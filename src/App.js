@@ -11,7 +11,6 @@ const App = (props) => {
     reverseMatrixValues,
     matrixSizeSelected,
     hasContainerStyles,
-    handleCellInputChange,
   } = props;
 
   const containerStyles = hasContainerStyles
@@ -34,7 +33,6 @@ const App = (props) => {
           hideMatrixInputs={hideMatrixInputs}
           matrixSizeSelected={matrixSizeSelected}
           reverseMatrixValues={reverseMatrixValues}
-          handleCellInputChange={handleCellInputChange}
         />
       </table>
     </div>

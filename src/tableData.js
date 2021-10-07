@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 
 const TableData = (props) => {
-  const { tableData, hideMatrixInputs, handleCellInputChange } = props;
-  const [inputToText, setInputToText] = useState(false);
+  const { tableData, hideMatrixInputs } = props;
+  // const [inputToText, setInputToText] = useState(false);
 
   useEffect(() => {
-    setInputToText(false);
+    // setInputToText(false);
   }, [hideMatrixInputs]);
 
   const handleCellClick = (tdSelected) => {
@@ -46,7 +46,6 @@ TableData.defaultProps = {
   inputValue: "",
   inputColour: "",
   inputPlaceHolder: "",
-  handleCellInputChange: () => {},
 };
 TableData.propsTypes = {
   data: [],
@@ -54,7 +53,6 @@ TableData.propsTypes = {
   inputValue: PropTypes.string,
   inputColour: PropTypes.string,
   inputPlaceHolder: PropTypes.string,
-  handleCellInputChange: PropTypes.func,
 };
 
 export default TableData;
