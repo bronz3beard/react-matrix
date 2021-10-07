@@ -2,7 +2,7 @@ export const data = {
   id: 1,
   matrix_size: 5,
   matrix_name: "React Matrix",
-  matrix_description: "Matrix Template",
+  matrix_description: "Risk Matrix Template",
   matrix_details: [
     {
       id: 1,
