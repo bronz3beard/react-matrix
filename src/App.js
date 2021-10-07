@@ -17,6 +17,7 @@ const App = (props) => {
     ? {
         top: `${50}%`,
         left: `${50}%`,
+        textAlign: "center",
         position: "absolute",
         transform: `translate(${-50}%, ${-50}%)`,
       }
@@ -26,6 +27,8 @@ const App = (props) => {
 
   return (
     <div style={containerStyles}>
+      <h1>{data.matrix_name}</h1>
+      <h4>{data.matrix_description}</h4>
       <table id="matrix-table" style={tableBorder}>
         <MatrixHeaders columns={data} matrixSizeSelected={matrixSizeSelected} />
         <MatrixRows
