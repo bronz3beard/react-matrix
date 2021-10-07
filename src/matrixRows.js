@@ -5,8 +5,13 @@ import TableData from "./tableData";
 
 const MatrixRows = ({ data, reverseMatrixValues }) => {
   const valuesArray = reverseMatrixValues
-    ? groupObjectsByProp(data.matrix_values, "likelihood_descriptor").reverse()
-    : groupObjectsByProp(data.matrix_values, "likelihood_descriptor");
+    ? groupObjectsByProp(data.matrix_values, "likelihood_descriptor")
+        .reverse()
+        .slice(0, data.matrix_size)
+    : groupObjectsByProp(data.matrix_values, "likelihood_descriptor").slice(
+        0,
+        data.matrix_size
+      );
 
   return (
     <tbody>
@@ -38,7 +43,7 @@ const MatrixRows = ({ data, reverseMatrixValues }) => {
                 {data.matrix_details[rowHeaderOrder].row_header_sub_title}
               </div>
             </th>
-            {row.map((item, index) => {
+            {row.slice(0, data.matrix_size).map((item, index) => {
               return <TableData tableData={item} key={`${item.id}-${index}`} />;
             })}
           </tr>
