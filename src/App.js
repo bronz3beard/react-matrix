@@ -5,23 +5,35 @@ import MatrixHeaders from "./matrixHeaders";
 import MatrixRows from "./matrixRows";
 
 const App = (props) => {
-  const { handleCellInputChange, hideMatrixInputs, matrixSizeSelected } = props;
+  const {
+    hasTableBorder,
+    hideMatrixInputs,
+    reverseMatrixValues,
+    matrixSizeSelected,
+    hasContainerStyles,
+    handleCellInputChange,
+  } = props;
 
-  return (
-    <div
-      style={{
+  const containerStyles = hasContainerStyles
+    ? {
         top: `${50}%`,
         left: `${50}%`,
         position: "absolute",
         transform: `translate(${-50}%, ${-50}%)`,
-      }}
-    >
-      <table id="matrix-table" style={{ border: `${1}px solid black` }}>
+      }
+    : {};
+
+  const tableBorder = hasTableBorder ? { border: `${1}px solid black` } : {};
+
+  return (
+    <div style={containerStyles}>
+      <table id="matrix-table" style={tableBorder}>
         <MatrixHeaders columns={data} matrixSizeSelected={matrixSizeSelected} />
         <MatrixRows
           data={data}
           hideMatrixInputs={hideMatrixInputs}
           matrixSizeSelected={matrixSizeSelected}
+          reverseMatrixValues={reverseMatrixValues}
           handleCellInputChange={handleCellInputChange}
         />
       </table>

@@ -5,7 +5,7 @@ import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <StrictMode>
-    <App />
+    <App hasTableBorder hasContainerStyles reverseMatrixValues />
   </StrictMode>,
   document.getElementById("root")
 );
