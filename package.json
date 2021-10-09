@@ -1,7 +1,10 @@
 {
-  "name": "react-matrix",
+  "name": "react-data-matrix",
   "version": "0.1.0",
-  "description": "View structured data in a matrix table (data grid), showing a value located at an X and Y coordinate.",
+  "private": false,
+  "license": "MIT",
+  "homepage": "https://github.com/bronz3beard/react-matrix",
+  "author": "bronz3beard <exempli.gratia.webdesign@gmail.com> (https://www.eg-web-design.com/)",
   "keywords": [
     "data",
     "risk",
@@ -11,11 +14,19 @@
     "table",
     "data table"
   ],
-  "homepage": "",
-  "license": "MIT",
-  "private": false,
-  "author": "bronz3beard <exempli.gratia.webdesign@gmail.com> (https://www.eg-web-design.com/)",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bronz3beard/react-matrix.git"
+  },
+  "description": "View structured data in a matrix table (data grid), showing a value located at an X and Y coordinate.",
   "dependencies": {
+    "@babel/polyfill": "^7.12.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -28,7 +39,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "rm -rf dist && NODE_ENV=production babel src/lib --out-dir dist --copy-files",
+    "build-og": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -49,5 +61,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.15.7",
+    "@babel/core": "^7.15.8",
+    "@babel/preset-env": "^7.15.8"
   }
 }
