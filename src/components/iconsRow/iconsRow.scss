@@ -1,0 +1,47 @@
+.socialStylesContainer {
+  top: 1rem;
+  left: -1rem;
+  z-index: 12;
+  position: fixed;
+  overflow: hidden;
+
+  .socialStyles {
+    display: flex;
+    position: fixed;
+    align-items: left;
+    -moz-box-align: left;
+    flex-direction: column;
+    border-bottom-right-radius: 5px;
+
+    a {
+      width: 3rem;
+      color: #000000;
+      padding: .2rem 0 0 0.6rem;
+    }
+
+    svg {
+      width: 2em;
+
+      &:hover {
+        color: #000000;
+      }
+    }
+  }
+}
+
+
+@media screen and (min-width: 20em) and (max-width: 20em) {
+  .socialStylesContainer {
+    top: 3.9rem;
+    z-index: 6;
+
+    .socialStyles {
+      flex-direction: row;
+
+      a {
+        width: 2.5rem;
+        padding: .2rem 1rem 0 1rem;
+      }
+    }
+  }
+}

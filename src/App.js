@@ -1,8 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
+import IconsRow from "./components/iconsRow";
+import Footer from "./components/footer";
 import { ReactMatrix } from "./lib";
 
-const App = (props) => <ReactMatrix {...props} />;
+const App = (props) => (
+  <>
+    <IconsRow />
+    <ReactMatrix {...props} />
+    <Footer />
+  </>
+);
 
 App.defaultProps = {
   hasTableBorder: true,
@@ -12,6 +20,9 @@ App.defaultProps = {
   headerPrimaryUpper: true,
   hasContainerStyles: true,
   reverseMatrixValues: true,
+
+  tableContainerStyles: {},
+  tableStyles: {},
 
   thRowStyles: {},
   thTitleStyles: {},
@@ -74,6 +85,9 @@ App.propTypes = {
 
   rowPrimaryUpper: PropTypes.bool,
   headerPrimaryUpper: PropTypes.bool,
+
+  tableContainerStyles: PropTypes.shape({}),
+  tableStyles: PropTypes.shape({}),
 
   thRowStyles: PropTypes.shape({}),
   thTitleStyles: PropTypes.shape({}),

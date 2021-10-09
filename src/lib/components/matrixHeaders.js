@@ -42,6 +42,7 @@ const MatrixHeaders = (props) => {
   const customThTitleStyles = !thTitleStyles ? {} : thTitleStyles;
   const headerTitleStyles = hasInlineStyles
     ? {
+        padding: `${0} ${0.5}rem ${0} ${0.5}rem`,
         backgroundColor: "light-grey",
         border: `${1}px solid black`,
         ...thTitleStyles,
@@ -60,25 +61,20 @@ const MatrixHeaders = (props) => {
   return (
     <thead>
       <tr id="react-matrix-blank-headers-primary-title-row">
-        <th headers="blank"></th>
-        <th headers="blank"></th>
-        <th headers="blank"></th>
-        <th headers="blank"></th>
+        <th headers="blank" colSpan="4"></th>
         <th
           style={headerPrimaryTitleStyles}
           id="react-matrix-header-primary-title"
         >
           {headerPrimaryTitle}
         </th>
-        <th headers="blank"></th>
-        <th headers="blank"></th>
+        <th headers="blank" colSpan="2"></th>
       </tr>
       <tr
         style={headerRowStyles}
         id={`react-matrix-dynamic-headers-row-${customHeaderRowIdValue}`}
       >
-        <th headers="blank"></th>
-        <th headers="blank"></th>
+        <th headers="blank" colSpan="2"></th>
         {data.matrix_details.slice(0, data.matrix_size).map((column, index) => {
           return (
             <th

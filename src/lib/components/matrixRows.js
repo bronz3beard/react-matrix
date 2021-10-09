@@ -44,7 +44,7 @@ const MatrixRows = (props) => {
   const customTitleStyle = !trTitleStyles ? {} : trTitleStyles;
   const tableRowHeaderTitleStyles = hasInlineStyles
     ? {
-        backgroundColor: "light-black",
+        padding: `${0} ${0.5}rem ${0} ${0.5}rem`,
         border: `${1}px solid black`,
         ...trTitleStyles,
       }

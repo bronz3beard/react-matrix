@@ -20,7 +20,7 @@ const App = () => {
 ```
 
 # Expected Data Structure
-- See ```./src/lib/utils/data.js``` for an example of the data, this can be used for testing if needed,
+- See [```./src/lib/utils/data.js```](https://github.com/bronz3beard/react-matrix/blob/main/src/lib/utils/data.js) for an example of the data, this can be used for testing if needed,
   or an example of how to construct/deconstruct your data objects from your api.
 
 ```js
@@ -175,7 +175,7 @@ const App = () => {
 ```
 
 # Available Properties
-----
+
 - __hasInlineStyles__
   * Default is true.
   * If false all inline styles are removed.
@@ -243,6 +243,10 @@ const App = () => {
 ### Inline
 __These styles can be added to the current styles or, 
 if you make ```hasInlineStyles = false```, then add these values with your own styles, you can have full control over styling inline.__
+
+__ReactMatrix__
+- tableContainerStyles={{}}
+- tableStyles={{}}
 
 __MatrixHeaders__
 - thRowStyles={{}}

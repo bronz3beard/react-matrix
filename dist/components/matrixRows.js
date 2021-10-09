@@ -47,7 +47,7 @@ const MatrixRows = props => {
   }, customRowStyles) : _objectSpread({}, customRowStyles);
   const customTitleStyle = !trTitleStyles ? {} : trTitleStyles;
   const tableRowHeaderTitleStyles = hasInlineStyles ? _objectSpread({
-    backgroundColor: "light-black",
+    padding: "".concat(0, " ", 0.5, "rem ", 0, " ", 0.5, "rem"),
     border: "".concat(1, "px solid black")
   }, trTitleStyles) : _objectSpread({}, customTitleStyle);
   const customSubTitleStyle = !trSubTitleStyles ? {} : trSubTitleStyles;
