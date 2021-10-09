@@ -1,4 +1,6 @@
 # React Matrix
+[React Matrix Demo](https://react-matrix.herokuapp.com/)
+
 React Matrix table shows relationships between two or more variables in a data set in grid format.
 
 The most common usage for a table like React Matrix, is to display the __likelihood__ and __consequence__ "scores" of __risks/hazards__, this can be for anything from Corporate, Work Health Safety and Environment risks, and more.
