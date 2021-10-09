@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import MatrixHeaders from "./matrixHeaders";
-import MatrixRows from "./matrixRows";
+import { MatrixHeaders, MatrixRows } from "./lib";
 
 const App = (props) => {
   const {

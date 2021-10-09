@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { capitaliseString } from "./functions";
-import "./riskMatrix.scss";
+import { capitaliseString } from "../utils/functions";
+// import "./styles/riskMatrix.scss";
 
 const MatrixHeaders = (props) => {
   const {

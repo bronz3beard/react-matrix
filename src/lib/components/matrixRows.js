@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { groupObjectsByProp, capitaliseString } from "./functions";
+import { groupObjectsByProp, capitaliseString } from "../utils/functions";
 import TableData from "./tableData";
 
 const MatrixRows = (props) => {
