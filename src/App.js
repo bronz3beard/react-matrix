@@ -1,86 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { MatrixHeaders, MatrixRows } from "./lib";
+import { ReactMatrix } from "./lib";
 
-const ReactMatrix = (props) => {
-  const {
-    data,
-    thRowStyles,
-    trRowStyles,
-    trTitleStyles,
-    thTitleStyles,
-    hasTableBorder,
-    rowPrimaryUpper,
-    hasInlineStyles,
-    thSubTitleStyles,
-    trSubTitleStyles,
-    headerPrimaryUpper,
-    matrixSizeSelected,
-    hasContainerStyles,
-    reverseMatrixValues,
-    thPrimaryTitleStyles,
-    trPrimaryTitleStyles,
-    customHeaderRowIdValue,
-    customRowDynamicIdValue,
-    customTableDataDynamicIdValue,
-    customDynamicHeaderTitleIdValue,
-    customDynamicSubHeaderTitleIdValue,
-  } = props;
+const App = (props) => <ReactMatrix {...props} />;
 
-  const containerStyles =
-    hasInlineStyles && hasContainerStyles
-      ? {
-          top: `${50}%`,
-          left: `${50}%`,
-          textAlign: "center",
-          position: "absolute",
-          transform: `translate(${-50}%, ${-50}%)`,
-        }
-      : {};
-
-  const tableBorder =
-    hasInlineStyles && hasTableBorder ? { border: `${1}px solid black` } : {};
-
-  return (
-    <div style={containerStyles}>
-      <h1>{data.matrix_name}</h1>
-      <h4>{data.matrix_description}</h4>
-      <table id="matrix-table" style={tableBorder}>
-        <MatrixHeaders
-          data={data}
-          thRowStyles={thRowStyles}
-          thTitleStyles={thTitleStyles}
-          hasInlineStyles={hasInlineStyles}
-          thSubTitleStyles={thSubTitleStyles}
-          headerPrimaryUpper={headerPrimaryUpper}
-          matrixSizeSelected={matrixSizeSelected}
-          thPrimaryTitleStyles={thPrimaryTitleStyles}
-          customHeaderRowIdValue={customHeaderRowIdValue}
-          customDynamicHeaderTitleIdValue={customDynamicHeaderTitleIdValue}
-          customDynamicSubHeaderTitleIdValue={
-            customDynamicSubHeaderTitleIdValue
-          }
-        />
-
-        <MatrixRows
-          data={data}
-          trRowStyles={trRowStyles}
-          trTitleStyles={trTitleStyles}
-          rowPrimaryUpper={rowPrimaryUpper}
-          hasInlineStyles={hasInlineStyles}
-          trSubTitleStyles={trSubTitleStyles}
-          matrixSizeSelected={matrixSizeSelected}
-          reverseMatrixValues={reverseMatrixValues}
-          trPrimaryTitleStyles={trPrimaryTitleStyles}
-          customRowDynamicIdValue={customRowDynamicIdValue}
-          customTableDataDynamicIdValue={customTableDataDynamicIdValue}
-        />
-      </table>
-    </div>
-  );
-};
-
-ReactMatrix.defaultProps = {
+App.defaultProps = {
   hasTableBorder: true,
   rowPrimaryUpper: true,
   hasInlineStyles: true,
@@ -109,7 +33,7 @@ ReactMatrix.defaultProps = {
   customDynamicSubHeaderTitleIdValue: "",
 };
 
-ReactMatrix.propTypes = {
+App.propTypes = {
   data: PropTypes.shape({
     id: PropTypes.number,
     matrix_name: PropTypes.string,
@@ -173,4 +97,4 @@ ReactMatrix.propTypes = {
   customTableDataDynamicIdValue: PropTypes.string,
 };
 
-export default ReactMatrix;
+export default App;
