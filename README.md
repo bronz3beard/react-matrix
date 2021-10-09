@@ -1,70 +1,248 @@
-# Getting Started with Create React App
+# React Matrix
+React Matrix table shows relationships between two or more variables in a data set in grid format.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The most common usage for a table like React Matrix, is to display the __likelihood__ and __consequence__ "scores" of __risks/hazards__, this can be for anything from Corporate, Work Health Safety and Environment risks, and more.
 
-## Available Scripts
+# Expected Data Structure
+- See ```data.js``` for an example of the data, this can be used for testing if needed,
+  or an example of how to construct/deconstruct your data objects from your api.
 
-In the project directory, you can run:
+```js
+  const data = {
+    id: 1,
+    matrix_size: 5,
+    matrix_name: "React Matrix",
+    matrix_description: "Risk Matrix Template",
+    matrix_details: [
+      {
+        id: 1,
+        likelihood: "LIKELIHOOD VALUE",
+        consequence: CONSEQUENCE VALUE,
+        header_title: "Title",
+        header_sub_title: "Sub-title/description.",
+        row_header_title: "Row Title",
+        row_header_sub_title: "Row Sub-title/description.",
+      }, {
+        id: 2,
+        ...
+      } {
+        id: 3,
+        ...
+      } {
+        id: 4,
+        ...
+      } {
+        id: 5,
+        ...
+      }
+    ],
+    matrix_values: [
+      {
+        id: 1,
+        position: 1,
+        matrix_id: 1,
+        score_value: 1,
+        colour: "green",
+        description: "low",
+        consequence_descriptor: 1,
+        likelihood_descriptor: "E",
+        response: "Business as usual",
+      }, {
+        id: 2,
+        ...
+      },
+      ...,
+      ...,
+      , {
+        id: 25,
+        ...
+      },
+    ]
+  }
+```
 
-### `yarn start`
+# PropTypes
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```js
+  propTypes = {
+    data: PropTypes.shape({
+      id: PropTypes.number,
+      matrix_name: PropTypes.string,
+      matrix_description: PropTypes.string,
+      matrix_size: PropTypes.number.isRequired,
+      matrix_details: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number,
+          likelihood: PropTypes.string,
+          consequence: PropTypes.number,
+          header_title: PropTypes.string,
+          header_sub_title: PropTypes.string,
+          row_header_title: PropTypes.string,
+          row_header_sub_title: PropTypes.string,
+        })
+      ).isRequired,
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+      matrix_values: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number.isRequired,
+          colour: PropTypes.string,
+          position: PropTypes.number.isRequired,
+          matrix_id: PropTypes.number,
+          score_value: PropTypes.number,
+          description: PropTypes.string,
+          response: PropTypes.string,
+          likelihood_descriptor: PropTypes.string.isRequired,
+          consequence_descriptor: PropTypes.number,
+        })
+      ).isRequired,
+    }).isRequired,
 
-### `yarn test`
+    hasTableBorder: PropTypes.bool,
+    hasInlineStyles: PropTypes.bool,
+    hasContainerStyles: PropTypes.bool,
+    reverseMatrixValues: PropTypes.bool,
+    matrixSizeSelected: PropTypes.number,
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    rowPrimaryUpper: PropTypes.bool,
+    headerPrimaryUpper: PropTypes.bool,
 
-### `yarn build`
+    thRowStyles: PropTypes.shape({}),
+    thTitleStyles: PropTypes.shape({}),
+    thSubTitleStyles: PropTypes.shape({}),
+    thPrimaryTitleStyles: PropTypes.shape({}),
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    trRowStyles: PropTypes.shape({}),
+    trTitleStyles: PropTypes.shape({}),
+    trSubTitleStyles: PropTypes.shape({}),
+    trPrimaryTitleStyles: PropTypes.shape({}),
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    tdStyles: PropTypes.shape({}),
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    customHeaderRowIdValue: PropTypes.string,
+    customDynamicHeaderTitleIdValue: PropTypes.string,
+    customDynamicSubHeaderTitleIdValue: PropTypes.string,
 
-### `yarn eject`
+    customRowDynamicIdValue: PropTypes.string,
+    customRowHeaderDynamicIdValue: PropTypes.string,
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+    customTableDataDynamicIdValue: PropTypes.string,
+  };
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  defaultProps = {
+    hasTableBorder: true,
+    rowPrimaryUpper: true,
+    hasInlineStyles: true,
+    matrixSizeSelected: 5,
+    headerPrimaryUpper: true,
+    hasContainerStyles: true,
+    reverseMatrixValues: true,
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+    thRowStyles: {},
+    thTitleStyles: {},
+    thSubTitleStyles: {},
+    thPrimaryTitleStyles: {},
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+    trRowStyles: {},
+    trTitleStyles: {},
+    trSubTitleStyles: {},
+    trPrimaryTitleStyles: {},
 
-## Learn More
+    tdStyles: {},
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    customHeaderRowIdValue: "",
+    customRowDynamicIdValue: "",
+    customTableDataDynamicIdValue: "",
+    customRowHeaderDynamicIdValue: "",
+    customDynamicHeaderTitleIdValue: "",
+    customDynamicSubHeaderTitleIdValue: "",
+  };
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# Available Properties
+----
+- __hasInlineStyles__
+  * Default is true.
+  * If false all inline styles are removed.
 
-### Code Splitting
+----
+- __hasTableBorder__
+  * Default is true.
+  * If false the most outer border is removed.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+----
+- __hasContainerStyles__
+  * Default is true.
+  * This will center the matrix in the middle of the page.
 
-### Analyzing the Bundle Size
+----
+- __reverseMatrixValues__
+  * Default is true.
+  * When true the lowest value will be in the bottom left and the highest value will be in the top right, with all sequential values in-between.
+  * When false the values will be reversed, lowest value top left highest value bottom right.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+----
+- __rowPrimaryUpper__
+  * Default is true.
+  * If false string formatting will be removed.
 
-### Making a Progressive Web App
+----
+- __headerPrimaryUpper__
+  * Default is true.
+  * If false string formatting will be removed.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+----
+- __customHeaderRowIdValue__
+  * Default is empty string.
+  * can be used to target element through id prop.
 
-### Advanced Configuration
+----
+- __customDynamicHeaderTitleIdValue__
+  * Default is empty string.
+  * can be used to target element through id prop.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+----
+- __customDynamicSubHeaderTitleIdValue__
+  * Default is empty string.
+  * can be used to target element through id prop.
 
-### Deployment
+----
+- __customRowDynamicIdValue__
+  * Default is empty string.
+  * can be used to target element through id prop.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+----
+- __customRowHeaderDynamicIdValue__
+  * Default is empty string.
+  * can be used to target element through id prop.
 
-### `yarn build` fails to minify
+----
+- __customTableDataDynamicIdValue__
+  * Default is empty string.
+  * can be used to target element through id prop.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+----
+
+# Styling Properties
+
+### Inline
+__These styles can be added to the current styles or, 
+if you make ```hasInlineStyles = false```, then add these values with your own styles, you can have full control over styling inline.__
+
+__MatrixHeaders__
+- thRowStyles={{}}
+- thTitleStyles={{}}
+- thSubTitleStyles={{}}
+- thPrimaryTitleStyles={{}}
+
+__MatrixRows__
+- trRowStyles={{}},
+- trTitleStyles={{}},
+- trSubTitleStyles={{}},
+- trPrimaryTitleStyles={{}},
+
+__TableData__
+- tdStyles={{}},
+
+----
+# Create React App
+- This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

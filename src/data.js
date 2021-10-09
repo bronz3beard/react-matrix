@@ -2,7 +2,10 @@ export const data = {
   id: 1,
   matrix_size: 5,
   matrix_name: "React Matrix",
+  primary_header_title: "Consequence",
+  primary_row_header_title: "Likelihood",
   matrix_description: "Risk Matrix Template",
+
   matrix_details: [
     {
       id: 1,
@@ -58,6 +61,7 @@ export const data = {
       row_header_sub_title: "Row Header sub-title/description.",
     },
   ],
+
   matrix_values: [
     {
       id: 26,
@@ -68,7 +72,7 @@ export const data = {
       position: 1,
       likelihood_descriptor: "E",
       consequence_descriptor: 1,
-      risk_response: "Business as usual",
+      response: "Business as usual",
     },
     {
       id: 27,
@@ -79,7 +83,7 @@ export const data = {
       position: 6,
       likelihood_descriptor: "D",
       consequence_descriptor: 1,
-      risk_response: "Business as usual",
+      response: "Business as usual",
     },
     {
       id: 28,
@@ -90,7 +94,7 @@ export const data = {
       position: 2,
       likelihood_descriptor: "E",
       consequence_descriptor: 2,
-      risk_response: "Business as usual",
+      response: "Business as usual",
     },
     {
       id: 29,
@@ -101,7 +105,7 @@ export const data = {
       position: 11,
       likelihood_descriptor: "C",
       consequence_descriptor: 1,
-      risk_response: "Business as usual",
+      response: "Business as usual",
     },
     {
       id: 30,
@@ -112,7 +116,7 @@ export const data = {
       position: 7,
       likelihood_descriptor: "D",
       consequence_descriptor: 2,
-      risk_response: "Business as usual",
+      response: "Business as usual",
     },
     {
       id: 31,
@@ -123,7 +127,7 @@ export const data = {
       position: 3,
       likelihood_descriptor: "E",
       consequence_descriptor: 3,
-      risk_response: "Business as usual",
+      response: "Business as usual",
     },
     {
       id: 32,
@@ -134,7 +138,7 @@ export const data = {
       position: 16,
       likelihood_descriptor: "B",
       consequence_descriptor: 1,
-      risk_response: "Requires routine to periodic monitoring",
+      response: "Requires routine to periodic monitoring",
     },
     {
       id: 33,
@@ -145,7 +149,7 @@ export const data = {
       position: 12,
       likelihood_descriptor: "C",
       consequence_descriptor: 2,
-      risk_response: "Requires routine to periodic monitoring",
+      response: "Requires routine to periodic monitoring",
     },
     {
       id: 34,
@@ -156,7 +160,7 @@ export const data = {
       position: 8,
       likelihood_descriptor: "D",
       consequence_descriptor: 3,
-      risk_response: "Requires routine to periodic monitoring",
+      response: "Requires routine to periodic monitoring",
     },
     {
       id: 35,
@@ -167,7 +171,7 @@ export const data = {
       position: 4,
       likelihood_descriptor: "E",
       consequence_descriptor: 4,
-      risk_response: "Requires routine to periodic monitoring",
+      response: "Requires routine to periodic monitoring",
     },
     {
       id: 36,
@@ -178,7 +182,7 @@ export const data = {
       position: 21,
       likelihood_descriptor: "A",
       consequence_descriptor: 1,
-      risk_response: "Requires routine to periodic monitoring",
+      response: "Requires routine to periodic monitoring",
     },
     {
       id: 37,
@@ -189,7 +193,7 @@ export const data = {
       position: 17,
       likelihood_descriptor: "B",
       consequence_descriptor: 2,
-      risk_response: "Risk requires targeted management plan",
+      response: "Risk requires targeted management plan",
     },
     {
       id: 38,
@@ -200,7 +204,7 @@ export const data = {
       position: 13,
       likelihood_descriptor: "C",
       consequence_descriptor: 3,
-      risk_response: "Risk requires targeted management plan",
+      response: "Risk requires targeted management plan",
     },
     {
       id: 39,
@@ -211,7 +215,7 @@ export const data = {
       position: 9,
       likelihood_descriptor: "D",
       consequence_descriptor: 4,
-      risk_response: "Risk requires targeted management plan",
+      response: "Risk requires targeted management plan",
     },
     {
       id: 40,
@@ -222,7 +226,7 @@ export const data = {
       position: 5,
       likelihood_descriptor: "E",
       consequence_descriptor: 5,
-      risk_response: "Risk requires targeted management plan",
+      response: "Risk requires targeted management plan",
     },
     {
       id: 41,
@@ -233,7 +237,7 @@ export const data = {
       position: 22,
       likelihood_descriptor: "A",
       consequence_descriptor: 2,
-      risk_response: "Risk requires targeted management plan",
+      response: "Risk requires targeted management plan",
     },
     {
       id: 42,
@@ -244,7 +248,7 @@ export const data = {
       position: 18,
       likelihood_descriptor: "B",
       consequence_descriptor: 3,
-      risk_response: "Risk requires targeted management plan",
+      response: "Risk requires targeted management plan",
     },
     {
       id: 43,
@@ -255,7 +259,7 @@ export const data = {
       position: 14,
       likelihood_descriptor: "C",
       consequence_descriptor: 4,
-      risk_response: "Risk requires targeted management plan",
+      response: "Risk requires targeted management plan",
     },
     {
       id: 44,
@@ -266,7 +270,7 @@ export const data = {
       position: 10,
       likelihood_descriptor: "D",
       consequence_descriptor: 5,
-      risk_response: "Risk requires targeted management plan",
+      response: "Risk requires targeted management plan",
     },
     {
       id: 45,
@@ -277,7 +281,7 @@ export const data = {
       position: 23,
       likelihood_descriptor: "A",
       consequence_descriptor: 3,
-      risk_response: "Activity should not commence",
+      response: "Activity should not commence",
     },
     {
       id: 46,
@@ -288,7 +292,7 @@ export const data = {
       position: 19,
       likelihood_descriptor: "B",
       consequence_descriptor: 4,
-      risk_response: "Activity should not commence",
+      response: "Activity should not commence",
     },
     {
       id: 47,
@@ -299,7 +303,7 @@ export const data = {
       position: 15,
       likelihood_descriptor: "C",
       consequence_descriptor: 5,
-      risk_response: "Activity should not commence",
+      response: "Activity should not commence",
     },
     {
       id: 48,
@@ -310,7 +314,7 @@ export const data = {
       position: 24,
       likelihood_descriptor: "A",
       consequence_descriptor: 4,
-      risk_response: "Activity should not commence",
+      response: "Activity should not commence",
     },
     {
       id: 49,
@@ -321,7 +325,7 @@ export const data = {
       position: 20,
       likelihood_descriptor: "B",
       consequence_descriptor: 5,
-      risk_response: "Activity should not commence",
+      response: "Activity should not commence",
     },
     {
       id: 50,
@@ -332,7 +336,7 @@ export const data = {
       position: 25,
       likelihood_descriptor: "A",
       consequence_descriptor: 5,
-      risk_response: "Activity should not commence",
+      response: "Activity should not commence",
     },
   ],
 };

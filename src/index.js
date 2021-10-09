@@ -1,11 +1,12 @@
 import React, { StrictMode } from "react";
 import ReactDOM from "react-dom";
+import { data } from "./data";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <StrictMode>
-    <App hasTableBorder hasContainerStyles reverseMatrixValues />
+    <App data={data} />
   </StrictMode>,
   document.getElementById("root")
 );
