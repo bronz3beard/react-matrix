@@ -1,58 +1,70 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 const TableData = (props) => {
-  const { tableData, hideMatrixInputs } = props;
-  // const [inputToText, setInputToText] = useState(false);
-
-  useEffect(() => {
-    // setInputToText(false);
-  }, [hideMatrixInputs]);
+  const { data, tdStyles, hasInlineStyles, customTableDataDynamicIdValue } =
+    props;
 
   const handleCellClick = (tdSelected) => {
-    alert(`${tdSelected.description}, ${tdSelected.score_value}`);
-    // tableData.forEach((val) => {
-    //   val.expanded = false;
-    // });
-    // if (tdSelected) {
-    //   tdSelected.expanded = true;
-    // }
-    // setInputToText(!inputToText);
+    alert(
+      `${tdSelected?.description}, ${tdSelected?.score_value} \n${tdSelected?.response}`
+    );
   };
+
+  const customTdStyles = !tdStyles ? {} : tdStyles;
+  const tableDataStyles = hasInlineStyles
+    ? {
+        cursor: "pointer",
+        textAlign: "center",
+        borderColor: "black",
+        borderStyle: "solid",
+        borderWidth: `${1}px`,
+        backgroundColor: data?.colour,
+        ...tdStyles,
+      }
+    : { ...customTdStyles };
 
   return (
     <>
       <td
-        onClick={() => handleCellClick(tableData)}
-        style={{
-          cursor: "pointer",
-          textAlign: "center",
-          borderColor: "black",
-          borderStyle: "solid",
-          borderWidth: `${1}px`,
-          backgroundColor: tableData.colour,
-        }}
+        style={tableDataStyles}
+        onClick={() => handleCellClick(data)}
+        id={`react-matrix-dynamic-table-data${
+          !customTableDataDynamicIdValue
+            ? ""
+            : `-${customTableDataDynamicIdValue}`
+        }`}
       >
-        {`${tableData.description}`}
+        {`${data?.description}`}
         <br />
-        {`(${tableData.score_value})`}
+        {`(${data?.score_value})`}
       </td>
     </>
   );
 };
 
 TableData.defaultProps = {
-  inputDescription: "",
-  inputValue: "",
-  inputColour: "",
-  inputPlaceHolder: "",
+  tdStyles: {},
+  hasInlineStyles: true,
+  customTableDataDynamicIdValue: "",
 };
+
 TableData.propsTypes = {
-  data: [],
-  inputDescription: PropTypes.string,
-  inputValue: PropTypes.string,
-  inputColour: PropTypes.string,
-  inputPlaceHolder: PropTypes.string,
+  data: PropTypes.shape({
+    id: PropTypes.number,
+    colour: PropTypes.string,
+    position: PropTypes.number,
+    matrix_id: PropTypes.number,
+    score_value: PropTypes.number,
+    description: PropTypes.string,
+    response: PropTypes.string,
+    likelihood_descriptor: PropTypes.string,
+    consequence_descriptor: PropTypes.number,
+  }).isRequired,
+
+  tdStyles: PropTypes.shape({}),
+  hasInlineStyles: PropTypes.bool,
+  customTableDataDynamicIdValue: PropTypes.string,
 };
 
 export default TableData;
