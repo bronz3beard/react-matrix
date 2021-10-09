@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { MatrixHeaders, MatrixRows } from "./lib";
 
-const App = (props) => {
+const ReactMatrix = (props) => {
   const {
     data,
     thRowStyles,
@@ -80,7 +80,7 @@ const App = (props) => {
   );
 };
 
-App.defaultProps = {
+ReactMatrix.defaultProps = {
   hasTableBorder: true,
   rowPrimaryUpper: true,
   hasInlineStyles: true,
@@ -109,7 +109,7 @@ App.defaultProps = {
   customDynamicSubHeaderTitleIdValue: "",
 };
 
-App.propTypes = {
+ReactMatrix.propTypes = {
   data: PropTypes.shape({
     id: PropTypes.number,
     matrix_name: PropTypes.string,
@@ -173,4 +173,4 @@ App.propTypes = {
   customTableDataDynamicIdValue: PropTypes.string,
 };
 
-export default App;
+export default ReactMatrix;
