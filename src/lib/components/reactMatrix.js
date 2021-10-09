@@ -6,6 +6,7 @@ import MatrixRows from "./matrixRows";
 const ReactMatrix = (props) => {
   const {
     data,
+    tableStyles,
     thRowStyles,
     trRowStyles,
     trTitleStyles,
@@ -21,6 +22,7 @@ const ReactMatrix = (props) => {
     reverseMatrixValues,
     thPrimaryTitleStyles,
     trPrimaryTitleStyles,
+    tableContainerStyles,
     customHeaderRowIdValue,
     customRowDynamicIdValue,
     customTableDataDynamicIdValue,
@@ -28,25 +30,36 @@ const ReactMatrix = (props) => {
     customDynamicSubHeaderTitleIdValue,
   } = props;
 
+  const customContainerStyles = !tableContainerStyles
+    ? {}
+    : tableContainerStyles;
   const containerStyles =
     hasInlineStyles && hasContainerStyles
       ? {
           top: `${50}%`,
           left: `${50}%`,
+          height: `${100}%`,
           textAlign: "center",
           position: "absolute",
           transform: `translate(${-50}%, ${-50}%)`,
+          ...tableContainerStyles,
         }
-      : {};
+      : { ...customContainerStyles };
 
   const tableBorder =
     hasInlineStyles && hasTableBorder ? { border: `${1}px solid black` } : {};
+
+  const customTableStyles = !tableStyles ? {} : tableStyles;
+  const tableElmStyles =
+    hasInlineStyles && tableStyles
+      ? { width: `${70}rem`, ...tableStyles }
+      : { ...customTableStyles };
 
   return (
     <div style={containerStyles}>
       <h1>{data.matrix_name}</h1>
       <h4>{data.matrix_description}</h4>
-      <table id="matrix-table" style={tableBorder}>
+      <table id="matrix-table" style={{ ...tableElmStyles, ...tableBorder }}>
         <MatrixHeaders
           data={data}
           thRowStyles={thRowStyles}
@@ -89,6 +102,9 @@ ReactMatrix.defaultProps = {
   headerPrimaryUpper: true,
   hasContainerStyles: true,
   reverseMatrixValues: true,
+
+  tableContainerStyles: {},
+  tableStyles: {},
 
   thRowStyles: {},
   thTitleStyles: {},
@@ -151,6 +167,9 @@ ReactMatrix.propTypes = {
 
   rowPrimaryUpper: PropTypes.bool,
   headerPrimaryUpper: PropTypes.bool,
+
+  tableContainerStyles: PropTypes.shape({}),
+  tableStyles: PropTypes.shape({}),
 
   thRowStyles: PropTypes.shape({}),
   thTitleStyles: PropTypes.shape({}),

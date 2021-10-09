@@ -15,9 +15,16 @@ var _matrixRows = _interopRequireDefault(require("./matrixRows"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 const ReactMatrix = props => {
   const {
     data,
+    tableStyles,
     thRowStyles,
     trRowStyles,
     trTitleStyles,
@@ -33,27 +40,34 @@ const ReactMatrix = props => {
     reverseMatrixValues,
     thPrimaryTitleStyles,
     trPrimaryTitleStyles,
+    tableContainerStyles,
     customHeaderRowIdValue,
     customRowDynamicIdValue,
     customTableDataDynamicIdValue,
     customDynamicHeaderTitleIdValue,
     customDynamicSubHeaderTitleIdValue
   } = props;
-  const containerStyles = hasInlineStyles && hasContainerStyles ? {
+  const customContainerStyles = !tableContainerStyles ? {} : tableContainerStyles;
+  const containerStyles = hasInlineStyles && hasContainerStyles ? _objectSpread({
     top: "".concat(50, "%"),
     left: "".concat(50, "%"),
+    height: "".concat(100, "%"),
     textAlign: "center",
     position: "absolute",
     transform: "translate(".concat(-50, "%, ").concat(-50, "%)")
-  } : {};
+  }, tableContainerStyles) : _objectSpread({}, customContainerStyles);
   const tableBorder = hasInlineStyles && hasTableBorder ? {
     border: "".concat(1, "px solid black")
   } : {};
+  const customTableStyles = !tableStyles ? {} : tableStyles;
+  const tableElmStyles = hasInlineStyles && tableStyles ? _objectSpread({
+    width: "".concat(70, "rem")
+  }, tableStyles) : _objectSpread({}, customTableStyles);
   return /*#__PURE__*/_react.default.createElement("div", {
     style: containerStyles
   }, /*#__PURE__*/_react.default.createElement("h1", null, data.matrix_name), /*#__PURE__*/_react.default.createElement("h4", null, data.matrix_description), /*#__PURE__*/_react.default.createElement("table", {
     id: "matrix-table",
-    style: tableBorder
+    style: _objectSpread(_objectSpread({}, tableElmStyles), tableBorder)
   }, /*#__PURE__*/_react.default.createElement(_matrixHeaders.default, {
     data: data,
     thRowStyles: thRowStyles,
@@ -89,6 +103,8 @@ ReactMatrix.defaultProps = {
   headerPrimaryUpper: true,
   hasContainerStyles: true,
   reverseMatrixValues: true,
+  tableContainerStyles: {},
+  tableStyles: {},
   thRowStyles: {},
   thTitleStyles: {},
   thSubTitleStyles: {},
@@ -139,6 +155,8 @@ ReactMatrix.propTypes = {
   matrixSizeSelected: _propTypes.default.number,
   rowPrimaryUpper: _propTypes.default.bool,
   headerPrimaryUpper: _propTypes.default.bool,
+  tableContainerStyles: _propTypes.default.shape({}),
+  tableStyles: _propTypes.default.shape({}),
   thRowStyles: _propTypes.default.shape({}),
   thTitleStyles: _propTypes.default.shape({}),
   thSubTitleStyles: _propTypes.default.shape({}),

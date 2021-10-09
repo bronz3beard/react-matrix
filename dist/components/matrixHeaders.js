@@ -47,6 +47,7 @@ const MatrixHeaders = props => {
   }, thRowStyles) : _objectSpread({}, customRowStyles);
   const customThTitleStyles = !thTitleStyles ? {} : thTitleStyles;
   const headerTitleStyles = hasInlineStyles ? _objectSpread({
+    padding: "".concat(0, " ", 0.5, "rem ", 0, " ", 0.5, "rem"),
     backgroundColor: "light-grey",
     border: "".concat(1, "px solid black")
   }, thTitleStyles) : _objectSpread({}, customThTitleStyles);
@@ -59,27 +60,20 @@ const MatrixHeaders = props => {
   return /*#__PURE__*/_react.default.createElement("thead", null, /*#__PURE__*/_react.default.createElement("tr", {
     id: "react-matrix-blank-headers-primary-title-row"
   }, /*#__PURE__*/_react.default.createElement("th", {
-    headers: "blank"
-  }), /*#__PURE__*/_react.default.createElement("th", {
-    headers: "blank"
-  }), /*#__PURE__*/_react.default.createElement("th", {
-    headers: "blank"
-  }), /*#__PURE__*/_react.default.createElement("th", {
-    headers: "blank"
+    headers: "blank",
+    colSpan: "4"
   }), /*#__PURE__*/_react.default.createElement("th", {
     style: headerPrimaryTitleStyles,
     id: "react-matrix-header-primary-title"
   }, headerPrimaryTitle), /*#__PURE__*/_react.default.createElement("th", {
-    headers: "blank"
-  }), /*#__PURE__*/_react.default.createElement("th", {
-    headers: "blank"
+    headers: "blank",
+    colSpan: "2"
   })), /*#__PURE__*/_react.default.createElement("tr", {
     style: headerRowStyles,
     id: "react-matrix-dynamic-headers-row-".concat(customHeaderRowIdValue)
   }, /*#__PURE__*/_react.default.createElement("th", {
-    headers: "blank"
-  }), /*#__PURE__*/_react.default.createElement("th", {
-    headers: "blank"
+    headers: "blank",
+    colSpan: "2"
   }), data.matrix_details.slice(0, data.matrix_size).map((column, index) => {
     return /*#__PURE__*/_react.default.createElement("th", {
       scope: "col",
