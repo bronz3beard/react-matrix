@@ -5,6 +5,20 @@ React Matrix table shows relationships between two or more variables in a data s
 
 The most common usage for a table like React Matrix, is to display the __likelihood__ and __consequence__ "scores" of __risks/hazards__, this can be for anything from Corporate, Work Health Safety and Environment risks, and more.
 
+# Usage
+
+```js 
+import { ReactMatrix } from "react-data-matrix";
+
+const App = () => {
+  ...
+
+  return (
+    <ReactMatrix data={data} {...seeOtherPropsBelow} />
+  )
+}
+```
+
 # Expected Data Structure
 - See ```./src/lib/utils/data.js``` for an example of the data, this can be used for testing if needed,
   or an example of how to construct/deconstruct your data objects from your api.
