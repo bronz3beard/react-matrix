@@ -1,11 +1,11 @@
 import React, { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import { data } from "./lib/utils/data";
-import ReactMatrix from "./ReactMatrix";
+import App from "./App";
 
 ReactDOM.render(
   <StrictMode>
-    <ReactMatrix />
+    <App data={data} />
   </StrictMode>,
   document.getElementById("root")
 );
