@@ -1,5 +1,4 @@
-# React Matrix
-{%= badge("fury") %}
+# React Matrix &nbsp; [![npm version](https://badge.fury.io/js/react-data-matrix.svg)](https://badge.fury.io/js/react-data-matrix)
 
 [React Matrix Demo](https://react-matrix.herokuapp.com/)
 
