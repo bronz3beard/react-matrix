@@ -1,4 +1,6 @@
 # React Matrix
+{%= badge("fury") %}
+
 [React Matrix Demo](https://react-matrix.herokuapp.com/)
 
 React Matrix table shows relationships between two or more variables in a data set in grid format.
