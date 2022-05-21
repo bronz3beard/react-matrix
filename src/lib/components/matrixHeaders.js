@@ -1,5 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {
+  getHeaderRowStyles,
+  getHeaderTitleStyles,
+  getHeaderSubTitleStyles,
+  getHeaderPrimaryTitleStyles,
+} from "../helpers/getStyles";
 import { capitaliseString } from "../utils/functions";
 // import "./styles/riskMatrix.scss";
 
@@ -17,42 +23,10 @@ const MatrixHeaders = (props) => {
     customDynamicSubHeaderTitleIdValue,
   } = props;
 
-  const customPrimaryTitleStyles = !thPrimaryTitleStyles
-    ? {}
-    : thPrimaryTitleStyles;
-  const headerPrimaryTitleStyles = hasInlineStyles
-    ? {
-        borderWidth: `${0}`,
-        padding: `${1}rem ${0} ${1}rem ${0}`,
-        ...thPrimaryTitleStyles,
-      }
-    : { ...customPrimaryTitleStyles };
-
-  const customRowStyles = !thRowStyles ? {} : thRowStyles;
-  const headerRowStyles = hasInlineStyles
-    ? {
-        borderColor: "black",
-        borderStyle: "solid",
-        padding: `${10}rem ${0} ${0} ${0}`,
-        borderWidth: `${0} ${0} ${0} ${10}px`,
-        ...thRowStyles,
-      }
-    : { ...customRowStyles };
-
-  const customThTitleStyles = !thTitleStyles ? {} : thTitleStyles;
-  const headerTitleStyles = hasInlineStyles
-    ? {
-        padding: `${0} ${0.5}rem ${0} ${0.5}rem`,
-        backgroundColor: "light-grey",
-        border: `${1}px solid black`,
-        ...thTitleStyles,
-      }
-    : { ...customThTitleStyles };
-
-  const customThSubTitleStyles = !thSubTitleStyles ? {} : thSubTitleStyles;
-  const headerSubTitleStyles = hasInlineStyles
-    ? { fontSize: `${0.9}em`, fontWeight: "normal", ...thSubTitleStyles }
-    : { ...customThSubTitleStyles };
+  const headerRowStyles = getHeaderRowStyles(hasInlineStyles, thRowStyles);
+  const headerTitleStyles = getHeaderTitleStyles(hasInlineStyles, thTitleStyles);
+  const headerSubTitleStyles = getHeaderSubTitleStyles(hasInlineStyles, thSubTitleStyles);
+  const headerPrimaryTitleStyles = getHeaderPrimaryTitleStyles(hasInlineStyles, thPrimaryTitleStyles);
 
   const headerPrimaryTitle = headerPrimaryUpper
     ? capitaliseString(data.primary_header_title)
@@ -114,6 +88,8 @@ MatrixHeaders.defaultProps = {
   thTitleStyles: {},
   thSubTitleStyles: {},
   thPrimaryTitleStyles: {},
+
+  matrixSizeSelected: 5,
 
   customHeaderRowIdValue: "",
   customDynamicHeaderTitleIdValue: "",

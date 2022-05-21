@@ -1,129 +1,84 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {
+  getTableStyles,
+  getTableBoarder,
+  getContainerStyles,
+} from "../helpers/getStyles";
 import MatrixHeaders from "./matrixHeaders";
 import MatrixRows from "./matrixRows";
+import { Consumer } from "../context";
+
 
 const ReactMatrix = (props) => {
   const {
-    data,
+    matrixName,
     tableStyles,
-    thRowStyles,
-    trRowStyles,
-    trTitleStyles,
-    thTitleStyles,
     hasTableBorder,
-    rowPrimaryUpper,
     hasInlineStyles,
-    thSubTitleStyles,
-    trSubTitleStyles,
-    headerPrimaryUpper,
-    matrixSizeSelected,
+    matrixDescription,
     hasContainerStyles,
-    reverseMatrixValues,
-    thPrimaryTitleStyles,
-    trPrimaryTitleStyles,
     tableContainerStyles,
-    customHeaderRowIdValue,
-    customRowDynamicIdValue,
-    customTableDataDynamicIdValue,
-    customDynamicHeaderTitleIdValue,
-    customDynamicSubHeaderTitleIdValue,
   } = props;
-
-  const customContainerStyles = !tableContainerStyles
-    ? {}
-    : tableContainerStyles;
-  const containerStyles =
-    hasInlineStyles && hasContainerStyles
-      ? {
-          top: `${50}%`,
-          left: `${50}%`,
-          height: `${100}%`,
-          textAlign: "center",
-          position: "absolute",
-          transform: `translate(${-50}%, ${-50}%)`,
-          ...tableContainerStyles,
-        }
-      : { ...customContainerStyles };
-
-  const tableBorder =
-    hasInlineStyles && hasTableBorder ? { border: `${1}px solid black` } : {};
-
-  const customTableStyles = !tableStyles ? {} : tableStyles;
-  const tableElmStyles =
-    hasInlineStyles && tableStyles
-      ? { width: `${70}rem`, ...tableStyles }
-      : { ...customTableStyles };
+  const tableBorder = getTableBoarder(hasInlineStyles && hasTableBorder);
+  const tableElmStyles = getTableStyles(hasInlineStyles && tableStyles, tableStyles);
+  const containerStyles = getContainerStyles(hasInlineStyles && hasContainerStyles, tableContainerStyles);
 
   return (
     <div style={containerStyles}>
-      <h1>{data.matrix_name}</h1>
-      <h4>{data.matrix_description}</h4>
+      <h1>{matrixName}</h1>
+      <h4>{matrixDescription}</h4>
       <table id="matrix-table" style={{ ...tableElmStyles, ...tableBorder }}>
-        <MatrixHeaders
-          data={data}
-          thRowStyles={thRowStyles}
-          thTitleStyles={thTitleStyles}
-          hasInlineStyles={hasInlineStyles}
-          thSubTitleStyles={thSubTitleStyles}
-          headerPrimaryUpper={headerPrimaryUpper}
-          matrixSizeSelected={matrixSizeSelected}
-          thPrimaryTitleStyles={thPrimaryTitleStyles}
-          customHeaderRowIdValue={customHeaderRowIdValue}
-          customDynamicHeaderTitleIdValue={customDynamicHeaderTitleIdValue}
-          customDynamicSubHeaderTitleIdValue={
-            customDynamicSubHeaderTitleIdValue
+        <Consumer>
+          {context => (
+            <MatrixHeaders
+              data={context.data}
+              thRowStyles={context.thRowStyles}
+              thTitleStyles={context.thTitleStyles}
+              hasInlineStyles={context.hasInlineStyles}
+              thSubTitleStyles={context.thSubTitleStyles}
+              headerPrimaryUpper={context.headerPrimaryUpper}
+              matrixSizeSelected={context.matrixSizeSelected}
+              thPrimaryTitleStyles={context.thPrimaryTitleStyles}
+              customHeaderRowIdValue={context.customHeaderRowIdValue}
+              customDynamicHeaderTitleIdValue={context.customDynamicHeaderTitleIdValue}
+              customDynamicSubHeaderTitleIdValue={
+                context.customDynamicSubHeaderTitleIdValue
+              }
+            />
+          )}
+        </Consumer>
+        <Consumer>
+          {context => 
+            <MatrixRows
+              data={context.data}
+              trRowStyles={context.trRowStyles}
+              trTitleStyles={context.trTitleStyles}
+              rowPrimaryUpper={context.rowPrimaryUpper}
+              hasInlineStyles={context.hasInlineStyles}
+              trSubTitleStyles={context.trSubTitleStyles}
+              matrixSizeSelected={context.matrixSizeSelected}
+              reverseMatrixValues={context.reverseMatrixValues}
+              trPrimaryTitleStyles={context.trPrimaryTitleStyles}
+              customRowDynamicIdValue={context.customRowDynamicIdValue}
+              customTableDataDynamicIdValue={context.customTableDataDynamicIdValue}
+            />
           }
-        />
-
-        <MatrixRows
-          data={data}
-          trRowStyles={trRowStyles}
-          trTitleStyles={trTitleStyles}
-          rowPrimaryUpper={rowPrimaryUpper}
-          hasInlineStyles={hasInlineStyles}
-          trSubTitleStyles={trSubTitleStyles}
-          matrixSizeSelected={matrixSizeSelected}
-          reverseMatrixValues={reverseMatrixValues}
-          trPrimaryTitleStyles={trPrimaryTitleStyles}
-          customRowDynamicIdValue={customRowDynamicIdValue}
-          customTableDataDynamicIdValue={customTableDataDynamicIdValue}
-        />
+        </Consumer>
       </table>
     </div>
   );
 };
 
 ReactMatrix.defaultProps = {
-  hasTableBorder: true,
-  rowPrimaryUpper: true,
-  hasInlineStyles: true,
-  matrixSizeSelected: 5,
-  headerPrimaryUpper: true,
-  hasContainerStyles: true,
-  reverseMatrixValues: true,
-
-  tableContainerStyles: {},
   tableStyles: {},
+  hasTableBorder: true,
+  hasInlineStyles: true,
+  hasContainerStyles: true,
+  tableContainerStyles: {},
 
-  thRowStyles: {},
-  thTitleStyles: {},
-  thSubTitleStyles: {},
-  thPrimaryTitleStyles: {},
-
-  trRowStyles: {},
-  trTitleStyles: {},
-  trSubTitleStyles: {},
-  trPrimaryTitleStyles: {},
-
-  tdStyles: {},
-
-  customHeaderRowIdValue: "",
-  customRowDynamicIdValue: "",
-  customTableDataDynamicIdValue: "",
-  customRowHeaderDynamicIdValue: "",
-  customDynamicHeaderTitleIdValue: "",
-  customDynamicSubHeaderTitleIdValue: "",
+  matrixName: "",
+  matrixDescription: "",
 };
 
 ReactMatrix.propTypes = {
@@ -157,8 +112,7 @@ ReactMatrix.propTypes = {
         consequence_descriptor: PropTypes.number,
       })
     ).isRequired,
-  }).isRequired,
-
+  }),
   hasTableBorder: PropTypes.bool,
   hasInlineStyles: PropTypes.bool,
   hasContainerStyles: PropTypes.bool,

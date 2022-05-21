@@ -9,9 +9,13 @@ var _react = _interopRequireDefault(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
+var _getStyles = require("../helpers/getStyles");
+
 var _matrixHeaders = _interopRequireDefault(require("./matrixHeaders"));
 
 var _matrixRows = _interopRequireDefault(require("./matrixRows"));
+
+var _context = require("../context");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -23,103 +27,57 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 const ReactMatrix = props => {
   const {
-    data,
+    matrixName,
     tableStyles,
-    thRowStyles,
-    trRowStyles,
-    trTitleStyles,
-    thTitleStyles,
     hasTableBorder,
-    rowPrimaryUpper,
     hasInlineStyles,
-    thSubTitleStyles,
-    trSubTitleStyles,
-    headerPrimaryUpper,
-    matrixSizeSelected,
+    matrixDescription,
     hasContainerStyles,
-    reverseMatrixValues,
-    thPrimaryTitleStyles,
-    trPrimaryTitleStyles,
-    tableContainerStyles,
-    customHeaderRowIdValue,
-    customRowDynamicIdValue,
-    customTableDataDynamicIdValue,
-    customDynamicHeaderTitleIdValue,
-    customDynamicSubHeaderTitleIdValue
+    tableContainerStyles
   } = props;
-  const customContainerStyles = !tableContainerStyles ? {} : tableContainerStyles;
-  const containerStyles = hasInlineStyles && hasContainerStyles ? _objectSpread({
-    top: "".concat(50, "%"),
-    left: "".concat(50, "%"),
-    height: "".concat(100, "%"),
-    textAlign: "center",
-    position: "absolute",
-    transform: "translate(".concat(-50, "%, ").concat(-50, "%)")
-  }, tableContainerStyles) : _objectSpread({}, customContainerStyles);
-  const tableBorder = hasInlineStyles && hasTableBorder ? {
-    border: "".concat(1, "px solid black")
-  } : {};
-  const customTableStyles = !tableStyles ? {} : tableStyles;
-  const tableElmStyles = hasInlineStyles && tableStyles ? _objectSpread({
-    width: "".concat(70, "rem")
-  }, tableStyles) : _objectSpread({}, customTableStyles);
+  const tableBorder = (0, _getStyles.getTableBoarder)(hasInlineStyles && hasTableBorder);
+  const tableElmStyles = (0, _getStyles.getTableStyles)(hasInlineStyles && tableStyles, tableStyles);
+  const containerStyles = (0, _getStyles.getContainerStyles)(hasInlineStyles && hasContainerStyles, tableContainerStyles);
   return /*#__PURE__*/_react.default.createElement("div", {
     style: containerStyles
-  }, /*#__PURE__*/_react.default.createElement("h1", null, data.matrix_name), /*#__PURE__*/_react.default.createElement("h4", null, data.matrix_description), /*#__PURE__*/_react.default.createElement("table", {
+  }, /*#__PURE__*/_react.default.createElement("h1", null, matrixName), /*#__PURE__*/_react.default.createElement("h4", null, matrixDescription), /*#__PURE__*/_react.default.createElement("table", {
     id: "matrix-table",
     style: _objectSpread(_objectSpread({}, tableElmStyles), tableBorder)
-  }, /*#__PURE__*/_react.default.createElement(_matrixHeaders.default, {
-    data: data,
-    thRowStyles: thRowStyles,
-    thTitleStyles: thTitleStyles,
-    hasInlineStyles: hasInlineStyles,
-    thSubTitleStyles: thSubTitleStyles,
-    headerPrimaryUpper: headerPrimaryUpper,
-    matrixSizeSelected: matrixSizeSelected,
-    thPrimaryTitleStyles: thPrimaryTitleStyles,
-    customHeaderRowIdValue: customHeaderRowIdValue,
-    customDynamicHeaderTitleIdValue: customDynamicHeaderTitleIdValue,
-    customDynamicSubHeaderTitleIdValue: customDynamicSubHeaderTitleIdValue
-  }), /*#__PURE__*/_react.default.createElement(_matrixRows.default, {
-    data: data,
-    trRowStyles: trRowStyles,
-    trTitleStyles: trTitleStyles,
-    rowPrimaryUpper: rowPrimaryUpper,
-    hasInlineStyles: hasInlineStyles,
-    trSubTitleStyles: trSubTitleStyles,
-    matrixSizeSelected: matrixSizeSelected,
-    reverseMatrixValues: reverseMatrixValues,
-    trPrimaryTitleStyles: trPrimaryTitleStyles,
-    customRowDynamicIdValue: customRowDynamicIdValue,
-    customTableDataDynamicIdValue: customTableDataDynamicIdValue
-  })));
+  }, /*#__PURE__*/_react.default.createElement(_context.Consumer, null, context => /*#__PURE__*/_react.default.createElement(_matrixHeaders.default, {
+    data: context.data,
+    thRowStyles: context.thRowStyles,
+    thTitleStyles: context.thTitleStyles,
+    hasInlineStyles: context.hasInlineStyles,
+    thSubTitleStyles: context.thSubTitleStyles,
+    headerPrimaryUpper: context.headerPrimaryUpper,
+    matrixSizeSelected: context.matrixSizeSelected,
+    thPrimaryTitleStyles: context.thPrimaryTitleStyles,
+    customHeaderRowIdValue: context.customHeaderRowIdValue,
+    customDynamicHeaderTitleIdValue: context.customDynamicHeaderTitleIdValue,
+    customDynamicSubHeaderTitleIdValue: context.customDynamicSubHeaderTitleIdValue
+  })), /*#__PURE__*/_react.default.createElement(_context.Consumer, null, context => /*#__PURE__*/_react.default.createElement(_matrixRows.default, {
+    data: context.data,
+    trRowStyles: context.trRowStyles,
+    trTitleStyles: context.trTitleStyles,
+    rowPrimaryUpper: context.rowPrimaryUpper,
+    hasInlineStyles: context.hasInlineStyles,
+    trSubTitleStyles: context.trSubTitleStyles,
+    matrixSizeSelected: context.matrixSizeSelected,
+    reverseMatrixValues: context.reverseMatrixValues,
+    trPrimaryTitleStyles: context.trPrimaryTitleStyles,
+    customRowDynamicIdValue: context.customRowDynamicIdValue,
+    customTableDataDynamicIdValue: context.customTableDataDynamicIdValue
+  }))));
 };
 
 ReactMatrix.defaultProps = {
-  hasTableBorder: true,
-  rowPrimaryUpper: true,
-  hasInlineStyles: true,
-  matrixSizeSelected: 5,
-  headerPrimaryUpper: true,
-  hasContainerStyles: true,
-  reverseMatrixValues: true,
-  tableContainerStyles: {},
   tableStyles: {},
-  thRowStyles: {},
-  thTitleStyles: {},
-  thSubTitleStyles: {},
-  thPrimaryTitleStyles: {},
-  trRowStyles: {},
-  trTitleStyles: {},
-  trSubTitleStyles: {},
-  trPrimaryTitleStyles: {},
-  tdStyles: {},
-  customHeaderRowIdValue: "",
-  customRowDynamicIdValue: "",
-  customTableDataDynamicIdValue: "",
-  customRowHeaderDynamicIdValue: "",
-  customDynamicHeaderTitleIdValue: "",
-  customDynamicSubHeaderTitleIdValue: ""
+  hasTableBorder: true,
+  hasInlineStyles: true,
+  hasContainerStyles: true,
+  tableContainerStyles: {},
+  matrixName: "",
+  matrixDescription: ""
 };
 ReactMatrix.propTypes = {
   data: _propTypes.default.shape({
@@ -147,7 +105,7 @@ ReactMatrix.propTypes = {
       likelihood_descriptor: _propTypes.default.string.isRequired,
       consequence_descriptor: _propTypes.default.number
     })).isRequired
-  }).isRequired,
+  }),
   hasTableBorder: _propTypes.default.bool,
   hasInlineStyles: _propTypes.default.bool,
   hasContainerStyles: _propTypes.default.bool,

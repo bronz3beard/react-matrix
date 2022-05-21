@@ -1,4 +1,10 @@
 import React from "react";
+import {
+  getHeaderRowStyles,
+  getHeaderTitleStyles,
+  getHeaderSubTitleStyles,
+  getHeaderPrimaryTitleStyles,
+} from "../helpers/getStyles";
 import PropTypes from "prop-types";
 import { groupObjectsByProp, capitaliseString } from "../utils/functions";
 import TableData from "./tableData";
@@ -28,32 +34,10 @@ const MatrixRows = (props) => {
         data.matrix_size
       );
 
-  const customPrimaryTitleStyles = !trPrimaryTitleStyles
-    ? {}
-    : trPrimaryTitleStyles;
-
-  const rowHeaderPrimaryTitleStyles = hasInlineStyles
-    ? { ...trPrimaryTitleStyles }
-    : { ...customPrimaryTitleStyles };
-
-  const customRowStyles = !trRowStyles ? {} : trRowStyles;
-  const tableRowStyles = hasInlineStyles
-    ? { border: `${1}px solid black`, ...customRowStyles }
-    : { ...customRowStyles };
-
-  const customTitleStyle = !trTitleStyles ? {} : trTitleStyles;
-  const tableRowHeaderTitleStyles = hasInlineStyles
-    ? {
-        padding: `${0} ${0.5}rem ${0} ${0.5}rem`,
-        border: `${1}px solid black`,
-        ...trTitleStyles,
-      }
-    : { ...customTitleStyle };
-
-  const customSubTitleStyle = !trSubTitleStyles ? {} : trSubTitleStyles;
-  const tableRowHeaderSubTitleStyles = hasInlineStyles
-    ? { fontSize: `${0.9}em`, fontWeight: "normal", ...trSubTitleStyles }
-    : { ...customSubTitleStyle };
+  const tableRowStyles = getHeaderRowStyles(hasInlineStyles, trRowStyles);
+  const tableRowHeaderTitleStyles = getHeaderTitleStyles(hasInlineStyles, trTitleStyles);
+  const tableRowHeaderSubTitleStyles = getHeaderSubTitleStyles(hasInlineStyles, trSubTitleStyles);
+  const rowHeaderPrimaryTitleStyles = getHeaderPrimaryTitleStyles(hasInlineStyles, trPrimaryTitleStyles);
 
   const rowPrimaryTitle = rowPrimaryUpper
     ? capitaliseString(data.primary_row_header_title)
@@ -126,6 +110,8 @@ MatrixRows.defaultProps = {
   trPrimaryTitleStyles: {},
 
   tdStyles: {},
+
+  matrixSizeSelected: 5,
 
   customRowDynamicIdValue: "",
   customRowHeaderDynamicIdValue: "",
