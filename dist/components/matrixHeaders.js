@@ -9,15 +9,11 @@ var _react = _interopRequireDefault(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
+var _getStyles = require("../helpers/getStyles");
+
 var _functions = require("../utils/functions");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 // import "./styles/riskMatrix.scss";
 const MatrixHeaders = props => {
@@ -33,29 +29,10 @@ const MatrixHeaders = props => {
     customDynamicHeaderTitleIdValue,
     customDynamicSubHeaderTitleIdValue
   } = props;
-  const customPrimaryTitleStyles = !thPrimaryTitleStyles ? {} : thPrimaryTitleStyles;
-  const headerPrimaryTitleStyles = hasInlineStyles ? _objectSpread({
-    borderWidth: "".concat(0),
-    padding: "".concat(1, "rem ", 0, " ", 1, "rem ", 0)
-  }, thPrimaryTitleStyles) : _objectSpread({}, customPrimaryTitleStyles);
-  const customRowStyles = !thRowStyles ? {} : thRowStyles;
-  const headerRowStyles = hasInlineStyles ? _objectSpread({
-    borderColor: "black",
-    borderStyle: "solid",
-    padding: "".concat(10, "rem ", 0, " ", 0, " ", 0),
-    borderWidth: "".concat(0, " ", 0, " ", 0, " ", 10, "px")
-  }, thRowStyles) : _objectSpread({}, customRowStyles);
-  const customThTitleStyles = !thTitleStyles ? {} : thTitleStyles;
-  const headerTitleStyles = hasInlineStyles ? _objectSpread({
-    padding: "".concat(0, " ", 0.5, "rem ", 0, " ", 0.5, "rem"),
-    backgroundColor: "light-grey",
-    border: "".concat(1, "px solid black")
-  }, thTitleStyles) : _objectSpread({}, customThTitleStyles);
-  const customThSubTitleStyles = !thSubTitleStyles ? {} : thSubTitleStyles;
-  const headerSubTitleStyles = hasInlineStyles ? _objectSpread({
-    fontSize: "".concat(0.9, "em"),
-    fontWeight: "normal"
-  }, thSubTitleStyles) : _objectSpread({}, customThSubTitleStyles);
+  const headerRowStyles = (0, _getStyles.getHeaderRowStyles)(hasInlineStyles, thRowStyles);
+  const headerTitleStyles = (0, _getStyles.getHeaderTitleStyles)(hasInlineStyles, thTitleStyles);
+  const headerSubTitleStyles = (0, _getStyles.getHeaderSubTitleStyles)(hasInlineStyles, thSubTitleStyles);
+  const headerPrimaryTitleStyles = (0, _getStyles.getHeaderPrimaryTitleStyles)(hasInlineStyles, thPrimaryTitleStyles);
   const headerPrimaryTitle = headerPrimaryUpper ? (0, _functions.capitaliseString)(data.primary_header_title) : data.primary_header_title;
   return /*#__PURE__*/_react.default.createElement("thead", null, /*#__PURE__*/_react.default.createElement("tr", {
     id: "react-matrix-blank-headers-primary-title-row"
@@ -94,6 +71,7 @@ MatrixHeaders.defaultProps = {
   thTitleStyles: {},
   thSubTitleStyles: {},
   thPrimaryTitleStyles: {},
+  matrixSizeSelected: 5,
   customHeaderRowIdValue: "",
   customDynamicHeaderTitleIdValue: "",
   customDynamicSubHeaderTitleIdValue: ""

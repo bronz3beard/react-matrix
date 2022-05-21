@@ -9,6 +9,8 @@ require("core-js/modules/es.array.reverse.js");
 
 var _react = _interopRequireDefault(require("react"));
 
+var _getStyles = require("../helpers/getStyles");
+
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _functions = require("../utils/functions");
@@ -16,12 +18,6 @@ var _functions = require("../utils/functions");
 var _tableData = _interopRequireDefault(require("./tableData"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 const MatrixRows = props => {
   const {
@@ -39,22 +35,10 @@ const MatrixRows = props => {
     customTableDataDynamicIdValue
   } = props;
   const valuesArray = reverseMatrixValues ? (0, _functions.groupObjectsByProp)(data.matrix_values, "likelihood_descriptor").reverse().slice(0, data.matrix_size) : (0, _functions.groupObjectsByProp)(data.matrix_values, "likelihood_descriptor").slice(0, data.matrix_size);
-  const customPrimaryTitleStyles = !trPrimaryTitleStyles ? {} : trPrimaryTitleStyles;
-  const rowHeaderPrimaryTitleStyles = hasInlineStyles ? _objectSpread({}, trPrimaryTitleStyles) : _objectSpread({}, customPrimaryTitleStyles);
-  const customRowStyles = !trRowStyles ? {} : trRowStyles;
-  const tableRowStyles = hasInlineStyles ? _objectSpread({
-    border: "".concat(1, "px solid black")
-  }, customRowStyles) : _objectSpread({}, customRowStyles);
-  const customTitleStyle = !trTitleStyles ? {} : trTitleStyles;
-  const tableRowHeaderTitleStyles = hasInlineStyles ? _objectSpread({
-    padding: "".concat(0, " ", 0.5, "rem ", 0, " ", 0.5, "rem"),
-    border: "".concat(1, "px solid black")
-  }, trTitleStyles) : _objectSpread({}, customTitleStyle);
-  const customSubTitleStyle = !trSubTitleStyles ? {} : trSubTitleStyles;
-  const tableRowHeaderSubTitleStyles = hasInlineStyles ? _objectSpread({
-    fontSize: "".concat(0.9, "em"),
-    fontWeight: "normal"
-  }, trSubTitleStyles) : _objectSpread({}, customSubTitleStyle);
+  const tableRowStyles = (0, _getStyles.getHeaderRowStyles)(hasInlineStyles, trRowStyles);
+  const tableRowHeaderTitleStyles = (0, _getStyles.getHeaderTitleStyles)(hasInlineStyles, trTitleStyles);
+  const tableRowHeaderSubTitleStyles = (0, _getStyles.getHeaderSubTitleStyles)(hasInlineStyles, trSubTitleStyles);
+  const rowHeaderPrimaryTitleStyles = (0, _getStyles.getHeaderPrimaryTitleStyles)(hasInlineStyles, trPrimaryTitleStyles);
   const rowPrimaryTitle = rowPrimaryUpper ? (0, _functions.capitaliseString)(data.primary_row_header_title) : data.primary_row_header_title;
   return /*#__PURE__*/_react.default.createElement("tbody", null, /*#__PURE__*/_react.default.createElement("tr", {
     id: "react-matrix-row-primary-title"
@@ -97,6 +81,7 @@ MatrixRows.defaultProps = {
   trSubTitleStyles: {},
   trPrimaryTitleStyles: {},
   tdStyles: {},
+  matrixSizeSelected: 5,
   customRowDynamicIdValue: "",
   customRowHeaderDynamicIdValue: "",
   customTableDataDynamicIdValue: ""

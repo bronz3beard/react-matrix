@@ -1,11 +1,14 @@
 import React, { StrictMode } from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from 'react-dom/client';
 import { data } from "./lib/utils/data";
 import App from "./App";
 
-ReactDOM.render(
+const container = document.getElementById('root');
+const root = createRoot(container);
+
+root.render(
   <StrictMode>
     <App data={data} />
   </StrictMode>,
-  document.getElementById("root")
 );
+

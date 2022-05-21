@@ -1,16 +1,38 @@
 import React from "react";
-import { ReactMatrix } from "react-data-matrix";
+import { ReactMatrix } from 'react-data-matrix'; // "./lib"; //
+import { Provider } from "./lib/context";
 import PropTypes from "prop-types";
 import IconsRow from "./components/iconsRow";
 import Footer from "./components/footer";
 
-const App = (props) => (
-  <>
-    <IconsRow />
-    <ReactMatrix {...props} />
-    <Footer />
-  </>
-);
+const App = (props) => {
+  const {
+    data,
+    tableStyles,
+    hasTableBorder,
+    hasInlineStyles,
+    hasContainerStyles,
+    tableContainerStyles
+  } = props;
+
+  return (
+    <>
+      <IconsRow />
+      <Provider value={{...props}}>
+        <ReactMatrix
+          tableStyles={tableStyles}
+          matrixName={data.matrix_name}
+          hasTableBorder={hasTableBorder}
+          hasInlineStyles={hasInlineStyles}
+          hasContainerStyles={hasContainerStyles}
+          tableContainerStyles={tableContainerStyles}
+          matrixDescription={data.matrix_description}
+        />
+      </Provider>
+      <Footer />
+    </>
+  );
+};
 
 App.defaultProps = {
   hasTableBorder: true,

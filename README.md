@@ -169,6 +169,8 @@ const App = () => {
 
     tdStyles: {},
 
+    matrixName: "",
+    matrixDescription: "",
     customHeaderRowIdValue: "",
     customRowDynamicIdValue: "",
     customTableDataDynamicIdValue: "",
