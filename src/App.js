@@ -1,8 +1,8 @@
 import React from "react";
+import { ReactMatrix } from "react-data-matrix";
 import PropTypes from "prop-types";
 import IconsRow from "./components/iconsRow";
 import Footer from "./components/footer";
-import { ReactMatrix } from "./lib";
 
 const App = (props) => (
   <>
