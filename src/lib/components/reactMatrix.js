@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import {
   getTableStyles,
@@ -7,11 +7,10 @@ import {
 } from "../helpers/getStyles";
 import MatrixHeaders from "./matrixHeaders";
 import MatrixRows from "./matrixRows";
-import { Consumer } from "../context";
+import Context from "../context";
 
-
-const ReactMatrix = (props) => {
-  const {
+const ReactMatrix = () => {
+  const { 
     matrixName,
     tableStyles,
     hasTableBorder,
@@ -19,7 +18,8 @@ const ReactMatrix = (props) => {
     matrixDescription,
     hasContainerStyles,
     tableContainerStyles,
-  } = props;
+   } = useContext(Context)
+
   const tableBorder = getTableBoarder(hasInlineStyles && hasTableBorder);
   const tableElmStyles = getTableStyles(hasInlineStyles && tableStyles, tableStyles);
   const containerStyles = getContainerStyles(hasInlineStyles && hasContainerStyles, tableContainerStyles);
@@ -29,42 +29,8 @@ const ReactMatrix = (props) => {
       <h1>{matrixName}</h1>
       <h4>{matrixDescription}</h4>
       <table id="matrix-table" style={{ ...tableElmStyles, ...tableBorder }}>
-        <Consumer>
-          {context => (
-            <MatrixHeaders
-              data={context.data}
-              thRowStyles={context.thRowStyles}
-              thTitleStyles={context.thTitleStyles}
-              hasInlineStyles={context.hasInlineStyles}
-              thSubTitleStyles={context.thSubTitleStyles}
-              headerPrimaryUpper={context.headerPrimaryUpper}
-              matrixSizeSelected={context.matrixSizeSelected}
-              thPrimaryTitleStyles={context.thPrimaryTitleStyles}
-              customHeaderRowIdValue={context.customHeaderRowIdValue}
-              customDynamicHeaderTitleIdValue={context.customDynamicHeaderTitleIdValue}
-              customDynamicSubHeaderTitleIdValue={
-                context.customDynamicSubHeaderTitleIdValue
-              }
-            />
-          )}
-        </Consumer>
-        <Consumer>
-          {context => 
-            <MatrixRows
-              data={context.data}
-              trRowStyles={context.trRowStyles}
-              trTitleStyles={context.trTitleStyles}
-              rowPrimaryUpper={context.rowPrimaryUpper}
-              hasInlineStyles={context.hasInlineStyles}
-              trSubTitleStyles={context.trSubTitleStyles}
-              matrixSizeSelected={context.matrixSizeSelected}
-              reverseMatrixValues={context.reverseMatrixValues}
-              trPrimaryTitleStyles={context.trPrimaryTitleStyles}
-              customRowDynamicIdValue={context.customRowDynamicIdValue}
-              customTableDataDynamicIdValue={context.customTableDataDynamicIdValue}
-            />
-          }
-        </Consumer>
+        <MatrixHeaders />
+        <MatrixRows />
       </table>
     </div>
   );
@@ -97,7 +63,7 @@ ReactMatrix.propTypes = {
         row_header_title: PropTypes.string,
         row_header_sub_title: PropTypes.string,
       })
-    ).isRequired,
+    ),
 
     matrix_values: PropTypes.arrayOf(
       PropTypes.shape({
@@ -111,7 +77,7 @@ ReactMatrix.propTypes = {
         likelihood_descriptor: PropTypes.string.isRequired,
         consequence_descriptor: PropTypes.number,
       })
-    ).isRequired,
+    ),
   }),
   hasTableBorder: PropTypes.bool,
   hasInlineStyles: PropTypes.bool,

@@ -1,11 +1,13 @@
 "use strict";
 
+require("core-js/modules/web.dom-collections.iterator.js");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
@@ -15,9 +17,13 @@ var _matrixHeaders = _interopRequireDefault(require("./matrixHeaders"));
 
 var _matrixRows = _interopRequireDefault(require("./matrixRows"));
 
-var _context = require("../context");
+var _context = _interopRequireDefault(require("../context"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
@@ -25,7 +31,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-const ReactMatrix = props => {
+const ReactMatrix = () => {
   const {
     matrixName,
     tableStyles,
@@ -34,7 +40,7 @@ const ReactMatrix = props => {
     matrixDescription,
     hasContainerStyles,
     tableContainerStyles
-  } = props;
+  } = (0, _react.useContext)(_context.default);
   const tableBorder = (0, _getStyles.getTableBoarder)(hasInlineStyles && hasTableBorder);
   const tableElmStyles = (0, _getStyles.getTableStyles)(hasInlineStyles && tableStyles, tableStyles);
   const containerStyles = (0, _getStyles.getContainerStyles)(hasInlineStyles && hasContainerStyles, tableContainerStyles);
@@ -43,31 +49,7 @@ const ReactMatrix = props => {
   }, /*#__PURE__*/_react.default.createElement("h1", null, matrixName), /*#__PURE__*/_react.default.createElement("h4", null, matrixDescription), /*#__PURE__*/_react.default.createElement("table", {
     id: "matrix-table",
     style: _objectSpread(_objectSpread({}, tableElmStyles), tableBorder)
-  }, /*#__PURE__*/_react.default.createElement(_context.Consumer, null, context => /*#__PURE__*/_react.default.createElement(_matrixHeaders.default, {
-    data: context.data,
-    thRowStyles: context.thRowStyles,
-    thTitleStyles: context.thTitleStyles,
-    hasInlineStyles: context.hasInlineStyles,
-    thSubTitleStyles: context.thSubTitleStyles,
-    headerPrimaryUpper: context.headerPrimaryUpper,
-    matrixSizeSelected: context.matrixSizeSelected,
-    thPrimaryTitleStyles: context.thPrimaryTitleStyles,
-    customHeaderRowIdValue: context.customHeaderRowIdValue,
-    customDynamicHeaderTitleIdValue: context.customDynamicHeaderTitleIdValue,
-    customDynamicSubHeaderTitleIdValue: context.customDynamicSubHeaderTitleIdValue
-  })), /*#__PURE__*/_react.default.createElement(_context.Consumer, null, context => /*#__PURE__*/_react.default.createElement(_matrixRows.default, {
-    data: context.data,
-    trRowStyles: context.trRowStyles,
-    trTitleStyles: context.trTitleStyles,
-    rowPrimaryUpper: context.rowPrimaryUpper,
-    hasInlineStyles: context.hasInlineStyles,
-    trSubTitleStyles: context.trSubTitleStyles,
-    matrixSizeSelected: context.matrixSizeSelected,
-    reverseMatrixValues: context.reverseMatrixValues,
-    trPrimaryTitleStyles: context.trPrimaryTitleStyles,
-    customRowDynamicIdValue: context.customRowDynamicIdValue,
-    customTableDataDynamicIdValue: context.customTableDataDynamicIdValue
-  }))));
+  }, /*#__PURE__*/_react.default.createElement(_matrixHeaders.default, null), /*#__PURE__*/_react.default.createElement(_matrixRows.default, null)));
 };
 
 ReactMatrix.defaultProps = {
@@ -93,7 +75,7 @@ ReactMatrix.propTypes = {
       header_sub_title: _propTypes.default.string,
       row_header_title: _propTypes.default.string,
       row_header_sub_title: _propTypes.default.string
-    })).isRequired,
+    })),
     matrix_values: _propTypes.default.arrayOf(_propTypes.default.shape({
       id: _propTypes.default.number.isRequired,
       colour: _propTypes.default.string,
@@ -104,7 +86,7 @@ ReactMatrix.propTypes = {
       response: _propTypes.default.string,
       likelihood_descriptor: _propTypes.default.string.isRequired,
       consequence_descriptor: _propTypes.default.number
-    })).isRequired
+    }))
   }),
   hasTableBorder: _propTypes.default.bool,
   hasInlineStyles: _propTypes.default.bool,
