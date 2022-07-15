@@ -1,5 +1,7 @@
 "use strict";
 
+require("core-js/modules/web.dom-collections.iterator.js");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -7,19 +9,23 @@ exports.default = void 0;
 
 require("core-js/modules/es.array.reverse.js");
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
 
 var _getStyles = require("../helpers/getStyles");
-
-var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _functions = require("../utils/functions");
 
 var _tableData = _interopRequireDefault(require("./tableData"));
 
+var _context = _interopRequireDefault(require("../context"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const MatrixRows = props => {
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+const MatrixRows = () => {
   const {
     data,
     tdStyles,
@@ -33,7 +39,7 @@ const MatrixRows = props => {
     customRowDynamicIdValue,
     customRowHeaderDynamicIdValue,
     customTableDataDynamicIdValue
-  } = props;
+  } = (0, _react.useContext)(_context.default);
   const valuesArray = reverseMatrixValues ? (0, _functions.groupObjectsByProp)(data.matrix_values, "likelihood_descriptor").reverse().slice(0, data.matrix_size) : (0, _functions.groupObjectsByProp)(data.matrix_values, "likelihood_descriptor").slice(0, data.matrix_size);
   const tableRowStyles = (0, _getStyles.getHeaderRowStyles)(hasInlineStyles, trRowStyles);
   const tableRowHeaderTitleStyles = (0, _getStyles.getHeaderTitleStyles)(hasInlineStyles, trTitleStyles);
@@ -85,45 +91,6 @@ MatrixRows.defaultProps = {
   customRowDynamicIdValue: "",
   customRowHeaderDynamicIdValue: "",
   customTableDataDynamicIdValue: ""
-};
-MatrixRows.propTypes = {
-  data: _propTypes.default.shape({
-    id: _propTypes.default.number,
-    matrix_name: _propTypes.default.string,
-    matrix_description: _propTypes.default.string,
-    matrix_size: _propTypes.default.number.isRequired,
-    matrix_details: _propTypes.default.arrayOf(_propTypes.default.shape({
-      id: _propTypes.default.number,
-      likelihood: _propTypes.default.string,
-      consequence: _propTypes.default.number,
-      header_title: _propTypes.default.string,
-      header_sub_title: _propTypes.default.string,
-      row_header_title: _propTypes.default.string,
-      row_header_sub_title: _propTypes.default.string
-    })).isRequired,
-    matrix_values: _propTypes.default.arrayOf(_propTypes.default.shape({
-      id: _propTypes.default.number.isRequired,
-      colour: _propTypes.default.string,
-      position: _propTypes.default.number.isRequired,
-      matrix_id: _propTypes.default.number,
-      score_value: _propTypes.default.number,
-      description: _propTypes.default.string,
-      response: _propTypes.default.string,
-      likelihood_descriptor: _propTypes.default.string.isRequired,
-      consequence_descriptor: _propTypes.default.number
-    })).isRequired
-  }).isRequired,
-  rowPrimaryUpper: _propTypes.default.bool,
-  hasInlineStyles: _propTypes.default.bool,
-  reverseMatrixValues: _propTypes.default.bool,
-  trRowStyles: _propTypes.default.shape({}),
-  trTitleStyles: _propTypes.default.shape({}),
-  trSubTitleStyles: _propTypes.default.shape({}),
-  trPrimaryTitleStyles: _propTypes.default.shape({}),
-  tdStyles: _propTypes.default.shape({}),
-  customRowDynamicIdValue: _propTypes.default.string,
-  customRowHeaderDynamicIdValue: _propTypes.default.string,
-  customTableDataDynamicIdValue: _propTypes.default.string
 };
 var _default = MatrixRows;
 exports.default = _default;

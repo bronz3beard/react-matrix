@@ -15,3 +15,6 @@ export const capitaliseFirstCharacter = stringValue => (
 export const capitaliseString = (stringValue) => (
   stringValue.toUpperCase()
 );
+
+export const callAll = (...fns) => (...args) =>
+fns.forEach(fn => fn && fn(...args))

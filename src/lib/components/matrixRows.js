@@ -1,16 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   getHeaderRowStyles,
   getHeaderTitleStyles,
   getHeaderSubTitleStyles,
   getHeaderPrimaryTitleStyles,
 } from "../helpers/getStyles";
-import PropTypes from "prop-types";
 import { groupObjectsByProp, capitaliseString } from "../utils/functions";
 import TableData from "./tableData";
+import Context from "../context";
 
-const MatrixRows = (props) => {
-  const {
+const MatrixRows = () => {
+  const { 
     data,
     tdStyles,
     trRowStyles,
@@ -23,7 +23,7 @@ const MatrixRows = (props) => {
     customRowDynamicIdValue,
     customRowHeaderDynamicIdValue,
     customTableDataDynamicIdValue,
-  } = props;
+   } = useContext(Context)
 
   const valuesArray = reverseMatrixValues
     ? groupObjectsByProp(data.matrix_values, "likelihood_descriptor")
@@ -116,56 +116,6 @@ MatrixRows.defaultProps = {
   customRowDynamicIdValue: "",
   customRowHeaderDynamicIdValue: "",
   customTableDataDynamicIdValue: "",
-};
-
-MatrixRows.propTypes = {
-  data: PropTypes.shape({
-    id: PropTypes.number,
-    matrix_name: PropTypes.string,
-    matrix_description: PropTypes.string,
-    matrix_size: PropTypes.number.isRequired,
-    matrix_details: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number,
-        likelihood: PropTypes.string,
-        consequence: PropTypes.number,
-        header_title: PropTypes.string,
-        header_sub_title: PropTypes.string,
-        row_header_title: PropTypes.string,
-        row_header_sub_title: PropTypes.string,
-      })
-    ).isRequired,
-
-    matrix_values: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        colour: PropTypes.string,
-        position: PropTypes.number.isRequired,
-        matrix_id: PropTypes.number,
-        score_value: PropTypes.number,
-        description: PropTypes.string,
-        response: PropTypes.string,
-        likelihood_descriptor: PropTypes.string.isRequired,
-        consequence_descriptor: PropTypes.number,
-      })
-    ).isRequired,
-  }).isRequired,
-
-  rowPrimaryUpper: PropTypes.bool,
-  hasInlineStyles: PropTypes.bool,
-  reverseMatrixValues: PropTypes.bool,
-
-  trRowStyles: PropTypes.shape({}),
-  trTitleStyles: PropTypes.shape({}),
-  trSubTitleStyles: PropTypes.shape({}),
-  trPrimaryTitleStyles: PropTypes.shape({}),
-
-  tdStyles: PropTypes.shape({}),
-
-  customRowDynamicIdValue: PropTypes.string,
-  customRowHeaderDynamicIdValue: PropTypes.string,
-
-  customTableDataDynamicIdValue: PropTypes.string,
 };
 
 export default MatrixRows;

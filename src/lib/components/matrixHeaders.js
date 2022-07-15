@@ -1,5 +1,4 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useContext } from "react";
 import {
   getHeaderRowStyles,
   getHeaderTitleStyles,
@@ -7,10 +6,11 @@ import {
   getHeaderPrimaryTitleStyles,
 } from "../helpers/getStyles";
 import { capitaliseString } from "../utils/functions";
+import Context from "../context";
 // import "./styles/riskMatrix.scss";
 
-const MatrixHeaders = (props) => {
-  const {
+const MatrixHeaders = () => {
+  const { 
     data,
     thRowStyles,
     thTitleStyles,
@@ -21,7 +21,7 @@ const MatrixHeaders = (props) => {
     customHeaderRowIdValue,
     customDynamicHeaderTitleIdValue,
     customDynamicSubHeaderTitleIdValue,
-  } = props;
+   } = useContext(Context)
 
   const headerRowStyles = getHeaderRowStyles(hasInlineStyles, thRowStyles);
   const headerTitleStyles = getHeaderTitleStyles(hasInlineStyles, thTitleStyles);
@@ -94,52 +94,6 @@ MatrixHeaders.defaultProps = {
   customHeaderRowIdValue: "",
   customDynamicHeaderTitleIdValue: "",
   customDynamicSubHeaderTitleIdValue: "",
-};
-
-MatrixHeaders.propTypes = {
-  data: PropTypes.shape({
-    id: PropTypes.number,
-    matrix_name: PropTypes.string,
-    matrix_description: PropTypes.string,
-    matrix_size: PropTypes.number.isRequired,
-    matrix_details: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number,
-        likelihood: PropTypes.string,
-        consequence: PropTypes.number,
-        header_title: PropTypes.string,
-        header_sub_title: PropTypes.string,
-        row_header_title: PropTypes.string,
-        row_header_sub_title: PropTypes.string,
-      })
-    ).isRequired,
-
-    matrix_values: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        colour: PropTypes.string,
-        position: PropTypes.number.isRequired,
-        matrix_id: PropTypes.number,
-        score_value: PropTypes.number,
-        description: PropTypes.string,
-        response: PropTypes.string,
-        likelihood_descriptor: PropTypes.string.isRequired,
-        consequence_descriptor: PropTypes.number,
-      })
-    ).isRequired,
-  }).isRequired,
-
-  hasInlineStyles: PropTypes.bool,
-  headerPrimaryUpper: PropTypes.bool,
-
-  thRowStyles: PropTypes.shape({}),
-  thTitleStyles: PropTypes.shape({}),
-  thSubTitleStyles: PropTypes.shape({}),
-  thPrimaryTitleStyles: PropTypes.shape({}),
-
-  customHeaderRowIdValue: PropTypes.string,
-  customDynamicHeaderTitleIdValue: PropTypes.string,
-  customDynamicSubHeaderTitleIdValue: PropTypes.string,
 };
 
 export default MatrixHeaders;
