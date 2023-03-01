@@ -1,5 +1,5 @@
 import React from "react";
-import { ReactMatrix } from 'react-data-matrix'; // "./lib"; // 
+import { ReactMatrix } from  "./lib";
 import { Provider } from "./lib/context";
 import PropTypes from "prop-types";
 import IconsRow from "./components/iconsRow";
