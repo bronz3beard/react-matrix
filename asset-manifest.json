@@ -1,22 +1,13 @@
 {
   "files": {
-    "main.css": "/static/css/main.bb84e7de.chunk.css",
-    "main.js": "/static/js/main.cc8e9b2e.chunk.js",
-    "main.js.map": "/static/js/main.cc8e9b2e.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.eec8746e.js",
-    "runtime-main.js.map": "/static/js/runtime-main.eec8746e.js.map",
-    "static/js/2.b639df85.chunk.js": "/static/js/2.b639df85.chunk.js",
-    "static/js/2.b639df85.chunk.js.map": "/static/js/2.b639df85.chunk.js.map",
-    "static/js/3.d89005ef.chunk.js": "/static/js/3.d89005ef.chunk.js",
-    "static/js/3.d89005ef.chunk.js.map": "/static/js/3.d89005ef.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/main.bb84e7de.chunk.css.map": "/static/css/main.bb84e7de.chunk.css.map",
-    "static/js/2.b639df85.chunk.js.LICENSE.txt": "/static/js/2.b639df85.chunk.js.LICENSE.txt"
+    "main.css": "/react-matrix/static/css/main.0f0f3830.css",
+    "main.js": "/react-matrix/static/js/main.bb18079c.js",
+    "index.html": "/react-matrix/index.html",
+    "main.0f0f3830.css.map": "/react-matrix/static/css/main.0f0f3830.css.map",
+    "main.bb18079c.js.map": "/react-matrix/static/js/main.bb18079c.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.eec8746e.js",
-    "static/js/2.b639df85.chunk.js",
-    "static/css/main.bb84e7de.chunk.css",
-    "static/js/main.cc8e9b2e.chunk.js"
+    "static/css/main.0f0f3830.css",
+    "static/js/main.bb18079c.js"
   ]
 }
