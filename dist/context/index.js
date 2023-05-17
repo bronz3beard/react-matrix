@@ -4,9 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = exports.Provider = void 0;
-
 var _react = require("react");
-
 const Context = /*#__PURE__*/(0, _react.createContext)({
   hasTableBorder: true,
   rowPrimaryUpper: true,
