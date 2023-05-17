@@ -14,14 +14,14 @@ const Footer = () => {
                   margin: `${1}rem ${0} ${1}rem ${0}`,
                 }}
               >
-                Copyright &copy; 2021 All Rights Reserved by
+                Copyright &copy; 2023 All Rights Reserved by
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://www.eg-web-design.com/"
+                  href="https://www.heyrory.com/"
                   style={{ textDecoration: "none" }}
                 >
-                  <span className="copyRight"> Exempli.Gratia. web design</span>
+                  <span className="copyRight"> heyrory.com</span>
                 </a>
               </p>
             </div>
