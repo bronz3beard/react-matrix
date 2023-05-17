@@ -9,7 +9,5 @@ Object.defineProperty(exports, "ReactMatrix", {
     return _reactMatrix.default;
   }
 });
-
 var _reactMatrix = _interopRequireDefault(require("./components/reactMatrix"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
