@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/react-matrix/static/css/main.0f0f3830.css",
-    "main.js": "/react-matrix/static/js/main.606f853c.js",
+    "main.js": "/react-matrix/static/js/main.5897ac0b.js",
     "index.html": "/react-matrix/index.html",
     "main.0f0f3830.css.map": "/react-matrix/static/css/main.0f0f3830.css.map",
-    "main.606f853c.js.map": "/react-matrix/static/js/main.606f853c.js.map"
+    "main.5897ac0b.js.map": "/react-matrix/static/js/main.5897ac0b.js.map"
   },
   "entrypoints": [
     "static/css/main.0f0f3830.css",
-    "static/js/main.606f853c.js"
+    "static/js/main.5897ac0b.js"
   ]
 }
