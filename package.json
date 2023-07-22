@@ -1,7 +1,6 @@
 {
   "name": "react-data-matrix",
-  "version": "0.3.6",
-  "types": "dist/types/index.d.ts",
+  "version": "0.4.0",
   "private": false,
   "license": "MIT",
   "homepage": "https://bronz3beard.github.io/react-matrix",
@@ -18,36 +17,38 @@
     "data matrix"
   ],
   "engines": {
-    "npm": ">=8.12.0",
-    "node": ">=18.4.0"
+    "npm": ">=8.19.2",
+    "node": ">=18.12.0"
   },
-  "main": "dist/index.js",
-  "module": "dist/index.js",
+  "main": "./dist/react-data-matrix.umd.js",
+  "module": "./dist/react-data-matrix.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/react-data-matrix.es.js",
+      "require": "./dist/react-data-matrix.umd.js"
+    }
+  },
   "files": [
     "dist",
-    "dist/types",
     "README.md"
   ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bronz3beard/react-matrix.git"
   },
+  "bugs": {
+    "url": "https://github.com/bronz3beard/react-matrix/issues"
+  },
   "description": "View structured data in a matrix table (data grid), showing a value located at an X and Y coordinate.",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "rm -rf dist && NODE_ENV=production tsc",
-    "babel": "babel src/lib --out-dir dist --copy-files",
-    "build:og": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build:og",
-    "deploy": "gh-pages -d build"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "build:watch": "tsc && vite build --watch",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "mock:publish": "npm pack --dry-run",
+    "deploy": "vite build && gh-pages -d dist"
   },
   "browserslist": {
     "production": [
@@ -61,25 +62,40 @@
       "last 1 safari version"
     ]
   },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": true,
+      "es2020": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended"
+    ],
+    "parserOptions": {
+      "sourceType": "module"
+    }
+  },
   "devDependencies": {
-    "@babel/cli": "^7.15.7",
-    "@babel/core": "^7.15.8",
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@babel/preset-env": "^7.15.8",
     "@fortawesome/fontawesome-svg-core": "latest",
     "@fortawesome/free-brands-svg-icons": "latest",
     "@fortawesome/react-fontawesome": "latest",
-    "@testing-library/jest-dom": "latest",
-    "@testing-library/react": "latest",
-    "@testing-library/user-event": "latest",
+    "@types/node": "^20.4.4",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vitejs/plugin-react": "^4.0.3",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react": "^7.33.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
     "gh-pages": "latest",
-    "react": "latest",
-    "react-dom": "latest",
-    "react-scripts": "^5.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "sass": "latest",
-    "typescript": "latest",
-    "web-vitals": "latest"
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5",
+    "vite-plugin-dts": "^3.3.1"
   }
 }

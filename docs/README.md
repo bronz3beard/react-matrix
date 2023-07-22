@@ -12,144 +12,215 @@ The most common usage for a table like React Matrix, is to display the **likelih
 
 # Usage
 
-```js
-import { ReactMatrix } from "react-data-matrix";
+```tsx
+import ReactMatrix from "react-data-matrix";
 
-const App = () => {
+const App: FC = () => {
   ...
 
   return (
-    <ReactMatrix data={data} {...seeOtherPropsBelow} />
+    <ReactMatrix
+      {...{
+        matrixName: "",
+        matrixDescription: "",
+        hasTableBorder: true,
+        rowPrimaryUpper: true,
+        hasInlineStyles: true,
+        matrixSizeSelected: 5,
+        headerPrimaryUpper: true,
+        hasContainerStyles: true,
+        reverseMatrixValues: true,
+
+        tableContainerStyles: {},
+        tableStyles: {},
+
+        thRowStyles: {},
+        thTitleStyles: {},
+        thSubTitleStyles: {},
+        thPrimaryTitleStyles: {},
+
+        trRowStyles: {},
+        trTitleStyles: {},
+        trSubTitleStyles: {},
+        trPrimaryTitleStyles: {},
+
+        tdStyles: {},
+
+        customHeaderRowIdValue: "",
+        customRowDynamicIdValue: "",
+        customTableDataDynamicIdValue: "",
+        customRowHeaderDynamicIdValue: "",
+        customDynamicHeaderTitleIdValue: "",
+        customDynamicSubHeaderTitleIdValue: "",
+        data,
+      }}
+    />
   )
 }
 ```
 
 # Expected Data Structure
 
-- See [`./src/lib/utils/data.js`](https://github.com/bronz3beard/react-matrix/blob/main/src/lib/utils/data.js) for an example of the data, this can be used for testing if needed,
+- See [`./src/lib/utils/data.ts`](https://github.com/bronz3beard/react-matrix/blob/main/src/lib/utils/data.ts) for an example of the data, this can be used for testing if needed,
   or an example of how to construct/deconstruct your data objects from your api.
 
-```js
-  const data = {
-    id: 1,
-    matrix_size: 5,
-    matrix_name: "React Matrix",
-    matrix_description: "Risk Matrix Template",
-    matrix_details: [
-      {
-        id: 1,
-        likelihood: "LIKELIHOOD VALUE",
-        consequence: CONSEQUENCE VALUE,
-        header_title: "Title",
-        header_sub_title: "Sub-title/description.",
-        row_header_title: "Row Title",
-        row_header_sub_title: "Row Sub-title/description.",
-      }, {
-        id: 2,
-        ...
-      } {
-        id: 3,
-        ...
-      } {
-        id: 4,
-        ...
-      } {
-        id: 5,
-        ...
-      }
-    ],
-    matrix_values: [
-      {
-        id: 1,
-        position: 1,
-        matrix_id: 1,
-        score_value: 1,
-        colour: "green",
-        description: "low",
-        consequence_descriptor: 1,
-        likelihood_descriptor: "E",
-        response: "Business as usual",
-      }, {
-        id: 2,
-        ...
-      },
-      ...,
-      ...,
-      , {
-        id: 25,
-        ...
-      },
-    ]
-  }
+```ts
+import { MatrixData } from "../types";
+
+export const data: MatrixData = {
+  id: 1,
+  matrix_size: 5,
+  matrix_name: "React Matrix",
+  primary_header_title: "Consequence",
+  primary_row_header_title: "Likelihood",
+  matrix_description: "Risk Matrix Template",
+
+  matrix_details: [
+    {
+      id: 1,
+      likelihood: "E",
+      consequence: 1,
+      position: 5,
+      matrix_type: "Risk",
+      header_title: "Minor",
+      header_sub_title: "Header sub-title/description.",
+      row_header_title: "Rare",
+      row_header_sub_title: "Row Header sub-title/description.",
+    },
+    ...
+  ],
+
+  matrix_values: [
+    {
+      id: 26,
+      matrix_id: 1,
+      description: "low",
+      score_value: 1,
+      colour: "green",
+      position: 1,
+      likelihood_descriptor: "E",
+      consequence_descriptor: 1,
+      response: "Business as usual",
+    },
+    ...
+  ],
+};
+
 ```
 
 # PropTypes
 
-```js
-propTypes = {
-  data: PropTypes.shape({
-    id: PropTypes.number,
-    matrix_name: PropTypes.string,
-    matrix_description: PropTypes.string,
-    matrix_size: PropTypes.number.isRequired,
-    matrix_details: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number,
-        likelihood: PropTypes.string,
-        consequence: PropTypes.number,
-        header_title: PropTypes.string,
-        header_sub_title: PropTypes.string,
-        row_header_title: PropTypes.string,
-        row_header_sub_title: PropTypes.string,
-      })
-    ).isRequired,
+```ts
+export interface MatrixDetail {
+  id: number;
+  position: number;
+  matrix_type: string;
+  likelihood: string;
+  consequence: number;
+  header_title: string;
+  header_sub_title: string;
+  row_header_title: string;
+  row_header_sub_title: string;
+}
 
-    matrix_values: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        colour: PropTypes.string,
-        position: PropTypes.number.isRequired,
-        matrix_id: PropTypes.number,
-        score_value: PropTypes.number,
-        description: PropTypes.string,
-        response: PropTypes.string,
-        likelihood_descriptor: PropTypes.string.isRequired,
-        consequence_descriptor: PropTypes.number,
-      })
-    ).isRequired,
-  }).isRequired,
+export interface MatrixValue {
+  id: number;
+  matrix_id: number;
+  description: string;
+  score_value: number;
+  colour: string;
+  position: number;
+  likelihood_descriptor: string;
+  consequence_descriptor: number;
+  response: string;
+}
 
-  hasTableBorder: PropTypes.bool,
-  hasInlineStyles: PropTypes.bool,
-  hasContainerStyles: PropTypes.bool,
-  reverseMatrixValues: PropTypes.bool,
-  matrixSizeSelected: PropTypes.number,
+export interface MatrixData {
+  id: number;
+  matrix_size: number;
+  matrix_name: string;
+  primary_header_title: string;
+  primary_row_header_title: string;
+  matrix_description: string;
+  matrix_details: MatrixDetail[];
+  matrix_values: MatrixValue[];
+}
 
-  rowPrimaryUpper: PropTypes.bool,
-  headerPrimaryUpper: PropTypes.bool,
+export interface ReactMatrixProps {
+  data: MatrixData;
+  hasTableBorder?: boolean;
+  hasInlineStyles?: boolean | undefined;
+  hasContainerStyles?: boolean | undefined;
+  reverseMatrixValues?: boolean;
+  matrixSizeSelected?: number;
+  rowPrimaryUpper?: boolean;
+  headerPrimaryUpper?: boolean;
+  tableContainerStyles?: React.CSSProperties;
+  tableStyles?: React.CSSProperties;
+  thRowStyles?: React.CSSProperties;
+  thTitleStyles?: React.CSSProperties;
+  thSubTitleStyles?: React.CSSProperties;
+  thPrimaryTitleStyles?: React.CSSProperties;
+  trRowStyles?: React.CSSProperties;
+  trTitleStyles?: React.CSSProperties;
+  trSubTitleStyles?: React.CSSProperties;
+  trPrimaryTitleStyles?: React.CSSProperties;
+  tdStyles?: React.CSSProperties;
+  customHeaderRowIdValue?: string;
+  customDynamicHeaderTitleIdValue?: string;
+  customDynamicSubHeaderTitleIdValue?: string;
+  customRowDynamicIdValue?: string;
+  customRowHeaderDynamicIdValue?: string;
+  customTableDataDynamicIdValue?: string;
+}
 
-  thRowStyles: PropTypes.shape({}),
-  thTitleStyles: PropTypes.shape({}),
-  thSubTitleStyles: PropTypes.shape({}),
-  thPrimaryTitleStyles: PropTypes.shape({}),
+export interface MatrixHeaderProps {
+  data: MatrixData;
+  hasInlineStyles?: boolean | undefined;
+  headerPrimaryUpper?: boolean;
+  thRowStyles?: React.CSSProperties;
+  thTitleStyles?: React.CSSProperties;
+  thSubTitleStyles?: React.CSSProperties;
+  thPrimaryTitleStyles?: React.CSSProperties;
+  customHeaderRowIdValue?: string;
+  customDynamicHeaderTitleIdValue?: string;
+  customDynamicSubHeaderTitleIdValue?: string;
+}
 
-  trRowStyles: PropTypes.shape({}),
-  trTitleStyles: PropTypes.shape({}),
-  trSubTitleStyles: PropTypes.shape({}),
-  trPrimaryTitleStyles: PropTypes.shape({}),
+export interface MatrixRowsProps {
+  data: MatrixData;
+  rowPrimaryUpper?: boolean;
+  hasInlineStyles?: boolean | undefined;
+  reverseMatrixValues?: boolean;
+  trRowStyles?: React.CSSProperties;
+  trTitleStyles?: React.CSSProperties;
+  trSubTitleStyles?: React.CSSProperties;
+  trPrimaryTitleStyles?: React.CSSProperties;
+  tdStyles?: React.CSSProperties;
+  customRowDynamicIdValue?: string;
+  customRowHeaderDynamicIdValue?: string;
+  customTableDataDynamicIdValue?: string;
+}
 
-  tdStyles: PropTypes.shape({}),
+export interface TableDataProps {
+  data: {
+    id: number;
+    colour: string;
+    position: number;
+    matrix_id: number;
+    score_value: number;
+    description: string;
+    response: string;
+    likelihood_descriptor: string;
+    consequence_descriptor: number;
+  };
+  tdStyles?: React.CSSProperties;
+  hasInlineStyles?: boolean;
+  customTableDataDynamicIdValue?: string;
+}
+```
 
-  customHeaderRowIdValue: PropTypes.string,
-  customDynamicHeaderTitleIdValue: PropTypes.string,
-  customDynamicSubHeaderTitleIdValue: PropTypes.string,
-
-  customRowDynamicIdValue: PropTypes.string,
-  customRowHeaderDynamicIdValue: PropTypes.string,
-
-  customTableDataDynamicIdValue: PropTypes.string,
-};
-
+```ts
 defaultProps = {
   hasTableBorder: true,
   rowPrimaryUpper: true,
@@ -158,6 +229,9 @@ defaultProps = {
   headerPrimaryUpper: true,
   hasContainerStyles: true,
   reverseMatrixValues: true,
+
+  tableContainerStyles: {},
+  tableStyles: {},
 
   thRowStyles: {},
   thTitleStyles: {},
@@ -287,6 +361,4 @@ if you make `hasInlineStyles = false`, then add these values with your own style
 
 ---
 
-# Create React App
-
-- This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React + TypeScript + Vite
