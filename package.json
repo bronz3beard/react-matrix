@@ -1,6 +1,6 @@
 {
   "name": "react-data-matrix",
-  "version": "0.3.0",
+  "version": "0.3.2",
   "types": "./lib/types/index.d.ts",
   "private": false,
   "license": "MIT",
