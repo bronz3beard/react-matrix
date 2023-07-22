@@ -1,4 +1,6 @@
-export const data = {
+import { MatrixData } from "../types";
+
+export const data: MatrixData = {
   id: 1,
   matrix_size: 5,
   matrix_name: "React Matrix",
@@ -11,6 +13,8 @@ export const data = {
       id: 1,
       likelihood: "E",
       consequence: 1,
+      position: 5,
+      matrix_type: "Risk",
       header_title: "Minor",
       header_sub_title: "Header sub-title/description.",
       row_header_title: "Rare",
