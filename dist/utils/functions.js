@@ -1,0 +1,18 @@
+export const groupObjectsByProp = (array, prop) => {
+    const map = new Map(Array.from(array, (obj) => [obj[prop], []]));
+    array.forEach((obj) => {
+        const key = obj[prop];
+        if (key !== undefined) {
+            const group = map.get(key);
+            if (group) {
+                group.push(obj);
+            }
+        }
+    });
+    return Array.from(map.values());
+};
+// capitalises first character of each word
+export const capitaliseFirstCharacter = (stringValue) => stringValue.replace(/\b([a-z\s])/g, (string) => string.toUpperCase());
+// capitalizes entire word
+export const capitaliseString = (stringValue) => stringValue.toUpperCase();
+export const callAll = (...fns) => (...args) => fns.forEach((fn) => fn && fn(...args));
