@@ -35,8 +35,6 @@ export interface MatrixData {
 
 export interface ReactMatrixProps {
   data: MatrixData;
-  matrixName: string;
-  matrixDescription: string;
   hasTableBorder?: boolean;
   hasInlineStyles?: boolean | undefined;
   hasContainerStyles?: boolean | undefined;

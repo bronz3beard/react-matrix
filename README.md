@@ -1,6 +1,6 @@
-# React Matrix &nbsp; [![npm version](https://badge.fury.io/js/react-data-matrix.svg)](https://badge.fury.io/js/react-data-matrix)
+# React Matrix
 
-[React Matrix Demo](https://bronz3beard.github.io/react-matrix)
+[React Matrix Demo](https://bronz3beard.github.io/react-matrix/)
 
 React Matrix table shows relationships between two or more variables in a data set in grid format.
 
@@ -12,8 +12,8 @@ The most common usage for a table like React Matrix, is to display the **likelih
 
 # Usage
 
-```ts
-import { ReactMatrix } from "react-data-matrix";
+```tsx
+import ReactMatrix from "react-data-matrix";
 
 const App: FC = () => {
   ...
@@ -65,60 +65,50 @@ const App: FC = () => {
   or an example of how to construct/deconstruct your data objects from your api.
 
 ```ts
-  const data = {
-    id: 1,
-    matrix_size: 5,
-    matrix_name: "React Matrix",
-    matrix_description: "Risk Matrix Template",
-    matrix_details: [
-      {
-        id: 1,
-        likelihood: "LIKELIHOOD VALUE",
-        consequence: CONSEQUENCE VALUE,
-        header_title: "Title",
-        header_sub_title: "Sub-title/description.",
-        row_header_title: "Row Title",
-        row_header_sub_title: "Row Sub-title/description.",
-      }, {
-        id: 2,
-        ...
-      } {
-        id: 3,
-        ...
-      } {
-        id: 4,
-        ...
-      } {
-        id: 5,
-        ...
-      }
-    ],
-    matrix_values: [
-      {
-        id: 1,
-        position: 1,
-        matrix_id: 1,
-        score_value: 1,
-        colour: "green",
-        description: "low",
-        consequence_descriptor: 1,
-        likelihood_descriptor: "E",
-        response: "Business as usual",
-      }, {
-        id: 2,
-        ...
-      },
-      ...,
-      ...,
-      , {
-        id: 25,
-        ...
-      },
-    ]
-  }
+import { MatrixData } from "react-data-matrix";
+
+export const data: MatrixData = {
+  id: 1,
+  matrix_size: 5,
+  matrix_name: "React Matrix",
+  primary_header_title: "Consequence",
+  primary_row_header_title: "Likelihood",
+  matrix_description: "Risk Matrix Template",
+
+  matrix_details: [
+    {
+      id: 1,
+      likelihood: "E",
+      consequence: 1,
+      position: 5,
+      matrix_type: "Risk",
+      header_title: "Minor",
+      header_sub_title: "Header sub-title/description.",
+      row_header_title: "Rare",
+      row_header_sub_title: "Row Header sub-title/description.",
+    },
+    ...
+  ],
+
+  matrix_values: [
+    {
+      id: 26,
+      matrix_id: 1,
+      description: "low",
+      score_value: 1,
+      colour: "green",
+      position: 1,
+      likelihood_descriptor: "E",
+      consequence_descriptor: 1,
+      response: "Business as usual",
+    },
+    ...
+  ],
+};
+
 ```
 
-# Types
+# PropTypes
 
 ```ts
 export interface MatrixDetail {
@@ -159,8 +149,8 @@ export interface MatrixData {
 export interface ReactMatrixProps {
   data: MatrixData;
   hasTableBorder?: boolean;
-  hasInlineStyles?: boolean;
-  hasContainerStyles?: boolean;
+  hasInlineStyles?: boolean | undefined;
+  hasContainerStyles?: boolean | undefined;
   reverseMatrixValues?: boolean;
   matrixSizeSelected?: number;
   rowPrimaryUpper?: boolean;
@@ -179,6 +169,34 @@ export interface ReactMatrixProps {
   customHeaderRowIdValue?: string;
   customDynamicHeaderTitleIdValue?: string;
   customDynamicSubHeaderTitleIdValue?: string;
+  customRowDynamicIdValue?: string;
+  customRowHeaderDynamicIdValue?: string;
+  customTableDataDynamicIdValue?: string;
+}
+
+export interface MatrixHeaderProps {
+  data: MatrixData;
+  hasInlineStyles?: boolean | undefined;
+  headerPrimaryUpper?: boolean;
+  thRowStyles?: React.CSSProperties;
+  thTitleStyles?: React.CSSProperties;
+  thSubTitleStyles?: React.CSSProperties;
+  thPrimaryTitleStyles?: React.CSSProperties;
+  customHeaderRowIdValue?: string;
+  customDynamicHeaderTitleIdValue?: string;
+  customDynamicSubHeaderTitleIdValue?: string;
+}
+
+export interface MatrixRowsProps {
+  data: MatrixData;
+  rowPrimaryUpper?: boolean;
+  hasInlineStyles?: boolean | undefined;
+  reverseMatrixValues?: boolean;
+  trRowStyles?: React.CSSProperties;
+  trTitleStyles?: React.CSSProperties;
+  trSubTitleStyles?: React.CSSProperties;
+  trPrimaryTitleStyles?: React.CSSProperties;
+  tdStyles?: React.CSSProperties;
   customRowDynamicIdValue?: string;
   customRowHeaderDynamicIdValue?: string;
   customTableDataDynamicIdValue?: string;
@@ -204,8 +222,6 @@ export interface TableDataProps {
 
 ```ts
 defaultProps = {
-  matrixName: "",
-  matrixDescription: "",
   hasTableBorder: true,
   rowPrimaryUpper: true,
   hasInlineStyles: true,
@@ -345,6 +361,4 @@ if you make `hasInlineStyles = false`, then add these values with your own style
 
 ---
 
-# Create React App
-
-- This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React + TypeScript + Vite

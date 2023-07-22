@@ -1,16 +1,14 @@
-import React from "react";
-import { ReactMatrix } from "./lib";
+import ReactMatrix from "../lib";
 import IconsRow from "./components/iconsRow";
 import Footer from "./components/footer";
+import { ReactMatrixProps } from "../lib/types";
 
-const App = (props) => {
+function App(props: ReactMatrixProps) {
   return (
     <>
       <IconsRow />
       <ReactMatrix
         {...{
-          matrixName: "",
-          matrixDescription: "",
           hasTableBorder: true,
           rowPrimaryUpper: true,
           hasInlineStyles: true,
@@ -46,6 +44,6 @@ const App = (props) => {
       <Footer />
     </>
   );
-};
+}
 
 export default App;

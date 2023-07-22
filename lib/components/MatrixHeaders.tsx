@@ -1,12 +1,12 @@
-import React, { FC } from "react";
+import { FC } from 'react';
 import {
   getHeaderRowStyles,
   getHeaderTitleStyles,
   getHeaderSubTitleStyles,
   getHeaderPrimaryTitleStyles,
-} from "../helpers/getStyles";
-import { capitaliseString } from "../utils/functions";
-import { MatrixHeaderProps } from "../types";
+} from '../helpers/getStyles';
+import { capitaliseString } from '../utils/functions';
+import { MatrixHeaderProps } from '../types';
 // import "./styles/riskMatrix.scss";
 
 const MatrixHeaders: FC<MatrixHeaderProps> = ({
@@ -17,9 +17,9 @@ const MatrixHeaders: FC<MatrixHeaderProps> = ({
   thTitleStyles = {},
   thSubTitleStyles = {},
   thPrimaryTitleStyles = {},
-  customHeaderRowIdValue = "",
-  customDynamicHeaderTitleIdValue = "",
-  customDynamicSubHeaderTitleIdValue = "",
+  customHeaderRowIdValue = '',
+  customDynamicHeaderTitleIdValue = '',
+  customDynamicSubHeaderTitleIdValue = '',
 }: MatrixHeaderProps) => {
   const headerRowStyles = getHeaderRowStyles(hasInlineStyles, thRowStyles);
   const headerTitleStyles = getHeaderTitleStyles(
@@ -63,7 +63,7 @@ const MatrixHeaders: FC<MatrixHeaderProps> = ({
               style={headerTitleStyles}
               id={`react-matrix-dynamic-column-header-title${
                 !customDynamicHeaderTitleIdValue
-                  ? ""
+                  ? ''
                   : `-${customDynamicHeaderTitleIdValue}`
               }`}
               key={`${column.id}-${index}`}
@@ -73,7 +73,7 @@ const MatrixHeaders: FC<MatrixHeaderProps> = ({
                 style={headerSubTitleStyles}
                 id={`react-matrix-dynamic-column-header-sub-title${
                   !customDynamicSubHeaderTitleIdValue
-                    ? ""
+                    ? ''
                     : `-${customDynamicSubHeaderTitleIdValue}`
                 }`}
               >

@@ -1,7 +1,4 @@
-export const groupObjectsByProp = <T extends Record<string, any>>(
-  array: T[],
-  prop: keyof T
-) => {
+export const groupObjectsByProp = <T>(array: T[], prop: keyof T) => {
   const map = new Map<T[keyof T], T[]>(
     Array.from(array, (obj) => [obj[prop], []])
   );
@@ -28,6 +25,6 @@ export const capitaliseString = (stringValue: string): string =>
   stringValue.toUpperCase();
 
 export const callAll =
-  <T extends (...args: any[]) => void>(...fns: T[]) =>
+  <T extends (...args: never[]) => void>(...fns: T[]) =>
   (...args: Parameters<T>) =>
     fns.forEach((fn) => fn && fn(...args));
