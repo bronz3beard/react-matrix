@@ -1,13 +1,13 @@
-import React, { FC } from "react";
+import { FC } from 'react';
 import {
   getHeaderRowStyles,
   getHeaderTitleStyles,
   getHeaderSubTitleStyles,
   getHeaderPrimaryTitleStyles,
-} from "../helpers/getStyles";
-import { groupObjectsByProp, capitaliseString } from "../utils/functions";
-import TableData from "./TableData";
-import { MatrixRowsProps, MatrixValue } from "../types";
+} from '../helpers/getStyles';
+import { groupObjectsByProp, capitaliseString } from '../utils/functions';
+import TableData from './TableData';
+import { MatrixRowsProps, MatrixValue } from '../types';
 
 const MatrixRows: FC<MatrixRowsProps> = ({
   data,
@@ -19,15 +19,15 @@ const MatrixRows: FC<MatrixRowsProps> = ({
   trSubTitleStyles = {},
   trPrimaryTitleStyles = {},
   tdStyles = {},
-  customRowDynamicIdValue = "",
-  customRowHeaderDynamicIdValue = "",
-  customTableDataDynamicIdValue = "",
+  customRowDynamicIdValue = '',
+  customRowHeaderDynamicIdValue = '',
+  customTableDataDynamicIdValue = '',
 }: MatrixRowsProps) => {
   const valuesArray = reverseMatrixValues
-    ? groupObjectsByProp(data.matrix_values, "likelihood_descriptor")
+    ? groupObjectsByProp(data.matrix_values, 'likelihood_descriptor')
         .reverse()
         .slice(0, data.matrix_size)
-    : groupObjectsByProp(data.matrix_values, "likelihood_descriptor").slice(
+    : groupObjectsByProp(data.matrix_values, 'likelihood_descriptor').slice(
         0,
         data.matrix_size
       );
@@ -69,7 +69,7 @@ const MatrixRows: FC<MatrixRowsProps> = ({
             id={`react-matrix-dynamic-rows-${
               data.matrix_details[rowHeaderOrder]?.row_header_title
             }-${data.matrix_details[rowHeaderOrder]?.row_header_sub_title}${
-              !customRowDynamicIdValue ? "" : `-${customRowDynamicIdValue}`
+              !customRowDynamicIdValue ? '' : `-${customRowDynamicIdValue}`
             }`}
           >
             <th
@@ -79,7 +79,7 @@ const MatrixRows: FC<MatrixRowsProps> = ({
                 data.matrix_details[rowHeaderOrder]?.row_header_title
               }-${data.matrix_details[rowHeaderOrder]?.row_header_sub_title}${
                 !customRowHeaderDynamicIdValue
-                  ? ""
+                  ? ''
                   : `-${customRowHeaderDynamicIdValue}`
               }`}
             >
