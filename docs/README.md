@@ -65,7 +65,7 @@ const App: FC = () => {
   or an example of how to construct/deconstruct your data objects from your api.
 
 ```ts
-import { MatrixData } from "../types";
+import { MatrixData } from "react-data-matrix";
 
 export const data: MatrixData = {
   id: 1,
