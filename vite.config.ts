@@ -5,21 +5,21 @@ import { defineConfig } from "vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/react-matrix/",
+  base: '/react-matrix/',
   build: {
     manifest: true,
     minify: true,
     reportCompressedSize: true,
     lib: {
-      entry: path.resolve(__dirname, "lib/index.tsx"),
-      name: "React Data Matrix",
+      entry: path.resolve(__dirname, 'lib/index.tsx'),
+      name: 'React Data Matrix',
       fileName: (format) => `react-data-matrix.${format}.js`,
     },
     rollupOptions: {
-      external: ["react", "react-dom"],
+      external: ['react', 'react-dom'],
       output: {
         globals: {
-          react: "React",
+          react: 'React',
         },
       },
     },

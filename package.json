@@ -1,6 +1,6 @@
 {
   "name": "react-data-matrix",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "private": false,
   "license": "MIT",
   "homepage": "https://bronz3beard.github.io/react-matrix",
@@ -30,7 +30,10 @@
     }
   },
   "files": [
-    "dist",
+    "dist/lib",
+    "dist/manifest.json",
+    "dist/react-data-matrix.es.js",
+    "dist/react-data-matrix.umd.js",
     "README.md"
   ],
   "repository": {
@@ -61,20 +64,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "eslintConfig": {
-    "env": {
-      "browser": true,
-      "node": true,
-      "es2020": true
-    },
-    "extends": [
-      "eslint:recommended",
-      "plugin:react/recommended"
-    ],
-    "parserOptions": {
-      "sourceType": "module"
-    }
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "latest",
