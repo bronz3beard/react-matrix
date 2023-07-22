@@ -1,7 +1,0 @@
-{
-  "lib/index.tsx": {
-    "file": "react-data-matrix.umd.js",
-    "isEntry": true,
-    "src": "lib/index.tsx"
-  }
-}
