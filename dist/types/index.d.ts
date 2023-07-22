@@ -35,9 +35,11 @@ export interface MatrixData {
 
 export interface ReactMatrixProps {
   data: MatrixData;
+  matrixName: string;
+  matrixDescription: string;
   hasTableBorder?: boolean;
-  hasInlineStyles?: boolean;
-  hasContainerStyles?: boolean;
+  hasInlineStyles?: boolean | undefined;
+  hasContainerStyles?: boolean | undefined;
   reverseMatrixValues?: boolean;
   matrixSizeSelected?: number;
   rowPrimaryUpper?: boolean;
@@ -56,6 +58,34 @@ export interface ReactMatrixProps {
   customHeaderRowIdValue?: string;
   customDynamicHeaderTitleIdValue?: string;
   customDynamicSubHeaderTitleIdValue?: string;
+  customRowDynamicIdValue?: string;
+  customRowHeaderDynamicIdValue?: string;
+  customTableDataDynamicIdValue?: string;
+}
+
+export interface MatrixHeaderProps {
+  data: MatrixData;
+  hasInlineStyles?: boolean | undefined;
+  headerPrimaryUpper?: boolean;
+  thRowStyles?: React.CSSProperties;
+  thTitleStyles?: React.CSSProperties;
+  thSubTitleStyles?: React.CSSProperties;
+  thPrimaryTitleStyles?: React.CSSProperties;
+  customHeaderRowIdValue?: string;
+  customDynamicHeaderTitleIdValue?: string;
+  customDynamicSubHeaderTitleIdValue?: string;
+}
+
+export interface MatrixRowsProps {
+  data: MatrixData;
+  rowPrimaryUpper?: boolean;
+  hasInlineStyles?: boolean | undefined;
+  reverseMatrixValues?: boolean;
+  trRowStyles?: React.CSSProperties;
+  trTitleStyles?: React.CSSProperties;
+  trSubTitleStyles?: React.CSSProperties;
+  trPrimaryTitleStyles?: React.CSSProperties;
+  tdStyles?: React.CSSProperties;
   customRowDynamicIdValue?: string;
   customRowHeaderDynamicIdValue?: string;
   customTableDataDynamicIdValue?: string;

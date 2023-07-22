@@ -2,9 +2,8 @@ import React from "react";
 import { ReactMatrix } from "./lib";
 import IconsRow from "./components/iconsRow";
 import Footer from "./components/footer";
-import { data } from "./lib/utils/data.ts";
 
-const App = () => {
+const App = (props) => {
   return (
     <>
       <IconsRow />
@@ -41,7 +40,7 @@ const App = () => {
           customRowHeaderDynamicIdValue: "",
           customDynamicHeaderTitleIdValue: "",
           customDynamicSubHeaderTitleIdValue: "",
-          data,
+          ...props,
         }}
       />
       <Footer />

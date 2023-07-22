@@ -1,6 +1,6 @@
 {
   "name": "react-data-matrix",
-  "version": "0.3.2",
+  "version": "0.3.4",
   "types": "./lib/types/index.d.ts",
   "private": false,
   "license": "MIT",
@@ -73,9 +73,7 @@
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "gh-pages": "latest",
-    "prop-types": "latest",
     "react": "latest",
-    "react-data-matrix": "latest",
     "react-dom": "latest",
     "react-scripts": "^5.0.1",
     "sass": "latest",
