@@ -12,14 +12,49 @@ The most common usage for a table like React Matrix, is to display the **likelih
 
 # Usage
 
-```js
+```ts
 import { ReactMatrix } from "react-data-matrix";
 
-const App = () => {
+const App: FC = () => {
   ...
 
   return (
-    <ReactMatrix data={data} {...seeOtherPropsBelow} />
+    <ReactMatrix
+      {...{
+        matrixName: "",
+        matrixDescription: "",
+        hasTableBorder: true,
+        rowPrimaryUpper: true,
+        hasInlineStyles: true,
+        matrixSizeSelected: 5,
+        headerPrimaryUpper: true,
+        hasContainerStyles: true,
+        reverseMatrixValues: true,
+
+        tableContainerStyles: {},
+        tableStyles: {},
+
+        thRowStyles: {},
+        thTitleStyles: {},
+        thSubTitleStyles: {},
+        thPrimaryTitleStyles: {},
+
+        trRowStyles: {},
+        trTitleStyles: {},
+        trSubTitleStyles: {},
+        trPrimaryTitleStyles: {},
+
+        tdStyles: {},
+
+        customHeaderRowIdValue: "",
+        customRowDynamicIdValue: "",
+        customTableDataDynamicIdValue: "",
+        customRowHeaderDynamicIdValue: "",
+        customDynamicHeaderTitleIdValue: "",
+        customDynamicSubHeaderTitleIdValue: "",
+        data,
+      }}
+    />
   )
 }
 ```
@@ -29,7 +64,7 @@ const App = () => {
 - See [`./src/lib/utils/data.js`](https://github.com/bronz3beard/react-matrix/blob/main/src/lib/utils/data.js) for an example of the data, this can be used for testing if needed,
   or an example of how to construct/deconstruct your data objects from your api.
 
-```js
+```ts
   const data = {
     id: 1,
     matrix_size: 5,
@@ -83,7 +118,7 @@ const App = () => {
   }
 ```
 
-# PropTypes
+# Types
 
 ```ts
 export interface MatrixDetail {
@@ -122,34 +157,7 @@ export interface MatrixData {
 }
 
 export interface ReactMatrixProps {
-  data?: {
-    id: number;
-    matrix_name: string;
-    matrix_description: string;
-    matrix_size: number;
-    primary_header_title: string;
-    primary_row_header_title: string;
-    matrix_details: {
-      id: number;
-      likelihood: string;
-      consequence: number;
-      header_title: string;
-      header_sub_title: string;
-      row_header_title: string;
-      row_header_sub_title: string;
-    }[];
-    matrix_values: {
-      id: number;
-      colour: string;
-      position: number;
-      matrix_id: number;
-      score_value: number;
-      description: string;
-      response: string;
-      likelihood_descriptor: string;
-      consequence_descriptor: number;
-    }[];
-  };
+  data: MatrixData;
   hasTableBorder?: boolean;
   hasInlineStyles?: boolean;
   hasContainerStyles?: boolean;
@@ -194,8 +202,10 @@ export interface TableDataProps {
 }
 ```
 
-```js
+```ts
 defaultProps = {
+  matrixName: "",
+  matrixDescription: "",
   hasTableBorder: true,
   rowPrimaryUpper: true,
   hasInlineStyles: true,
@@ -203,6 +213,9 @@ defaultProps = {
   headerPrimaryUpper: true,
   hasContainerStyles: true,
   reverseMatrixValues: true,
+
+  tableContainerStyles: {},
+  tableStyles: {},
 
   thRowStyles: {},
   thTitleStyles: {},
@@ -216,8 +229,6 @@ defaultProps = {
 
   tdStyles: {},
 
-  matrixName: "",
-  matrixDescription: "",
   customHeaderRowIdValue: "",
   customRowDynamicIdValue: "",
   customTableDataDynamicIdValue: "",

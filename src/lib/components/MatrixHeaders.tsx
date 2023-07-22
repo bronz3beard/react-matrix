@@ -1,4 +1,4 @@
-import React, { FC, useContext } from "react";
+import React, { FC } from "react";
 import {
   getHeaderRowStyles,
   getHeaderTitleStyles,
@@ -6,23 +6,21 @@ import {
   getHeaderPrimaryTitleStyles,
 } from "../helpers/getStyles";
 import { capitaliseString } from "../utils/functions";
-import Context from "../context";
+import { MatrixHeaderProps } from "../types";
 // import "./styles/riskMatrix.scss";
 
-const MatrixHeaders: FC = () => {
-  const {
-    data,
-    hasInlineStyles = true,
-    headerPrimaryUpper = true,
-    thRowStyles = {},
-    thTitleStyles = {},
-    thSubTitleStyles = {},
-    thPrimaryTitleStyles = {},
-    customHeaderRowIdValue = "",
-    customDynamicHeaderTitleIdValue = "",
-    customDynamicSubHeaderTitleIdValue = "",
-  } = useContext(Context);
-
+const MatrixHeaders: FC<MatrixHeaderProps> = ({
+  data,
+  hasInlineStyles = true,
+  headerPrimaryUpper = true,
+  thRowStyles = {},
+  thTitleStyles = {},
+  thSubTitleStyles = {},
+  thPrimaryTitleStyles = {},
+  customHeaderRowIdValue = "",
+  customDynamicHeaderTitleIdValue = "",
+  customDynamicSubHeaderTitleIdValue = "",
+}: MatrixHeaderProps) => {
   const headerRowStyles = getHeaderRowStyles(hasInlineStyles, thRowStyles);
   const headerTitleStyles = getHeaderTitleStyles(
     hasInlineStyles,

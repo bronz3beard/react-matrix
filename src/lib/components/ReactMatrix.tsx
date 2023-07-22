@@ -6,30 +6,30 @@ import {
 } from "../helpers/getStyles";
 import MatrixHeaders from "./MatrixHeaders";
 import MatrixRows from "./MatrixRows";
-import Context from "../context";
 import { ReactMatrixProps } from "../types";
 
-const ReactMatrix: FC<ReactMatrixProps> = ({ tableStyles = {} }) => {
-  const {
-    matrixName,
-    tableStyles: contextTableStyles,
-    hasTableBorder: contextHasTableBorder,
-    hasInlineStyles: contextHasInlineStyles,
-    matrixDescription,
-    hasContainerStyles: contextHasContainerStyles,
-    tableContainerStyles: contextTableContainerStyles,
-  } = useContext(Context);
+const ReactMatrix: FC<ReactMatrixProps> = ({
+  data,
+  matrixName,
+  tableStyles: contextTableStyles,
+  hasTableBorder: contextHasTableBorder,
+  hasInlineStyles: contextHasInlineStyles,
+  matrixDescription,
+  hasContainerStyles: contextHasContainerStyles,
+  tableContainerStyles: contextTableContainerStyles,
 
+  tableStyles = {},
+}) => {
   const tableBorder = getTableBoarder(
-    contextHasInlineStyles && contextHasTableBorder
+    !!(contextHasInlineStyles && contextHasTableBorder)
   );
   const tableElmStyles = getTableStyles(
     !!(contextHasInlineStyles && contextTableStyles),
     tableStyles
   );
   const containerStyles = getContainerStyles(
-    contextHasInlineStyles && contextHasContainerStyles,
-    contextTableContainerStyles
+    !!(contextHasInlineStyles && contextHasContainerStyles),
+    contextTableContainerStyles ?? {}
   );
 
   return (
@@ -37,8 +37,36 @@ const ReactMatrix: FC<ReactMatrixProps> = ({ tableStyles = {} }) => {
       <h1>{matrixName}</h1>
       <h4>{matrixDescription}</h4>
       <table id="matrix-table" style={{ ...tableElmStyles, ...tableBorder }}>
-        <MatrixHeaders />
-        <MatrixRows />
+        <MatrixHeaders
+          {...{
+            data,
+            hasInlineStyles: true,
+            headerPrimaryUpper: true,
+            thRowStyles: {},
+            thTitleStyles: {},
+            thSubTitleStyles: {},
+            thPrimaryTitleStyles: {},
+            customHeaderRowIdValue: "",
+            customDynamicHeaderTitleIdValue: "",
+            customDynamicSubHeaderTitleIdValue: "",
+          }}
+        />
+        <MatrixRows
+          {...{
+            data,
+            rowPrimaryUpper: true,
+            hasInlineStyles: true,
+            reverseMatrixValues: true,
+            trRowStyles: {},
+            trTitleStyles: {},
+            trSubTitleStyles: {},
+            trPrimaryTitleStyles: {},
+            tdStyles: {},
+            customRowDynamicIdValue: "",
+            customRowHeaderDynamicIdValue: "",
+            customTableDataDynamicIdValue: "",
+          }}
+        />
       </table>
     </div>
   );

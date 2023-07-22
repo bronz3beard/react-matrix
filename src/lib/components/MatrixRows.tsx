@@ -1,4 +1,4 @@
-import React, { FC, useContext } from "react";
+import React, { FC } from "react";
 import {
   getHeaderRowStyles,
   getHeaderTitleStyles,
@@ -7,25 +7,22 @@ import {
 } from "../helpers/getStyles";
 import { groupObjectsByProp, capitaliseString } from "../utils/functions";
 import TableData from "./TableData";
-import Context from "../context";
-import { MatrixValue } from "../types";
+import { MatrixRowsProps, MatrixValue } from "../types";
 
-const MatrixRows: FC = () => {
-  const {
-    data,
-    rowPrimaryUpper = true,
-    hasInlineStyles = true,
-    reverseMatrixValues = true,
-    trRowStyles = {},
-    trTitleStyles = {},
-    trSubTitleStyles = {},
-    trPrimaryTitleStyles = {},
-    tdStyles = {},
-    customRowDynamicIdValue = "",
-    customRowHeaderDynamicIdValue = "",
-    customTableDataDynamicIdValue = "",
-  } = useContext(Context);
-
+const MatrixRows: FC<MatrixRowsProps> = ({
+  data,
+  rowPrimaryUpper = true,
+  hasInlineStyles = true,
+  reverseMatrixValues = true,
+  trRowStyles = {},
+  trTitleStyles = {},
+  trSubTitleStyles = {},
+  trPrimaryTitleStyles = {},
+  tdStyles = {},
+  customRowDynamicIdValue = "",
+  customRowHeaderDynamicIdValue = "",
+  customTableDataDynamicIdValue = "",
+}: MatrixRowsProps) => {
   const valuesArray = reverseMatrixValues
     ? groupObjectsByProp(data.matrix_values, "likelihood_descriptor")
         .reverse()
@@ -113,23 +110,6 @@ const MatrixRows: FC = () => {
   );
 };
 
-MatrixRows.defaultProps = {
-  rowPrimaryUpper: true,
-  hasInlineStyles: true,
-  reverseMatrixValues: true,
-
-  trRowStyles: {},
-  trTitleStyles: {},
-  trSubTitleStyles: {},
-  trPrimaryTitleStyles: {},
-
-  tdStyles: {},
-
-  matrixSizeSelected: 5,
-
-  customRowDynamicIdValue: "",
-  customRowHeaderDynamicIdValue: "",
-  customTableDataDynamicIdValue: "",
-};
+MatrixRows.defaultProps = {};
 
 export default MatrixRows;
