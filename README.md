@@ -61,7 +61,7 @@ const App: FC = () => {
 
 # Expected Data Structure
 
-- See [`./src/lib/utils/data.js`](https://github.com/bronz3beard/react-matrix/blob/main/src/lib/utils/data.js) for an example of the data, this can be used for testing if needed,
+- See [`./src/lib/utils/data.ts`](https://github.com/bronz3beard/react-matrix/blob/main/src/lib/utils/data.ts) for an example of the data, this can be used for testing if needed,
   or an example of how to construct/deconstruct your data objects from your api.
 
 ```ts

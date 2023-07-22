@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "rootDir": "src/lib",
+    "outDir": "dist",
     "target": "es2016",
     "module": "esnext",
     "esModuleInterop": true,
@@ -12,10 +14,9 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
     "jsx": "preserve",
     "declaration": true,
-    "declarationDir": "./lib/types"
+    "declarationDir": "dist"
   },
-  "include": ["src", "src/lib"]
+  "include": ["src/lib", "src/lib/types"]
 }
