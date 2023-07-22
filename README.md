@@ -85,71 +85,116 @@ const App = () => {
 
 # PropTypes
 
+```ts
+export interface MatrixDetail {
+  id: number;
+  position: number;
+  matrix_type: string;
+  likelihood: string;
+  consequence: number;
+  header_title: string;
+  header_sub_title: string;
+  row_header_title: string;
+  row_header_sub_title: string;
+}
+
+export interface MatrixValue {
+  id: number;
+  matrix_id: number;
+  description: string;
+  score_value: number;
+  colour: string;
+  position: number;
+  likelihood_descriptor: string;
+  consequence_descriptor: number;
+  response: string;
+}
+
+export interface MatrixData {
+  id: number;
+  matrix_size: number;
+  matrix_name: string;
+  primary_header_title: string;
+  primary_row_header_title: string;
+  matrix_description: string;
+  matrix_details: MatrixDetail[];
+  matrix_values: MatrixValue[];
+}
+
+export interface ReactMatrixProps {
+  data?: {
+    id: number;
+    matrix_name: string;
+    matrix_description: string;
+    matrix_size: number;
+    primary_header_title: string;
+    primary_row_header_title: string;
+    matrix_details: {
+      id: number;
+      likelihood: string;
+      consequence: number;
+      header_title: string;
+      header_sub_title: string;
+      row_header_title: string;
+      row_header_sub_title: string;
+    }[];
+    matrix_values: {
+      id: number;
+      colour: string;
+      position: number;
+      matrix_id: number;
+      score_value: number;
+      description: string;
+      response: string;
+      likelihood_descriptor: string;
+      consequence_descriptor: number;
+    }[];
+  };
+  hasTableBorder?: boolean;
+  hasInlineStyles?: boolean;
+  hasContainerStyles?: boolean;
+  reverseMatrixValues?: boolean;
+  matrixSizeSelected?: number;
+  rowPrimaryUpper?: boolean;
+  headerPrimaryUpper?: boolean;
+  tableContainerStyles?: React.CSSProperties;
+  tableStyles?: React.CSSProperties;
+  thRowStyles?: React.CSSProperties;
+  thTitleStyles?: React.CSSProperties;
+  thSubTitleStyles?: React.CSSProperties;
+  thPrimaryTitleStyles?: React.CSSProperties;
+  trRowStyles?: React.CSSProperties;
+  trTitleStyles?: React.CSSProperties;
+  trSubTitleStyles?: React.CSSProperties;
+  trPrimaryTitleStyles?: React.CSSProperties;
+  tdStyles?: React.CSSProperties;
+  customHeaderRowIdValue?: string;
+  customDynamicHeaderTitleIdValue?: string;
+  customDynamicSubHeaderTitleIdValue?: string;
+  customRowDynamicIdValue?: string;
+  customRowHeaderDynamicIdValue?: string;
+  customTableDataDynamicIdValue?: string;
+}
+
+export interface TableDataProps {
+  data: {
+    id: number;
+    colour: string;
+    position: number;
+    matrix_id: number;
+    score_value: number;
+    description: string;
+    response: string;
+    likelihood_descriptor: string;
+    consequence_descriptor: number;
+  };
+  tdStyles?: React.CSSProperties;
+  hasInlineStyles?: boolean;
+  customTableDataDynamicIdValue?: string;
+}
+```
+
 ```js
-propTypes = {
-  data: PropTypes.shape({
-    id: PropTypes.number,
-    matrix_name: PropTypes.string,
-    matrix_description: PropTypes.string,
-    matrix_size: PropTypes.number.isRequired,
-    matrix_details: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number,
-        likelihood: PropTypes.string,
-        consequence: PropTypes.number,
-        header_title: PropTypes.string,
-        header_sub_title: PropTypes.string,
-        row_header_title: PropTypes.string,
-        row_header_sub_title: PropTypes.string,
-      })
-    ).isRequired,
-
-    matrix_values: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        colour: PropTypes.string,
-        position: PropTypes.number.isRequired,
-        matrix_id: PropTypes.number,
-        score_value: PropTypes.number,
-        description: PropTypes.string,
-        response: PropTypes.string,
-        likelihood_descriptor: PropTypes.string.isRequired,
-        consequence_descriptor: PropTypes.number,
-      })
-    ).isRequired,
-  }).isRequired,
-
-  hasTableBorder: PropTypes.bool,
-  hasInlineStyles: PropTypes.bool,
-  hasContainerStyles: PropTypes.bool,
-  reverseMatrixValues: PropTypes.bool,
-  matrixSizeSelected: PropTypes.number,
-
-  rowPrimaryUpper: PropTypes.bool,
-  headerPrimaryUpper: PropTypes.bool,
-
-  thRowStyles: PropTypes.shape({}),
-  thTitleStyles: PropTypes.shape({}),
-  thSubTitleStyles: PropTypes.shape({}),
-  thPrimaryTitleStyles: PropTypes.shape({}),
-
-  trRowStyles: PropTypes.shape({}),
-  trTitleStyles: PropTypes.shape({}),
-  trSubTitleStyles: PropTypes.shape({}),
-  trPrimaryTitleStyles: PropTypes.shape({}),
-
-  tdStyles: PropTypes.shape({}),
-
-  customHeaderRowIdValue: PropTypes.string,
-  customDynamicHeaderTitleIdValue: PropTypes.string,
-  customDynamicSubHeaderTitleIdValue: PropTypes.string,
-
-  customRowDynamicIdValue: PropTypes.string,
-  customRowHeaderDynamicIdValue: PropTypes.string,
-
-  customTableDataDynamicIdValue: PropTypes.string,
-};
-
 defaultProps = {
   hasTableBorder: true,
   rowPrimaryUpper: true,

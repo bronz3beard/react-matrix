@@ -1,5 +1,5 @@
 import React from "react";
-import { ReactMatrix } from  "./lib";
+import { ReactMatrix } from "./lib";
 import { Provider } from "./lib/context";
 import PropTypes from "prop-types";
 import IconsRow from "./components/iconsRow";
@@ -9,44 +9,45 @@ const App = (props) => {
   return (
     <>
       <IconsRow />
-      <Provider value={{...props}}>
+      <Provider
+        value={{
+          hasTableBorder: true,
+          rowPrimaryUpper: true,
+          hasInlineStyles: true,
+          matrixSizeSelected: 5,
+          headerPrimaryUpper: true,
+          hasContainerStyles: true,
+          reverseMatrixValues: true,
+
+          tableContainerStyles: {},
+          tableStyles: {},
+
+          thRowStyles: {},
+          thTitleStyles: {},
+          thSubTitleStyles: {},
+          thPrimaryTitleStyles: {},
+
+          trRowStyles: {},
+          trTitleStyles: {},
+          trSubTitleStyles: {},
+          trPrimaryTitleStyles: {},
+
+          tdStyles: {},
+
+          customHeaderRowIdValue: "",
+          customRowDynamicIdValue: "",
+          customTableDataDynamicIdValue: "",
+          customRowHeaderDynamicIdValue: "",
+          customDynamicHeaderTitleIdValue: "",
+          customDynamicSubHeaderTitleIdValue: "",
+          ...props,
+        }}
+      >
         <ReactMatrix />
       </Provider>
       <Footer />
     </>
   );
-};
-
-App.defaultProps = {
-  hasTableBorder: true,
-  rowPrimaryUpper: true,
-  hasInlineStyles: true,
-  matrixSizeSelected: 5,
-  headerPrimaryUpper: true,
-  hasContainerStyles: true,
-  reverseMatrixValues: true,
-
-  tableContainerStyles: {},
-  tableStyles: {},
-
-  thRowStyles: {},
-  thTitleStyles: {},
-  thSubTitleStyles: {},
-  thPrimaryTitleStyles: {},
-
-  trRowStyles: {},
-  trTitleStyles: {},
-  trSubTitleStyles: {},
-  trPrimaryTitleStyles: {},
-
-  tdStyles: {},
-
-  customHeaderRowIdValue: "",
-  customRowDynamicIdValue: "",
-  customTableDataDynamicIdValue: "",
-  customRowHeaderDynamicIdValue: "",
-  customDynamicHeaderTitleIdValue: "",
-  customDynamicSubHeaderTitleIdValue: "",
 };
 
 App.propTypes = {
@@ -55,6 +56,9 @@ App.propTypes = {
     matrix_name: PropTypes.string,
     matrix_description: PropTypes.string,
     matrix_size: PropTypes.number.isRequired,
+    primary_header_title: PropTypes.string,
+    primary_row_header_title: PropTypes.string,
+
     matrix_details: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number,

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { FC, useContext } from "react";
 import {
   getHeaderRowStyles,
   getHeaderTitleStyles,
@@ -9,46 +9,55 @@ import { capitaliseString } from "../utils/functions";
 import Context from "../context";
 // import "./styles/riskMatrix.scss";
 
-const MatrixHeaders = () => {
-  const { 
+const MatrixHeaders: FC = () => {
+  const {
     data,
-    thRowStyles,
-    thTitleStyles,
-    hasInlineStyles,
-    thSubTitleStyles,
-    headerPrimaryUpper,
-    thPrimaryTitleStyles,
-    customHeaderRowIdValue,
-    customDynamicHeaderTitleIdValue,
-    customDynamicSubHeaderTitleIdValue,
-   } = useContext(Context)
+    hasInlineStyles = true,
+    headerPrimaryUpper = true,
+    thRowStyles = {},
+    thTitleStyles = {},
+    thSubTitleStyles = {},
+    thPrimaryTitleStyles = {},
+    customHeaderRowIdValue = "",
+    customDynamicHeaderTitleIdValue = "",
+    customDynamicSubHeaderTitleIdValue = "",
+  } = useContext(Context);
 
   const headerRowStyles = getHeaderRowStyles(hasInlineStyles, thRowStyles);
-  const headerTitleStyles = getHeaderTitleStyles(hasInlineStyles, thTitleStyles);
-  const headerSubTitleStyles = getHeaderSubTitleStyles(hasInlineStyles, thSubTitleStyles);
-  const headerPrimaryTitleStyles = getHeaderPrimaryTitleStyles(hasInlineStyles, thPrimaryTitleStyles);
+  const headerTitleStyles = getHeaderTitleStyles(
+    hasInlineStyles,
+    thTitleStyles
+  );
+  const headerSubTitleStyles = getHeaderSubTitleStyles(
+    hasInlineStyles,
+    thSubTitleStyles
+  );
+  const headerPrimaryTitleStyles = getHeaderPrimaryTitleStyles(
+    hasInlineStyles,
+    thPrimaryTitleStyles
+  );
 
-  const headerPrimaryTitle = headerPrimaryUpper
-    ? capitaliseString(data.primary_header_title)
-    : data.primary_header_title;
+  const headerPrimaryTitle = !headerPrimaryUpper
+    ? capitaliseString(data?.primary_header_title)
+    : data?.primary_header_title;
 
   return (
     <thead>
       <tr id="react-matrix-blank-headers-primary-title-row">
-        <th headers="blank" colSpan="4"></th>
+        <th headers="blank" colSpan={4}></th>
         <th
           style={headerPrimaryTitleStyles}
           id="react-matrix-header-primary-title"
         >
           {headerPrimaryTitle}
         </th>
-        <th headers="blank" colSpan="2"></th>
+        <th headers="blank" colSpan={2}></th>
       </tr>
       <tr
         style={headerRowStyles}
         id={`react-matrix-dynamic-headers-row-${customHeaderRowIdValue}`}
       >
-        <th headers="blank" colSpan="2"></th>
+        <th headers="blank" colSpan={2}></th>
         {data.matrix_details.slice(0, data.matrix_size).map((column, index) => {
           return (
             <th
@@ -78,22 +87,6 @@ const MatrixHeaders = () => {
       </tr>
     </thead>
   );
-};
-
-MatrixHeaders.defaultProps = {
-  hasInlineStyles: true,
-  headerPrimaryUpper: true,
-
-  thRowStyles: {},
-  thTitleStyles: {},
-  thSubTitleStyles: {},
-  thPrimaryTitleStyles: {},
-
-  matrixSizeSelected: 5,
-
-  customHeaderRowIdValue: "",
-  customDynamicHeaderTitleIdValue: "",
-  customDynamicSubHeaderTitleIdValue: "",
 };
 
 export default MatrixHeaders;
