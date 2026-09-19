@@ -110,6 +110,4 @@ const MatrixRows: FC<MatrixRowsProps> = ({
   );
 };
 
-MatrixRows.defaultProps = {};
-
 export default MatrixRows;

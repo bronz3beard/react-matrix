@@ -19,12 +19,15 @@
       padding: .2rem 0 0 0.6rem;
     }
 
+    /* Size and colour previously came from Font Awesome (fa-3x, svg-inline--fa, color prop). */
     svg {
       width: 2em;
-
-      &:hover {
-        color: #000000;
-      }
+      height: 1em;
+      font-size: 3em;
+      overflow: visible;
+      vertical-align: -0.125em;
+      fill: currentColor;
+      color: #77B244;
     }
   }
 }

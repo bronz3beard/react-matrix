@@ -7,7 +7,6 @@ import {
 } from '../helpers/getStyles';
 import { capitaliseString } from '../utils/functions';
 import { MatrixHeaderProps } from '../types';
-// import "./styles/riskMatrix.scss";
 
 const MatrixHeaders: FC<MatrixHeaderProps> = ({
   data,
