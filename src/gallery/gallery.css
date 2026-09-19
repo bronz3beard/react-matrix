@@ -80,20 +80,21 @@
 
 .gallery-grid {
   display: grid;
-  /* A 5×5 preview needs about 455px (measured, Original at 0.75rem); 31rem cards
-     leave ~464px inside, so desktop previews never scroll (asserted in e2e).
-     Phones scroll the preview inside its card instead. */
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 31rem), 1fr));
+  /* Measured widest preview: 545px (Brutal, thick borders and gaps, at 0.75rem).
+     38rem columns leave ~576px inside, so no desktop preview scrolls at any
+     window width (asserted in e2e at 1280, 1600 and 2400). Phones scroll the
+     preview inside its card instead. */
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 38rem), 1fr));
   gap: 1rem;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+/* No `content-visibility: auto` here: skipped off-screen content gets no
+   ResizeObserver notifications, so previews that scroll on phones would never
+   become keyboard-focusable (found by axe in B11). */
 .preset-card {
-  /* Off-screen cards skip rendering until scrolled near. */
-  content-visibility: auto;
-  contain-intrinsic-size: auto 26rem;
   padding: 1rem;
   border: 1px solid #d0d0d0;
   border-radius: 12px;

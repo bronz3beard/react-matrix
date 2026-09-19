@@ -63,12 +63,19 @@ test('on desktop every preview shows its whole matrix without scrolling', async 
   test.skip((page.viewportSize()?.width ?? 0) < 1024, 'phones scroll previews inside their cards');
   await page.goto(GALLERY);
 
-  for (const preview of await page.locator('.preset-card .rdm-root').all()) {
-    const { scrollWidth, clientWidth } = await preview.evaluate((root) => ({
-      scrollWidth: root.scrollWidth,
-      clientWidth: root.clientWidth,
-    }));
-    expect(scrollWidth, 'preview is clipped').toBeLessThanOrEqual(clientWidth);
+  // Several widths: the column count changes with the window, and a narrower
+  // column is what once clipped the widest designs.
+  for (const width of [1280, 1600, 2400]) {
+    await page.setViewportSize({ width, height: 900 });
+    const clipped = await page.locator('.preset-card').evaluateAll((cards) =>
+      cards
+        .filter((card) => {
+          const root = card.querySelector<HTMLElement>('.rdm-root')!;
+          return root.scrollWidth > root.clientWidth;
+        })
+        .map((card) => card.querySelector('h2')?.textContent ?? '?')
+    );
+    expect(clipped, `clipped at ${width}px`).toEqual([]);
   }
 });
 

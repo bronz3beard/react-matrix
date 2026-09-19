@@ -25,4 +25,56 @@ export const catalog: Record<PresetName, PresetInfo> = {
     description: 'The 0.4.x look: your own data colours, 1px black lines and the page’s font.',
     tags: ['Minimal'],
   },
+  aurora: {
+    description: 'Northern lights on a night sky: glowing teal, violet and magenta cells.',
+    tags: ['Soft', 'Bold'],
+  },
+  midnight: {
+    description: 'Deep navy with jewel-tone cells and a subtle highlight on each edge.',
+    tags: ['Bold'],
+  },
+  broadsheet: {
+    description: 'Newspaper financial pages: serif type, hairline rules and large figures.',
+    tags: ['Editorial', 'Data-dense'],
+  },
+  brutal: {
+    description: 'Neo-brutalist blocks with thick borders, hard shadows and flat colour.',
+    tags: ['Bold', 'Playful'],
+  },
+  glasshouse: {
+    description: 'Rounded white-edged cells floating over a bright pastel gradient.',
+    tags: ['Soft', 'Playful'],
+  },
+  terminal: {
+    description: 'A phosphor terminal: monospace green on black, cells outlined by severity.',
+    tags: ['Technical', 'Data-dense'],
+  },
+  sherbet: {
+    description: 'Pill-shaped pastel cells and rounded type on a warm cream background.',
+    tags: ['Playful', 'Soft'],
+  },
+  graphite: {
+    description: 'Greyscale only, so it prints and photocopies cleanly; bold scores lead.',
+    tags: ['Minimal', 'Accessible'],
+  },
+  blueprint: {
+    description: 'A technical drawing: dashed white lines and outlined cells on blueprint blue.',
+    tags: ['Technical'],
+  },
+  thermal: {
+    description: 'A continuous heatmap by score, edge to edge, like a thermal camera.',
+    tags: ['Technical', 'Data-dense'],
+  },
+  whitespace: {
+    description: 'Quiet and spacious: faint hairlines and a coloured dot beside each rating.',
+    tags: ['Minimal'],
+  },
+  boardroom: {
+    description: 'A board report: navy header band, slate hairlines and left-aligned text.',
+    tags: ['Editorial'],
+  },
+  clay: {
+    description: 'Neumorphic tiles pressed out of soft grey, with a dot marking severity.',
+    tags: ['Soft', 'Minimal'],
+  },
 };

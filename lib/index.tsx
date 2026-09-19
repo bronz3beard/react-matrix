@@ -118,7 +118,7 @@ const ReactMatrix = ({
 };
 
 export default ReactMatrix;
-export { original, presets, type PresetName } from './theme/presets/index.js';
+export * from './theme/presets/index.js';
 export type {
   CellClickContext,
   MatrixData,
