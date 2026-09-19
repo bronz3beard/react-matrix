@@ -3,10 +3,10 @@ import {
   getTableStyles,
   getTableBoarder,
   getContainerStyles,
-} from './helpers/getStyles';
-import MatrixHeaders from './components/MatrixHeaders';
-import MatrixRows from './components/MatrixRows';
-import { ReactMatrixProps } from './types';
+} from './helpers/getStyles.js';
+import MatrixHeaders from './components/MatrixHeaders.js';
+import MatrixRows from './components/MatrixRows.js';
+import { ReactMatrixProps } from './types/index.js';
 
 const ReactMatrix: FC<ReactMatrixProps> = ({
   data,
@@ -94,3 +94,9 @@ const ReactMatrix: FC<ReactMatrixProps> = ({
 };
 
 export default ReactMatrix;
+export type {
+  MatrixData,
+  MatrixDetail,
+  MatrixValue,
+  ReactMatrixProps,
+} from './types/index.js';

@@ -2,10 +2,12 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "noEmit": false,
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "declaration": true,
     "emitDeclarationOnly": true,
     "rootDir": "lib",
     "outDir": "dist"
   },
-  "include": ["lib"]
+  "include": ["lib/index.tsx"]
 }

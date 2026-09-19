@@ -4,10 +4,10 @@ import {
   getHeaderTitleStyles,
   getHeaderSubTitleStyles,
   getHeaderPrimaryTitleStyles,
-} from '../helpers/getStyles';
-import { groupObjectsByProp, capitaliseString } from '../utils/functions';
-import TableData from './TableData';
-import { MatrixRowsProps, MatrixValue } from '../types';
+} from '../helpers/getStyles.js';
+import { groupObjectsByProp, capitaliseString } from '../utils/functions.js';
+import TableData from './TableData.js';
+import { MatrixRowsProps, MatrixValue } from '../types/index.js';
 
 const MatrixRows: FC<MatrixRowsProps> = ({
   data,

@@ -1,5 +1,5 @@
 import { CSSProperties, FC } from 'react';
-import { TableDataProps } from '../types';
+import { TableDataProps } from '../types/index.js';
 
 const TableData: FC<TableDataProps> = ({
   data,

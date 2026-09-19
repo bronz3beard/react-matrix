@@ -8,7 +8,7 @@ import { defineConfig } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 
 export default defineConfig(
-  { ignores: ['dist', 'dist-site', 'lib/index.d.ts'] },
+  { ignores: ['dist', 'dist-site'] },
   {
     files: ['**/*.{ts,tsx}'],
     extends: [

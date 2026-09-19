@@ -1,26 +1,24 @@
 import react from "@vitejs/plugin-react";
-import path from "path";
+import { fileURLToPath } from "node:url";
 import { defineConfig } from "vite";
 
-// Library build published to npm. Type declarations are emitted separately by
-// `tsc -p tsconfig.lib.json`; the demo site is built by vite.config.ts.
+// React is always provided by the host app: never bundle `react`, `react-dom`
+// or any of their subpaths (e.g. `react/jsx-runtime`).
+export const EXTERNAL_PACKAGES = /^react(-dom)?($|\/)/;
+
+// Library build published to npm (ESM only). Type declarations are emitted
+// separately by `tsc -p tsconfig.lib.json`; the demo site is built by vite.config.ts.
 export default defineConfig({
   build: {
-    manifest: true,
     minify: true,
     reportCompressedSize: true,
     lib: {
-      entry: path.resolve(__dirname, 'lib/index.tsx'),
-      name: 'React Data Matrix',
-      fileName: (format) => `react-data-matrix.${format}.js`,
+      entry: fileURLToPath(new URL('./lib/index.tsx', import.meta.url)),
+      formats: ['es'],
+      fileName: 'index',
     },
     rolldownOptions: {
-      external: ['react', 'react-dom'],
-      output: {
-        globals: {
-          react: 'React',
-        },
-      },
+      external: EXTERNAL_PACKAGES,
     },
   },
   plugins: [react()],

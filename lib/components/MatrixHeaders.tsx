@@ -4,9 +4,9 @@ import {
   getHeaderTitleStyles,
   getHeaderSubTitleStyles,
   getHeaderPrimaryTitleStyles,
-} from '../helpers/getStyles';
-import { capitaliseString } from '../utils/functions';
-import { MatrixHeaderProps } from '../types';
+} from '../helpers/getStyles.js';
+import { capitaliseString } from '../utils/functions.js';
+import { MatrixHeaderProps } from '../types/index.js';
 
 const MatrixHeaders: FC<MatrixHeaderProps> = ({
   data,
