@@ -3,7 +3,9 @@ import { transform } from 'lightningcss';
 import { describe, expect, it } from 'vitest';
 import { BASE_CSS } from '../../lib/theme/baseCss';
 
-const BUDGET_MINIFIED_BYTES = 2560;
+// Raised from 2560 to 3584 with Tech Lead approval (2026-09-19) for the preset
+// batches. Any further raise needs explicit approval again.
+const BUDGET_MINIFIED_BYTES = 3584;
 // Properties that can only paint a colour, never fetch a resource.
 const COLOUR_ONLY_PROPERTIES = new Set([
   'background-color',

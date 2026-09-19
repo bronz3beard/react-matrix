@@ -13,6 +13,8 @@
   box-shadow: 0px 0px 10px 10px rgba(94, 92, 92, 0.3),
     0 6px 20px 0 rgba(211, 211, 211, 0.2);
   background-color: #31363b;
+  /* ~9.8:1 on the footer background (was the default near-black, ~1.8:1). */
+  color: #e6e6e6;
 
   .copyRight {
     font-size: 1.5em;

@@ -38,5 +38,11 @@ export default defineConfig({
       name: 'webkit-desktop',
       use: { ...devices['Desktop Safari'], viewport: { width: 1280, height: 800 } },
     },
+    {
+      // Third engine for the strict-CSP proof only.
+      name: 'firefox-desktop',
+      use: { ...devices['Desktop Firefox'], viewport: { width: 1280, height: 800 } },
+      testMatch: /csp\.spec\.ts/,
+    },
   ],
 });

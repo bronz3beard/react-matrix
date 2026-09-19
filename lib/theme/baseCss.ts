@@ -9,6 +9,7 @@
 export const BASE_CSS = [
   '.rdm-root{container-type:inline-size;overflow-x:auto;font-family:var(--rdm-font);font-size:var(--rdm-font-size);color:var(--rdm-text);background-color:var(--rdm-surface);background-image:var(--rdm-backdrop)}',
   '.rdm-root[data-scheme=dark]{color-scheme:dark}',
+  '.rdm-root:focus-visible{outline:3px solid var(--rdm-focus);outline-offset:2px}',
   '.rdm-table{border-collapse:separate;border-spacing:var(--rdm-gap);margin-inline:auto;border:var(--rdm-line-width) var(--rdm-line-style) var(--rdm-line)}',
   '.rdm-caption{padding-block-end:1.33em}',
   '.rdm-caption>*{display:block;font-weight:700}',

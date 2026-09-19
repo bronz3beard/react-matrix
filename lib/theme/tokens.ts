@@ -23,8 +23,10 @@ export const themeToCssVars = (theme: MatrixTheme): CssVariables => ({
   '--rdm-focus': theme.focus,
 });
 
-// Enumerated theme choices select rules in the base stylesheet.
+// Enumerated theme choices select rules in the base stylesheet. `data-palette`
+// says whether cell colours come from the consumer's data or the theme's palette.
 export const themeToDataAttributes = (theme: MatrixTheme) => ({
+  'data-palette': theme.palette && theme.palette.length > 0 ? 'theme' : 'data',
   'data-scheme': theme.scheme,
   'data-variant': theme.cellVariant,
   'data-emphasis': theme.emphasis,

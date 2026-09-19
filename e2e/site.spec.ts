@@ -43,6 +43,24 @@ test('the page never scrolls sideways; a wide matrix scrolls inside itself', asy
   expect(overflow).toBeLessThanOrEqual(0);
 });
 
+test('a matrix that scrolls sideways can be scrolled from the keyboard', async ({ page }) => {
+  await page.goto('./');
+  const matrix = page.locator('.rdm-root');
+  const scrolls = await matrix.evaluate((element) => element.scrollWidth > element.clientWidth);
+
+  if (!scrolls) {
+    // Nothing to scroll (desktop): no extra tab stop.
+    await expect(matrix).not.toHaveAttribute('tabindex');
+    return;
+  }
+
+  const region = page.getByRole('region', { name: 'React Matrix' });
+  await expect(region).toHaveAttribute('tabindex', '0');
+  await region.focus();
+  await page.keyboard.press('ArrowRight');
+  await expect.poll(() => region.evaluate((element) => element.scrollLeft)).toBeGreaterThan(0);
+});
+
 // The Original preset's look: from the top of the caption to the bottom of the
 // table, excluding the demo site's header icons and footer. Re-baselined in 1.0
 // with Tech Lead sign-off (the pre-1.0 image is in git history at 8bec0eb).

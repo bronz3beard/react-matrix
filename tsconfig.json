@@ -24,7 +24,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "lib", "test", "scripts"],
+  "include": ["src", "lib", "test", "scripts", "e2e/fixtures"],
   "exclude": ["test/node"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

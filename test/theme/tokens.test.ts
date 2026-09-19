@@ -20,12 +20,18 @@ describe('theme tokens', () => {
 
   it('exposes enumerated choices as data attributes for the base stylesheet', () => {
     expect(themeToDataAttributes(original)).toEqual({
+      'data-palette': 'data',
       'data-scheme': 'light',
       'data-variant': 'fill',
       'data-emphasis': 'label',
       'data-align': 'center',
       'data-axis-case': 'upper',
     });
+    expect(
+      themeToDataAttributes({ ...original, palette: [{ bg: '#ffffff', fg: '#000000' }] })[
+        'data-palette'
+      ]
+    ).toBe('theme');
   });
 
   it('only references variables that a theme or a cell actually provides', () => {

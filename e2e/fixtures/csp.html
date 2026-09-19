@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Strict CSP: no 'unsafe-inline' for styles. Only same-origin files and
+         <style> elements carrying the nonce may apply. Test-only page. -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; style-src 'self' 'nonce-e2e-nonce'"
+    />
+    <title>Strict CSP fixture</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="./csp.tsx"></script>
+  </body>
+</html>

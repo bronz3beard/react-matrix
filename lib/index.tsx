@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState, type RefObject } from 'react';
 import MatrixHeaders from './components/MatrixHeaders.js';
 import MatrixRows from './components/MatrixRows.js';
 import { buildGrid } from './grid.js';
@@ -12,6 +12,28 @@ import type { ReactMatrixProps } from './types/index.js';
 // once per page; React 18 renders it in place. Spread so React 18's type
 // definitions, which lack `precedence`, still accept it.
 const HOISTED_STYLE = { href: BASE_CSS_HREF, precedence: 'default' };
+
+// True while the element scrolls sideways (a wide matrix on a narrow screen).
+// Such a region must be keyboard-scrollable (WCAG 2.1.1), so the root becomes
+// focusable only then, instead of adding a tab stop to every matrix.
+const useHorizontalOverflow = (ref: RefObject<HTMLElement | null>): boolean => {
+  const [overflows, setOverflows] = useState(false);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element || typeof ResizeObserver === 'undefined') return;
+    // Fires once on observe, then whenever the root or its table resizes.
+    const observer = new ResizeObserver(() =>
+      setOverflows(element.scrollWidth > element.clientWidth)
+    );
+    observer.observe(element);
+    const table = element.querySelector('table');
+    if (table) observer.observe(table);
+    return () => observer.disconnect();
+  }, [ref]);
+
+  return overflows;
+};
 
 const ReactMatrix = ({
   data,
@@ -38,6 +60,9 @@ const ReactMatrix = ({
     [data, theme, scale, unstyled]
   );
 
+  const rootRef = useRef<HTMLDivElement>(null);
+  const scrolls = useHorizontalOverflow(rootRef);
+
   // Invalid data is reported, never thrown: one bad value must not take down
   // the host page.
   useEffect(() => {
@@ -53,6 +78,8 @@ const ReactMatrix = ({
 
   return (
     <div
+      ref={rootRef}
+      {...(scrolls ? { tabIndex: 0, role: 'region', 'aria-label': data.matrix_name } : {})}
       className={className ? `rdm-root ${className}` : 'rdm-root'}
       style={unstyled ? { ...styles.root, ...style } : { ...themeToCssVars(theme), ...styles.root, ...style }}
       {...(unstyled ? {} : themeToDataAttributes(theme))}
