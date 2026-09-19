@@ -1,3 +1,5 @@
+import type { GridRow } from '../grid.js';
+
 export interface MatrixDetail {
   id: number;
   position: number;
@@ -63,6 +65,7 @@ export interface ReactMatrixProps {
 
 export interface MatrixHeaderProps {
   data: MatrixData;
+  columns: MatrixDetail[];
   hasInlineStyles?: boolean | undefined;
   headerPrimaryUpper?: boolean;
   thRowStyles?: React.CSSProperties;
@@ -76,9 +79,9 @@ export interface MatrixHeaderProps {
 
 export interface MatrixRowsProps {
   data: MatrixData;
+  rows: GridRow[];
   rowPrimaryUpper?: boolean;
   hasInlineStyles?: boolean | undefined;
-  reverseMatrixValues?: boolean;
   trRowStyles?: React.CSSProperties;
   trTitleStyles?: React.CSSProperties;
   trSubTitleStyles?: React.CSSProperties;

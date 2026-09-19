@@ -1,9 +1,10 @@
-import { FC } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import {
   getTableStyles,
   getTableBoarder,
   getContainerStyles,
 } from './helpers/getStyles.js';
+import { buildGrid } from './grid.js';
 import MatrixHeaders from './components/MatrixHeaders.js';
 import MatrixRows from './components/MatrixRows.js';
 import { ReactMatrixProps } from './types/index.js';
@@ -41,6 +42,17 @@ const ReactMatrix: FC<ReactMatrixProps> = ({
   customRowHeaderDynamicIdValue = '',
   customTableDataDynamicIdValue = '',
 }) => {
+  const grid = useMemo(
+    () => buildGrid(data, { reverse: reverseMatrixValues }),
+    [data, reverseMatrixValues]
+  );
+
+  // Invalid data is reported, never thrown: one bad value must not take down
+  // the host page.
+  useEffect(() => {
+    grid.issues.forEach((issue) => console.error(issue));
+  }, [grid]);
+
   const tableBorder = getTableBoarder(
     !!(contextHasInlineStyles && contextHasTableBorder)
   );
@@ -61,6 +73,7 @@ const ReactMatrix: FC<ReactMatrixProps> = ({
         <MatrixHeaders
           {...{
             data,
+            columns: grid.columns,
             hasInlineStyles,
             headerPrimaryUpper,
             thRowStyles,
@@ -75,9 +88,9 @@ const ReactMatrix: FC<ReactMatrixProps> = ({
         <MatrixRows
           {...{
             data,
+            rows: grid.rows,
             rowPrimaryUpper,
             hasInlineStyles,
-            reverseMatrixValues,
             trRowStyles,
             trTitleStyles,
             trSubTitleStyles,

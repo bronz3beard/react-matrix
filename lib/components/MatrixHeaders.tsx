@@ -10,6 +10,7 @@ import { MatrixHeaderProps } from '../types/index.js';
 
 const MatrixHeaders: FC<MatrixHeaderProps> = ({
   data,
+  columns,
   hasInlineStyles = true,
   headerPrimaryUpper = true,
   thRowStyles = {},
@@ -38,24 +39,31 @@ const MatrixHeaders: FC<MatrixHeaderProps> = ({
     ? capitaliseString(data?.primary_header_title)
     : data?.primary_header_title;
 
+  // The axis title sits over the middle column: two row-header columns plus the
+  // columns before it on the left, the rest on the right (4 and 2 for a 5×5).
+  const titleColumn = Math.floor((columns.length - 1) / 2);
+  const columnsAfterTitle = columns.length - 1 - titleColumn;
+
   return (
     <thead>
       <tr id="react-matrix-blank-headers-primary-title-row">
-        <th headers="blank" colSpan={4}></th>
+        <th headers="blank" colSpan={2 + titleColumn}></th>
         <th
           style={headerPrimaryTitleStyles}
           id="react-matrix-header-primary-title"
         >
           {headerPrimaryTitle}
         </th>
-        <th headers="blank" colSpan={2}></th>
+        {columnsAfterTitle > 0 && (
+          <th headers="blank" colSpan={columnsAfterTitle}></th>
+        )}
       </tr>
       <tr
         style={headerRowStyles}
         id={`react-matrix-dynamic-headers-row-${customHeaderRowIdValue}`}
       >
         <th headers="blank" colSpan={2}></th>
-        {data.matrix_details.slice(0, data.matrix_size).map((column, index) => {
+        {columns.map((column, index) => {
           return (
             <th
               scope="col"

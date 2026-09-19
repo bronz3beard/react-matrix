@@ -5,15 +5,15 @@ import {
   getHeaderSubTitleStyles,
   getHeaderPrimaryTitleStyles,
 } from '../helpers/getStyles.js';
-import { groupObjectsByProp, capitaliseString } from '../utils/functions.js';
+import { capitaliseString } from '../utils/functions.js';
 import TableData from './TableData.js';
-import { MatrixRowsProps, MatrixValue } from '../types/index.js';
+import { MatrixRowsProps } from '../types/index.js';
 
 const MatrixRows: FC<MatrixRowsProps> = ({
   data,
+  rows,
   rowPrimaryUpper = true,
   hasInlineStyles = true,
-  reverseMatrixValues = true,
   trRowStyles = {},
   trTitleStyles = {},
   trSubTitleStyles = {},
@@ -23,15 +23,6 @@ const MatrixRows: FC<MatrixRowsProps> = ({
   customRowHeaderDynamicIdValue = '',
   customTableDataDynamicIdValue = '',
 }: MatrixRowsProps) => {
-  const valuesArray = reverseMatrixValues
-    ? groupObjectsByProp(data.matrix_values, 'likelihood_descriptor')
-        .reverse()
-        .slice(0, data.matrix_size)
-    : groupObjectsByProp(data.matrix_values, 'likelihood_descriptor').slice(
-        0,
-        data.matrix_size
-      );
-
   const tableRowStyles = getHeaderRowStyles(hasInlineStyles, trRowStyles);
   const tableRowHeaderTitleStyles = getHeaderTitleStyles(
     hasInlineStyles,
@@ -53,59 +44,53 @@ const MatrixRows: FC<MatrixRowsProps> = ({
   return (
     <tbody>
       <tr id="react-matrix-row-primary-title">
-        <th scope="row" rowSpan={6} style={rowHeaderPrimaryTitleStyles}>
+        <th
+          scope="row"
+          rowSpan={rows.length + 1}
+          style={rowHeaderPrimaryTitleStyles}
+        >
           {rowPrimaryTitle}
         </th>
       </tr>
-      {valuesArray.map((row, index) => {
-        const rowHeaderOrder = reverseMatrixValues
-          ? data.matrix_size - (index + 1)
-          : index;
-
-        return (
-          <tr
-            style={tableRowStyles}
-            key={`row-${index}`}
-            id={`react-matrix-dynamic-rows-${
-              data.matrix_details[rowHeaderOrder]?.row_header_title
-            }-${data.matrix_details[rowHeaderOrder]?.row_header_sub_title}${
-              !customRowDynamicIdValue ? '' : `-${customRowDynamicIdValue}`
+      {rows.map(({ detail, cells }) => (
+        <tr
+          style={tableRowStyles}
+          key={detail.id}
+          id={`react-matrix-dynamic-rows-${detail.row_header_title}-${
+            detail.row_header_sub_title
+          }${!customRowDynamicIdValue ? '' : `-${customRowDynamicIdValue}`}`}
+        >
+          <th
+            scope="row"
+            style={tableRowHeaderTitleStyles}
+            id={`react-matrix-dynamic-rows-${detail.row_header_title}-${
+              detail.row_header_sub_title
+            }${
+              !customRowHeaderDynamicIdValue
+                ? ''
+                : `-${customRowHeaderDynamicIdValue}`
             }`}
           >
-            <th
-              scope="row"
-              style={tableRowHeaderTitleStyles}
-              id={`react-matrix-dynamic-rows-${
-                data.matrix_details[rowHeaderOrder]?.row_header_title
-              }-${data.matrix_details[rowHeaderOrder]?.row_header_sub_title}${
-                !customRowHeaderDynamicIdValue
-                  ? ''
-                  : `-${customRowHeaderDynamicIdValue}`
-              }`}
-            >
-              {data.matrix_details[rowHeaderOrder]?.row_header_title}
-              <div style={tableRowHeaderSubTitleStyles}>
-                {data.matrix_details[rowHeaderOrder]?.row_header_sub_title}
-              </div>
-            </th>
-            {row
-              .slice(0, data.matrix_size)
-              .map((item: MatrixValue, index: number) => {
-                return (
-                  <TableData
-                    data={item}
-                    tdStyles={tdStyles}
-                    key={`${item.id}-${index}`}
-                    hasInlineStyles={hasInlineStyles}
-                    customTableDataDynamicIdValue={
-                      customTableDataDynamicIdValue
-                    }
-                  />
-                );
-              })}
-          </tr>
-        );
-      })}
+            {detail.row_header_title}
+            <div style={tableRowHeaderSubTitleStyles}>
+              {detail.row_header_sub_title}
+            </div>
+          </th>
+          {cells.map((cell, index) =>
+            cell ? (
+              <TableData
+                data={cell}
+                tdStyles={tdStyles}
+                key={cell.id}
+                hasInlineStyles={hasInlineStyles}
+                customTableDataDynamicIdValue={customTableDataDynamicIdValue}
+              />
+            ) : (
+              <td key={`empty-${index}`} />
+            )
+          )}
+        </tr>
+      ))}
     </tbody>
   );
 };
