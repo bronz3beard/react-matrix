@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import ReactMatrix, { original, type MatrixTheme } from '../../lib';
-import { data } from '../../lib/utils/data';
+import { data } from '../../src/data/risk5x5';
 
 // Test-only page: a palette theme under a strict CSP (see csp.html). With
 // `?nonce=none` the matrix renders without the nonce: the negative control that

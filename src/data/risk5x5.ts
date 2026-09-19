@@ -1,4 +1,4 @@
-import { MatrixData } from '../types';
+import type { MatrixData } from '../../lib';
 
 export const data: MatrixData = {
   id: 1,

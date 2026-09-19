@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import { version as reactVersion } from 'react';
 import { expect, it } from 'vitest';
 import ReactMatrix from '../lib';
-import { data } from '../lib/utils/data';
+import { data } from '../src/data/risk5x5';
 
 // Its own file on purpose: Vitest gives every test file a fresh document, and
 // React 19 keeps a hoisted stylesheet in <head> for the document's lifetime,

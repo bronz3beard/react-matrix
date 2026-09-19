@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import ReactMatrix, { original } from '../lib';
 import { FALLBACK_CELL_COLOUR } from '../lib/theme/severity';
-import { data } from '../lib/utils/data';
+import { data } from '../src/data/risk5x5';
 import oracle from './fixtures/grid-5x5.pre-1.0.json';
 import { createMatrix, shuffle } from './fixtures/createMatrix';
 import { projectGrid } from './projectGrid';

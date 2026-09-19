@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import ReactMatrix, { type ReactMatrixProps } from '../lib';
-import { data } from '../lib/utils/data';
+import { data } from '../src/data/risk5x5';
 import { createMatrix } from './fixtures/createMatrix';
 
 const MOST_SEVERE = 'Likelihood Almost Certain, Consequence Catastrophic: extreme (25)';

@@ -9,7 +9,7 @@
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import ReactMatrix from '../lib';
-import { data } from '../lib/utils/data';
+import { data } from '../src/data/risk5x5';
 import { projectGrid, type CellRole, type TableRow } from '../test/projectGrid';
 
 const ENTITIES: Record<string, string> = {

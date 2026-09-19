@@ -8,7 +8,7 @@ import {
   createSeverityScale,
 } from '../../lib/theme/severity';
 import type { MatrixTheme } from '../../lib/theme/types';
-import { data } from '../../lib/utils/data';
+import { data } from '../../src/data/risk5x5';
 
 const valueWith = (overrides: Partial<MatrixValue>): MatrixValue => ({
   ...data.matrix_values[0],

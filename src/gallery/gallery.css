@@ -1,0 +1,128 @@
+.gallery {
+  max-inline-size: 96rem;
+  margin-inline: auto;
+  padding: 1.5rem 1rem 4rem;
+  font-family: system-ui, sans-serif;
+  color: #1a1a1a;
+  background-color: #ffffff;
+
+  header {
+    h1 {
+      margin: 0 0 0.25rem;
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+    }
+
+    p {
+      margin: 0;
+      color: #4a4a4a;
+    }
+  }
+}
+
+.filter-chips {
+  display: grid;
+  gap: 0.75rem;
+  margin-block: 1.25rem;
+
+  fieldset {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    border: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  legend {
+    inline-size: 100%;
+    margin-block-end: 0.25rem;
+    font-weight: 600;
+  }
+}
+
+/* A native radio/checkbox stretched invisibly over its label: still focusable,
+   still announced, and the whole 44px-tall chip is the tap target. */
+.chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 44px;
+  padding-inline: 1rem;
+  border: 1px solid #6b6b6b;
+  border-radius: 999px;
+  background-color: #ffffff;
+  cursor: pointer;
+
+  input {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  &:has(input:checked) {
+    border-color: #1a1a1a;
+    background-color: #1a1a1a;
+    color: #ffffff;
+  }
+
+  &:has(input:focus-visible) {
+    outline: 3px solid #1f6feb;
+    outline-offset: 2px;
+  }
+}
+
+.gallery-count {
+  margin-block: 0 1rem;
+  color: #4a4a4a;
+}
+
+.gallery-grid {
+  display: grid;
+  /* A 5×5 preview needs about 455px (measured, Original at 0.75rem); 31rem cards
+     leave ~464px inside, so desktop previews never scroll (asserted in e2e).
+     Phones scroll the preview inside its card instead. */
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 31rem), 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.preset-card {
+  /* Off-screen cards skip rendering until scrolled near. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 26rem;
+  padding: 1rem;
+  border: 1px solid #d0d0d0;
+  border-radius: 12px;
+  background-color: #ffffff;
+
+  h2 {
+    margin: 0;
+    font-size: 1.15rem;
+  }
+
+  p {
+    margin: 0.25rem 0 0.5rem;
+    color: #4a4a4a;
+  }
+}
+
+.preset-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin: 0 0 0.75rem;
+  padding: 0;
+  list-style: none;
+
+  li {
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+    background-color: #eef1f4;
+    color: #333333;
+    font-size: 0.75rem;
+  }
+}

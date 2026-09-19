@@ -12,53 +12,62 @@ type Violation = Awaited<ReturnType<AxeBuilder['analyze']>>['violations'][number
 const summarise = (violations: Violation[]) =>
   violations.map((v) => `${v.id}: ${v.nodes.map((node) => node.target.join(' ')).join(' | ')}`);
 
-const openDemo = async (page: Page) => {
+const PAGES = [
+  ['demo page', './'],
+  ['preset gallery', './?beta=gallery'],
+] as const;
+
+const openPage = async (page: Page, path: string) => {
   await page.route(/fonts\.(googleapis|gstatic)\.com/, (route) =>
     route.fulfill({ status: 200, contentType: 'text/css', body: '' })
   );
-  await page.goto('./');
-  await expect(page.getByRole('table')).toBeVisible();
-  // Steady state: the root becomes keyboard-focusable one frame after it is found
-  // to overflow (ResizeObserver), so scan only once that has happened.
+  await page.goto(path);
+  await expect(page.getByRole('table').first()).toBeVisible();
+  // Steady state: a matrix root becomes keyboard-focusable one frame after it is
+  // found to overflow (ResizeObserver), so scan only once every root has settled.
   await expect
     .poll(() =>
       page
         .locator('.rdm-root')
-        .evaluate(
-          (root) => root.scrollWidth <= root.clientWidth || root.getAttribute('tabindex') === '0'
+        .evaluateAll((roots) =>
+          roots.every(
+            (root) => root.scrollWidth <= root.clientWidth || root.getAttribute('tabindex') === '0'
+          )
         )
     )
     .toBe(true);
 };
 
-test('the demo page has no WCAG 2.2 A/AA violations', async ({ page }) => {
-  await openDemo(page);
+for (const [label, path] of PAGES) {
+  test(`the ${label} has no WCAG 2.2 A/AA violations`, async ({ page }) => {
+    await openPage(page, path);
 
-  const allButContrast = await new AxeBuilder({ page })
-    .withTags(WCAG_TAGS)
-    .disableRules(['color-contrast'])
-    .analyze();
-  const contrast = await new AxeBuilder({ page })
-    .withRules(['color-contrast'])
-    .exclude(DATA_COLOURED_CELLS)
-    .analyze();
+    const allButContrast = await new AxeBuilder({ page })
+      .withTags(WCAG_TAGS)
+      .disableRules(['color-contrast'])
+      .analyze();
+    const contrast = await new AxeBuilder({ page })
+      .withRules(['color-contrast'])
+      .exclude(DATA_COLOURED_CELLS)
+      .analyze();
 
-  expect(summarise([...allButContrast.violations, ...contrast.violations])).toEqual([]);
-});
+    expect(summarise([...allButContrast.violations, ...contrast.violations])).toEqual([]);
+  });
 
-test('data-coloured cells are the only contrast exception', async ({ page }) => {
-  await openDemo(page);
+  test(`data-coloured cells are the only contrast exception on the ${label}`, async ({ page }) => {
+    await openPage(page, path);
 
-  const { violations } = await new AxeBuilder({ page }).withRules(['color-contrast']).analyze();
-  const flagged = violations.flatMap((v) => v.nodes.map((node) => node.target.join(' ')));
+    const { violations } = await new AxeBuilder({ page }).withRules(['color-contrast']).analyze();
+    const flagged = violations.flatMap((v) => v.nodes.map((node) => node.target.join(' ')));
 
-  // The demo data really does contain low-contrast colours, so the exclusion above
-  // is exercised; and every flagged element is (inside) a data-coloured cell.
-  expect(flagged.length).toBeGreaterThan(0);
-  for (const selector of flagged) {
-    const insideDataCell = await page
-      .locator(selector)
-      .evaluate((element, cells) => element.closest(cells) !== null, DATA_COLOURED_CELLS);
-    expect(insideDataCell, selector).toBe(true);
-  }
-});
+    // The demo data really does contain low-contrast colours, so the exclusion above
+    // is exercised; and every flagged element is (inside) a data-coloured cell.
+    expect(flagged.length).toBeGreaterThan(0);
+    for (const selector of flagged) {
+      const insideDataCell = await page
+        .locator(selector)
+        .evaluate((element, cells) => element.closest(cells) !== null, DATA_COLOURED_CELLS);
+      expect(insideDataCell, selector).toBe(true);
+    }
+  });
+}

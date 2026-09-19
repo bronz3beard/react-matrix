@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { buildGrid, type Grid } from '../lib/grid';
-import { data } from '../lib/utils/data';
+import { data } from '../src/data/risk5x5';
 import { createMatrix, shuffle } from './fixtures/createMatrix';
 
 const labels = (grid: Grid) =>
