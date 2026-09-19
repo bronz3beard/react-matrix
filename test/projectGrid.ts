@@ -29,8 +29,12 @@ const primaryText = (cell: TableCell): string =>
 const hasText = (cell: TableCell): boolean => cellText(cell) !== '';
 
 export const projectGrid = (rows: TableRow[]): GridProjection => {
+  // Header rows hold column headers and no row header; any empty cells in them
+  // (e.g. layout corners) are ignored.
   const headerRows = rows.filter(
-    (row) => row.length > 0 && row.every((cell) => cell.role === 'columnheader')
+    (row) =>
+      row.some((cell) => cell.role === 'columnheader') &&
+      !row.some((cell) => cell.role === 'rowheader')
   );
   const columnHeaderRow = headerRows.reduce<TableRow>(
     (widest, row) =>
@@ -39,7 +43,11 @@ export const projectGrid = (rows: TableRow[]): GridProjection => {
   );
   const columnHeaderCells = columnHeaderRow.filter(hasText);
 
-  const dataRows = rows.filter((row) => row.some((cell) => cell.role === 'cell'));
+  const dataRows = rows.filter(
+    (row) =>
+      row.some((cell) => cell.role === 'rowheader') &&
+      row.some((cell) => cell.role === 'cell')
+  );
   const rowHeaderCells = dataRows.map((row) => {
     const rowHeaders = row.filter((cell) => cell.role === 'rowheader');
     const rowHeader = rowHeaders[rowHeaders.length - 1];

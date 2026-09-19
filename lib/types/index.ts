@@ -1,4 +1,5 @@
-import type { GridRow } from '../grid.js';
+import type { CSSProperties } from 'react';
+import type { MatrixTheme } from '../theme/types.js';
 
 export interface MatrixDetail {
   id: number;
@@ -35,76 +36,33 @@ export interface MatrixData {
   matrix_values: MatrixValue[];
 }
 
+/** Elements that accept per-instance inline overrides via `styles`. */
+export type MatrixSlot =
+  | 'root'
+  | 'caption'
+  | 'table'
+  | 'axisTitle'
+  | 'columnHeader'
+  | 'rowHeader'
+  | 'cell';
+
+export type MatrixSlotStyles = Partial<Record<MatrixSlot, CSSProperties>>;
+
+/** Root inline style; also accepts theme variable overrides like `--rdm-radius`. */
+export type MatrixRootStyle = CSSProperties & { [variable: `--rdm-${string}`]: string };
+
 export interface ReactMatrixProps {
   data: MatrixData;
-  hasTableBorder?: boolean;
-  hasInlineStyles?: boolean | undefined;
-  hasContainerStyles?: boolean | undefined;
+  /** Preset or custom theme (default `original`). Tweak with `{ ...preset, radius: '4px' }`. */
+  theme?: MatrixTheme;
+  /** Inline overrides per element, applied after the theme. */
+  styles?: MatrixSlotStyles;
+  className?: string;
+  style?: MatrixRootStyle;
+  /** Render semantic markup with `rdm-*` classes and `data-*` hooks only: no theme, no base stylesheet. */
+  unstyled?: boolean;
+  /** Most likely row on top (default `true`). */
   reverseMatrixValues?: boolean;
-  matrixSizeSelected?: number;
-  rowPrimaryUpper?: boolean;
-  headerPrimaryUpper?: boolean;
-  tableContainerStyles?: React.CSSProperties;
-  tableStyles?: React.CSSProperties;
-  thRowStyles?: React.CSSProperties;
-  thTitleStyles?: React.CSSProperties;
-  thSubTitleStyles?: React.CSSProperties;
-  thPrimaryTitleStyles?: React.CSSProperties;
-  trRowStyles?: React.CSSProperties;
-  trTitleStyles?: React.CSSProperties;
-  trSubTitleStyles?: React.CSSProperties;
-  trPrimaryTitleStyles?: React.CSSProperties;
-  tdStyles?: React.CSSProperties;
-  customHeaderRowIdValue?: string;
-  customDynamicHeaderTitleIdValue?: string;
-  customDynamicSubHeaderTitleIdValue?: string;
-  customRowDynamicIdValue?: string;
-  customRowHeaderDynamicIdValue?: string;
-  customTableDataDynamicIdValue?: string;
-}
-
-export interface MatrixHeaderProps {
-  data: MatrixData;
-  columns: MatrixDetail[];
-  hasInlineStyles?: boolean | undefined;
-  headerPrimaryUpper?: boolean;
-  thRowStyles?: React.CSSProperties;
-  thTitleStyles?: React.CSSProperties;
-  thSubTitleStyles?: React.CSSProperties;
-  thPrimaryTitleStyles?: React.CSSProperties;
-  customHeaderRowIdValue?: string;
-  customDynamicHeaderTitleIdValue?: string;
-  customDynamicSubHeaderTitleIdValue?: string;
-}
-
-export interface MatrixRowsProps {
-  data: MatrixData;
-  rows: GridRow[];
-  rowPrimaryUpper?: boolean;
-  hasInlineStyles?: boolean | undefined;
-  trRowStyles?: React.CSSProperties;
-  trTitleStyles?: React.CSSProperties;
-  trSubTitleStyles?: React.CSSProperties;
-  trPrimaryTitleStyles?: React.CSSProperties;
-  tdStyles?: React.CSSProperties;
-  customRowDynamicIdValue?: string;
-  customRowHeaderDynamicIdValue?: string;
-  customTableDataDynamicIdValue?: string;
-}
-
-export interface TableDataProps {
-  data: {
-    id: number;
-    colour: string;
-    position: number;
-    matrix_id: number;
-    score_value: number;
-    description: string;
-    response: string;
-    likelihood_descriptor: string;
-    consequence_descriptor: number;
-  };
-  tdStyles?: React.CSSProperties;
-  hasInlineStyles?: boolean;
-  customTableDataDynamicIdValue?: string;
+  /** CSP nonce for the base <style> element. */
+  nonce?: string;
 }

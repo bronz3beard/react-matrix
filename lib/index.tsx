@@ -1,105 +1,86 @@
-import { FC, useEffect, useMemo } from 'react';
-import {
-  getTableStyles,
-  getTableBoarder,
-  getContainerStyles,
-} from './helpers/getStyles.js';
-import { buildGrid } from './grid.js';
+import { useEffect, useMemo } from 'react';
 import MatrixHeaders from './components/MatrixHeaders.js';
 import MatrixRows from './components/MatrixRows.js';
-import { ReactMatrixProps } from './types/index.js';
+import { buildGrid } from './grid.js';
+import { BASE_CSS, BASE_CSS_HREF } from './theme/baseCss.js';
+import { original } from './theme/presets/original.js';
+import { cellColours, createSeverityScale } from './theme/severity.js';
+import { themeToCssVars, themeToDataAttributes } from './theme/tokens.js';
+import type { ReactMatrixProps } from './types/index.js';
 
-const ReactMatrix: FC<ReactMatrixProps> = ({
+// React 19 hoists a <style> with `href` + `precedence` into <head> and renders it
+// once per page; React 18 renders it in place. Spread so React 18's type
+// definitions, which lack `precedence`, still accept it.
+const HOISTED_STYLE = { href: BASE_CSS_HREF, precedence: 'default' };
+
+const ReactMatrix = ({
   data,
-  tableStyles: contextTableStyles,
-  hasTableBorder: contextHasTableBorder,
-  hasInlineStyles: contextHasInlineStyles,
-  hasContainerStyles: contextHasContainerStyles,
-  tableContainerStyles: contextTableContainerStyles,
-
-  tableStyles = {},
-  hasInlineStyles = true,
-
-  // MatrixHeaders
-  headerPrimaryUpper = true,
-  thRowStyles = {},
-  thTitleStyles = {},
-  thSubTitleStyles = {},
-  thPrimaryTitleStyles = {},
-  customHeaderRowIdValue = '',
-  customDynamicHeaderTitleIdValue = '',
-  customDynamicSubHeaderTitleIdValue = '',
-
-  // MatrixRows
-  rowPrimaryUpper = true,
+  theme = original,
+  styles = {},
+  className,
+  style,
+  unstyled = false,
   reverseMatrixValues = true,
-  trRowStyles = {},
-  trTitleStyles = {},
-  trSubTitleStyles = {},
-  trPrimaryTitleStyles = {},
-  tdStyles = {},
-  customRowDynamicIdValue = '',
-  customRowHeaderDynamicIdValue = '',
-  customTableDataDynamicIdValue = '',
-}) => {
+  nonce,
+}: ReactMatrixProps) => {
   const grid = useMemo(
     () => buildGrid(data, { reverse: reverseMatrixValues }),
     [data, reverseMatrixValues]
+  );
+  const scale = useMemo(() => createSeverityScale(data.matrix_values), [data]);
+  const colours = useMemo(
+    () =>
+      unstyled
+        ? null
+        : new Map(
+            data.matrix_values.map((value) => [value.id, cellColours(theme, { value, scale })])
+          ),
+    [data, theme, scale, unstyled]
   );
 
   // Invalid data is reported, never thrown: one bad value must not take down
   // the host page.
   useEffect(() => {
     grid.issues.forEach((issue) => console.error(issue));
-  }, [grid]);
-
-  const tableBorder = getTableBoarder(
-    !!(contextHasInlineStyles && contextHasTableBorder)
-  );
-  const tableElmStyles = getTableStyles(
-    !!(contextHasInlineStyles && contextTableStyles),
-    tableStyles
-  );
-  const containerStyles = getContainerStyles(
-    !!(contextHasInlineStyles && contextHasContainerStyles),
-    contextTableContainerStyles ?? {}
-  );
+    colours?.forEach(({ rejectedColour }, id) => {
+      if (rejectedColour !== undefined) {
+        console.error(
+          `react-data-matrix: value ${id} has an unsafe colour ${JSON.stringify(rejectedColour)}; a neutral colour is shown instead.`
+        );
+      }
+    });
+  }, [grid, colours]);
 
   return (
-    <div style={containerStyles}>
-      <h1>{data.matrix_name}</h1>
-      <h4>{data.matrix_description}</h4>
-      <table id="matrix-table" style={{ ...tableElmStyles, ...tableBorder }}>
+    <div
+      className={className ? `rdm-root ${className}` : 'rdm-root'}
+      style={unstyled ? { ...styles.root, ...style } : { ...themeToCssVars(theme), ...styles.root, ...style }}
+      {...(unstyled ? {} : themeToDataAttributes(theme))}
+    >
+      {!unstyled && (
+        <style {...HOISTED_STYLE} nonce={nonce}>
+          {BASE_CSS}
+        </style>
+      )}
+      <table className="rdm-table" style={styles.table}>
+        <caption className="rdm-caption" style={styles.caption}>
+          <span className="rdm-caption-title">{data.matrix_name}</span>
+          <span className="rdm-caption-description">{data.matrix_description}</span>
+        </caption>
+        <colgroup span={2} />
+        <colgroup span={grid.columns.length} />
         <MatrixHeaders
-          {...{
-            data,
-            columns: grid.columns,
-            hasInlineStyles,
-            headerPrimaryUpper,
-            thRowStyles,
-            thTitleStyles,
-            thSubTitleStyles,
-            thPrimaryTitleStyles,
-            customHeaderRowIdValue,
-            customDynamicHeaderTitleIdValue,
-            customDynamicSubHeaderTitleIdValue,
-          }}
+          title={data.primary_header_title}
+          columns={grid.columns}
+          styles={styles}
         />
         <MatrixRows
-          {...{
-            data,
-            rows: grid.rows,
-            rowPrimaryUpper,
-            hasInlineStyles,
-            trRowStyles,
-            trTitleStyles,
-            trSubTitleStyles,
-            trPrimaryTitleStyles,
-            tdStyles,
-            customRowDynamicIdValue,
-            customRowHeaderDynamicIdValue,
-            customTableDataDynamicIdValue,
-          }}
+          title={data.primary_row_header_title}
+          columns={grid.columns}
+          rows={grid.rows}
+          tiers={scale.tiers}
+          colours={colours}
+          styles={styles}
         />
       </table>
     </div>
@@ -107,9 +88,14 @@ const ReactMatrix: FC<ReactMatrixProps> = ({
 };
 
 export default ReactMatrix;
+export { original } from './theme/presets/original.js';
 export type {
   MatrixData,
   MatrixDetail,
+  MatrixRootStyle,
+  MatrixSlot,
+  MatrixSlotStyles,
   MatrixValue,
   ReactMatrixProps,
 } from './types/index.js';
+export type { CellVariant, MatrixTheme, SeverityColour } from './theme/types.js';

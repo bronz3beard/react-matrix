@@ -28,6 +28,12 @@ export default defineConfig(
     },
   },
   {
+    // The package entry exports the component alongside its presets and types.
+    // It is a public API surface, not a hot-reloaded app module.
+    files: ['lib/index.tsx'],
+    rules: { 'react-refresh/only-export-components': 'off' },
+  },
+  {
     files: ['lib/**/*.{ts,tsx}'],
     rules: {
       'no-restricted-syntax': [

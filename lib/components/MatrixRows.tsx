@@ -1,98 +1,50 @@
-import { FC } from 'react';
-import {
-  getHeaderRowStyles,
-  getHeaderTitleStyles,
-  getHeaderSubTitleStyles,
-  getHeaderPrimaryTitleStyles,
-} from '../helpers/getStyles.js';
-import { capitaliseString } from '../utils/functions.js';
+import type { GridRow } from '../grid.js';
+import type { SeverityColour } from '../theme/types.js';
+import type { MatrixDetail, MatrixSlotStyles } from '../types/index.js';
 import TableData from './TableData.js';
-import { MatrixRowsProps } from '../types/index.js';
 
-const MatrixRows: FC<MatrixRowsProps> = ({
-  data,
-  rows,
-  rowPrimaryUpper = true,
-  hasInlineStyles = true,
-  trRowStyles = {},
-  trTitleStyles = {},
-  trSubTitleStyles = {},
-  trPrimaryTitleStyles = {},
-  tdStyles = {},
-  customRowDynamicIdValue = '',
-  customRowHeaderDynamicIdValue = '',
-  customTableDataDynamicIdValue = '',
-}: MatrixRowsProps) => {
-  const tableRowStyles = getHeaderRowStyles(hasInlineStyles, trRowStyles);
-  const tableRowHeaderTitleStyles = getHeaderTitleStyles(
-    hasInlineStyles,
-    trTitleStyles
-  );
-  const tableRowHeaderSubTitleStyles = getHeaderSubTitleStyles(
-    hasInlineStyles,
-    trSubTitleStyles
-  );
-  const rowHeaderPrimaryTitleStyles = getHeaderPrimaryTitleStyles(
-    hasInlineStyles,
-    trPrimaryTitleStyles
-  );
+interface MatrixRowsProps {
+  title: string;
+  columns: MatrixDetail[];
+  rows: GridRow[];
+  tiers: ReadonlyMap<string, number>;
+  /** Severity colour per value id; `null` when unstyled. */
+  colours: ReadonlyMap<number, SeverityColour> | null;
+  styles: MatrixSlotStyles;
+}
 
-  const rowPrimaryTitle = rowPrimaryUpper
-    ? capitaliseString(data.primary_row_header_title)
-    : data.primary_row_header_title;
-
-  return (
-    <tbody>
-      <tr id="react-matrix-row-primary-title">
-        <th
-          scope="row"
-          rowSpan={rows.length + 1}
-          style={rowHeaderPrimaryTitleStyles}
-        >
-          {rowPrimaryTitle}
-        </th>
-      </tr>
-      {rows.map(({ detail, cells }) => (
-        <tr
-          style={tableRowStyles}
-          key={detail.id}
-          id={`react-matrix-dynamic-rows-${detail.row_header_title}-${
-            detail.row_header_sub_title
-          }${!customRowDynamicIdValue ? '' : `-${customRowDynamicIdValue}`}`}
-        >
+const MatrixRows = ({ title, columns, rows, tiers, colours, styles }: MatrixRowsProps) => (
+  <tbody>
+    {rows.map(({ detail, cells }, rowIndex) => (
+      <tr key={detail.id} data-row={detail.likelihood}>
+        {rowIndex === 0 && (
           <th
-            scope="row"
-            style={tableRowHeaderTitleStyles}
-            id={`react-matrix-dynamic-rows-${detail.row_header_title}-${
-              detail.row_header_sub_title
-            }${
-              !customRowHeaderDynamicIdValue
-                ? ''
-                : `-${customRowHeaderDynamicIdValue}`
-            }`}
+            className="rdm-axis-title"
+            scope="rowgroup"
+            rowSpan={rows.length}
+            style={styles.axisTitle}
           >
-            {detail.row_header_title}
-            <div style={tableRowHeaderSubTitleStyles}>
-              {detail.row_header_sub_title}
-            </div>
+            {title}
           </th>
-          {cells.map((cell, index) =>
-            cell ? (
-              <TableData
-                data={cell}
-                tdStyles={tdStyles}
-                key={cell.id}
-                hasInlineStyles={hasInlineStyles}
-                customTableDataDynamicIdValue={customTableDataDynamicIdValue}
-              />
-            ) : (
-              <td key={`empty-${index}`} />
-            )
-          )}
-        </tr>
-      ))}
-    </tbody>
-  );
-};
+        )}
+        <th className="rdm-row-header" scope="row" style={styles.rowHeader}>
+          {detail.row_header_title}
+          <div className="rdm-subtitle">{detail.row_header_sub_title}</div>
+        </th>
+        {cells.map((value, columnIndex) => (
+          <TableData
+            key={value?.id ?? `empty-${columnIndex}`}
+            value={value}
+            row={detail.likelihood}
+            column={columns[columnIndex].consequence}
+            tier={value ? tiers.get(value.colour) : undefined}
+            colours={value ? colours?.get(value.id) : undefined}
+            style={styles.cell}
+          />
+        ))}
+      </tr>
+    ))}
+  </tbody>
+);
 
 export default MatrixRows;

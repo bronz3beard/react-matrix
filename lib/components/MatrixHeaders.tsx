@@ -1,97 +1,43 @@
-import { FC } from 'react';
-import {
-  getHeaderRowStyles,
-  getHeaderTitleStyles,
-  getHeaderSubTitleStyles,
-  getHeaderPrimaryTitleStyles,
-} from '../helpers/getStyles.js';
-import { capitaliseString } from '../utils/functions.js';
-import { MatrixHeaderProps } from '../types/index.js';
+import type { MatrixDetail, MatrixSlotStyles } from '../types/index.js';
 
-const MatrixHeaders: FC<MatrixHeaderProps> = ({
-  data,
-  columns,
-  hasInlineStyles = true,
-  headerPrimaryUpper = true,
-  thRowStyles = {},
-  thTitleStyles = {},
-  thSubTitleStyles = {},
-  thPrimaryTitleStyles = {},
-  customHeaderRowIdValue = '',
-  customDynamicHeaderTitleIdValue = '',
-  customDynamicSubHeaderTitleIdValue = '',
-}: MatrixHeaderProps) => {
-  const headerRowStyles = getHeaderRowStyles(hasInlineStyles, thRowStyles);
-  const headerTitleStyles = getHeaderTitleStyles(
-    hasInlineStyles,
-    thTitleStyles
-  );
-  const headerSubTitleStyles = getHeaderSubTitleStyles(
-    hasInlineStyles,
-    thSubTitleStyles
-  );
-  const headerPrimaryTitleStyles = getHeaderPrimaryTitleStyles(
-    hasInlineStyles,
-    thPrimaryTitleStyles
-  );
+interface MatrixHeadersProps {
+  title: string;
+  columns: MatrixDetail[];
+  styles: MatrixSlotStyles;
+}
 
-  const headerPrimaryTitle = !headerPrimaryUpper
-    ? capitaliseString(data?.primary_header_title)
-    : data?.primary_header_title;
-
-  // The axis title sits over the middle column: two row-header columns plus the
-  // columns before it on the left, the rest on the right (4 and 2 for a 5×5).
-  const titleColumn = Math.floor((columns.length - 1) / 2);
-  const columnsAfterTitle = columns.length - 1 - titleColumn;
-
-  return (
-    <thead>
-      <tr id="react-matrix-blank-headers-primary-title-row">
-        <th headers="blank" colSpan={2 + titleColumn}></th>
-        <th
-          style={headerPrimaryTitleStyles}
-          id="react-matrix-header-primary-title"
-        >
-          {headerPrimaryTitle}
-        </th>
-        {columnsAfterTitle > 0 && (
-          <th headers="blank" colSpan={columnsAfterTitle}></th>
-        )}
-      </tr>
-      <tr
-        style={headerRowStyles}
-        id={`react-matrix-dynamic-headers-row-${customHeaderRowIdValue}`}
+// Two header rows: the column axis title spanning the value columns, then one
+// header per column. The two leading cells sit above the row axis title and the
+// row headers.
+const MatrixHeaders = ({ title, columns, styles }: MatrixHeadersProps) => (
+  <thead>
+    <tr>
+      <td className="rdm-corner" colSpan={2} />
+      <th
+        className="rdm-axis-title"
+        scope="colgroup"
+        colSpan={columns.length}
+        style={styles.axisTitle}
       >
-        <th headers="blank" colSpan={2}></th>
-        {columns.map((column, index) => {
-          return (
-            <th
-              scope="col"
-              style={headerTitleStyles}
-              id={`react-matrix-dynamic-column-header-title${
-                !customDynamicHeaderTitleIdValue
-                  ? ''
-                  : `-${customDynamicHeaderTitleIdValue}`
-              }`}
-              key={`${column.id}-${index}`}
-            >
-              {column.header_title}
-              <div
-                style={headerSubTitleStyles}
-                id={`react-matrix-dynamic-column-header-sub-title${
-                  !customDynamicSubHeaderTitleIdValue
-                    ? ''
-                    : `-${customDynamicSubHeaderTitleIdValue}`
-                }`}
-              >
-                {column.header_sub_title}
-              </div>
-            </th>
-          );
-        })}
-      </tr>
-    </thead>
-  );
-};
+        {title}
+      </th>
+    </tr>
+    <tr>
+      <td className="rdm-corner" colSpan={2} />
+      {columns.map((column) => (
+        <th
+          key={column.id}
+          className="rdm-column-header"
+          scope="col"
+          data-col={column.consequence}
+          style={styles.columnHeader}
+        >
+          {column.header_title}
+          <div className="rdm-subtitle">{column.header_sub_title}</div>
+        </th>
+      ))}
+    </tr>
+  </thead>
+);
 
 export default MatrixHeaders;
