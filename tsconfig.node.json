@@ -6,5 +6,12 @@
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true
   },
-  "include": ["vite.config.ts", "vite.lib.config.ts", "vitest.config.ts", "test/node"]
+  "include": [
+    "vite.config.ts",
+    "vite.lib.config.ts",
+    "vitest.config.ts",
+    "playwright.config.ts",
+    "test/node",
+    "e2e"
+  ]
 }

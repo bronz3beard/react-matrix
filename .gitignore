@@ -12,6 +12,9 @@ dist
 dist-site
 dist-ssr
 *.tsbuildinfo
+test-results
+playwright-report
+blob-report
 *.local
 
 # Editor directories and files
