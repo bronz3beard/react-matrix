@@ -1,4 +1,4 @@
-import { IconProp, library } from "@fortawesome/fontawesome-svg-core";
+import { library } from "@fortawesome/fontawesome-svg-core";
 import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 import { faGithub, faNpm, faReadme } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -26,7 +26,7 @@ const IconsRow = () => {
           <FontAwesomeIcon
             size="3x"
             color="#77B244"
-            icon={faGithub as IconProp}
+            icon={faGithub}
           />
         </a>
         <a
@@ -35,7 +35,7 @@ const IconsRow = () => {
           title="npm"
           href="https://www.npmjs.com/package/react-data-matrix"
         >
-          <FontAwesomeIcon size="3x" color="#77B244" icon={faNpm as IconProp} />
+          <FontAwesomeIcon size="3x" color="#77B244" icon={faNpm} />
         </a>
         <a
           target="_blank"
@@ -46,7 +46,7 @@ const IconsRow = () => {
           <FontAwesomeIcon
             size="3x"
             color="#77B244"
-            icon={faReadme as IconProp}
+            icon={faReadme}
           />
         </a>
       </div>

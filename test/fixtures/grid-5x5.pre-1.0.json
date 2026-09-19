@@ -1,0 +1,47 @@
+{
+  "axisTitles": {
+    "column": "Consequence",
+    "row": "LIKELIHOOD"
+  },
+  "columnHeaders": [
+    "Minor Header sub-title/description.",
+    "Moderate Header sub-title/description.",
+    "Significant Header sub-title/description.",
+    "Critical Header sub-title/description.",
+    "Catastrophic Header sub-title/description."
+  ],
+  "rowHeaders": [
+    "Almost Certain Row Header sub-title/description.",
+    "Likely Row Header sub-title/description.",
+    "Possible Row Header sub-title/description.",
+    "Unlikely Row Header sub-title/description.",
+    "Rare Row Header sub-title/description."
+  ],
+  "cells": {
+    "Almost Certain|Minor": "medium (11)",
+    "Almost Certain|Moderate": "high (16)",
+    "Almost Certain|Significant": "extreme (20)",
+    "Almost Certain|Critical": "extreme (23)",
+    "Almost Certain|Catastrophic": "extreme (25)",
+    "Likely|Minor": "medium (7)",
+    "Likely|Moderate": "high (12)",
+    "Likely|Significant": "high (17)",
+    "Likely|Critical": "extreme (21)",
+    "Likely|Catastrophic": "extreme (24)",
+    "Possible|Minor": "low (4)",
+    "Possible|Moderate": "medium (8)",
+    "Possible|Significant": "high (13)",
+    "Possible|Critical": "high (18)",
+    "Possible|Catastrophic": "extreme (22)",
+    "Unlikely|Minor": "low (2)",
+    "Unlikely|Moderate": "low (5)",
+    "Unlikely|Significant": "medium (9)",
+    "Unlikely|Critical": "high (14)",
+    "Unlikely|Catastrophic": "high (19)",
+    "Rare|Minor": "low (1)",
+    "Rare|Moderate": "low (3)",
+    "Rare|Significant": "low (6)",
+    "Rare|Critical": "medium (10)",
+    "Rare|Catastrophic": "high (15)"
+  }
+}

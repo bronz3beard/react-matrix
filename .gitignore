@@ -9,7 +9,9 @@ lerna-debug.log*
 
 node_modules
 dist
+dist-site
 dist-ssr
+*.tsbuildinfo
 *.local
 
 # Editor directories and files
@@ -24,3 +26,6 @@ dist-ssr
 *.sw?
 
 .history
+
+# -- Ai --
+.loop-out

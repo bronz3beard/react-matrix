@@ -8,13 +8,11 @@
 
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "declaration": true,
     "allowJs": false,
-    "esModuleInterop": false,
 
     /* Bundler mode */
-    // "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
@@ -26,6 +24,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "lib"],
+  "include": ["src", "lib", "test", "scripts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
