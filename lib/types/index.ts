@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import type { CSSProperties, MouseEvent } from 'react';
 import type { MatrixTheme } from '../theme/types.js';
 
 export interface MatrixDetail {
@@ -48,6 +48,16 @@ export type MatrixSlot =
 
 export type MatrixSlotStyles = Partial<Record<MatrixSlot, CSSProperties>>;
 
+/** What `onCellClick` receives besides the cell itself. */
+export interface CellClickContext {
+  /** The likelihood row the cell is in. */
+  row: Readonly<MatrixDetail>;
+  /** The consequence column the cell is in. */
+  column: Readonly<MatrixDetail>;
+  /** Also fired by Enter and Space: each cell is a native button when a handler is set. */
+  event: MouseEvent<HTMLButtonElement>;
+}
+
 /** Root inline style; also accepts theme variable overrides like `--rdm-radius`. */
 export type MatrixRootStyle = CSSProperties & { [variable: `--rdm-${string}`]: string };
 
@@ -65,4 +75,10 @@ export interface ReactMatrixProps {
   reverseMatrixValues?: boolean;
   /** CSP nonce for the base <style> element. */
   nonce?: string;
+  /**
+   * Called when a person chooses a cell by pointer or keyboard. Without it, cells
+   * are plain text. The data is the consumer's own and is rendered as text only;
+   * never inject it as HTML in the handler.
+   */
+  onCellClick?: (cell: Readonly<MatrixValue>, context: CellClickContext) => void;
 }

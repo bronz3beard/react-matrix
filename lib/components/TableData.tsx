@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import type { CSSProperties, MouseEvent } from 'react';
 import type { SeverityColour } from '../theme/types.js';
 import type { MatrixValue } from '../types/index.js';
 
@@ -9,12 +9,25 @@ interface TableDataProps {
   tier?: number;
   colours?: SeverityColour;
   style?: CSSProperties;
+  /** Set when the consumer passed `onCellClick`: the cell becomes a native button. */
+  onActivate?: (event: MouseEvent<HTMLButtonElement>) => void;
+  /** Row, column and rating, so the button makes sense outside the table's context. */
+  accessibleName?: string;
 }
 
 // One matrix cell. The severity colour arrives as --rdm-cell-bg/--rdm-cell-fg,
 // consumed only by colour properties in the base stylesheet; `data-tier` lets
 // unstyled (e.g. strict-CSP) consumers colour cells from their own CSS.
-const TableData = ({ value, row, column, tier, colours, style }: TableDataProps) => {
+const TableData = ({
+  value,
+  row,
+  column,
+  tier,
+  colours,
+  style,
+  onActivate,
+  accessibleName,
+}: TableDataProps) => {
   if (!value) {
     return (
       <td className="rdm-cell rdm-cell-empty" data-row={row} data-col={column} style={style} />
@@ -24,6 +37,13 @@ const TableData = ({ value, row, column, tier, colours, style }: TableDataProps)
   const colourVariables = colours
     ? { '--rdm-cell-bg': colours.bg, '--rdm-cell-fg': colours.fg }
     : undefined;
+  const content = (
+    <>
+      <span className="rdm-cell-label">{value.description}</span>
+      <br />
+      <span className="rdm-cell-score">{`(${value.score_value})`}</span>
+    </>
+  );
 
   return (
     <td
@@ -33,9 +53,19 @@ const TableData = ({ value, row, column, tier, colours, style }: TableDataProps)
       data-tier={tier}
       style={{ ...colourVariables, ...style }}
     >
-      <span className="rdm-cell-label">{value.description}</span>
-      <br />
-      <span className="rdm-cell-score">{`(${value.score_value})`}</span>
+      {onActivate ? (
+        // No try/catch: errors from the consumer's handler must surface, not vanish.
+        <button
+          type="button"
+          className="rdm-cell-button"
+          aria-label={accessibleName}
+          onClick={onActivate}
+        >
+          {content}
+        </button>
+      ) : (
+        content
+      )}
     </td>
   );
 };

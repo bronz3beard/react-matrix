@@ -44,6 +44,7 @@ const ReactMatrix = ({
   unstyled = false,
   reverseMatrixValues = true,
   nonce,
+  onCellClick,
 }: ReactMatrixProps) => {
   const grid = useMemo(
     () => buildGrid(data, { reverse: reverseMatrixValues }),
@@ -102,7 +103,9 @@ const ReactMatrix = ({
           styles={styles}
         />
         <MatrixRows
-          title={data.primary_row_header_title}
+          rowTitle={data.primary_row_header_title}
+          columnTitle={data.primary_header_title}
+          onCellClick={onCellClick}
           columns={grid.columns}
           rows={grid.rows}
           tiers={scale.tiers}
@@ -117,6 +120,7 @@ const ReactMatrix = ({
 export default ReactMatrix;
 export { original } from './theme/presets/original.js';
 export type {
+  CellClickContext,
   MatrixData,
   MatrixDetail,
   MatrixRootStyle,

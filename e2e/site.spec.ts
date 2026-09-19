@@ -43,6 +43,32 @@ test('the page never scrolls sideways; a wide matrix scrolls inside itself', asy
   expect(overflow).toBeLessThanOrEqual(0);
 });
 
+test('a cell can be chosen by pointer, Enter or Space', async ({ page }) => {
+  await page.goto('./');
+  const status = page.getByRole('status');
+
+  await page
+    .getByRole('button', { name: 'Likelihood Rare, Consequence Minor: low (1)' })
+    .click();
+  await expect(status).toHaveText('Rare × Minor: low (1). Business as usual.');
+
+  await page
+    .getByRole('button', { name: 'Likelihood Almost Certain, Consequence Catastrophic: extreme (25)' })
+    .focus();
+  await page.keyboard.press('Enter');
+  await expect(status).toHaveText(
+    'Almost Certain × Catastrophic: extreme (25). Activity should not commence.'
+  );
+
+  await page
+    .getByRole('button', { name: 'Likelihood Possible, Consequence Moderate: medium (8)' })
+    .focus();
+  await page.keyboard.press('Space');
+  await expect(status).toHaveText(
+    'Possible × Moderate: medium (8). Requires routine to periodic monitoring.'
+  );
+});
+
 test('a matrix that scrolls sideways can be scrolled from the keyboard', async ({ page }) => {
   await page.goto('./');
   const matrix = page.locator('.rdm-root');
