@@ -77,4 +77,52 @@ export const catalog: Record<PresetName, PresetInfo> = {
     description: 'Neumorphic tiles pressed out of soft grey, with a dot marking severity.',
     tags: ['Soft', 'Minimal'],
   },
+  arcade: {
+    description: '8-bit cabinet: chunky pixel borders and neon cells in monospace capitals.',
+    tags: ['Playful', 'Bold'],
+  },
+  sunset: {
+    description: 'A continuous warm wash by score, from sand through coral to crimson.',
+    tags: ['Soft'],
+  },
+  tidewater: {
+    description: 'One hue, many depths: severity read as depth of blue, shaded by score.',
+    tags: ['Minimal', 'Soft'],
+  },
+  canopy: {
+    description: 'Forest floor: linen, serif type and leaf-shaped cells in moss and rust.',
+    tags: ['Editorial', 'Soft'],
+  },
+  fjord: {
+    description: 'Nordic dusk: a cool slate surface with a single muted dot per rating.',
+    tags: ['Minimal'],
+  },
+  neon: {
+    description: 'Night-city signage: glowing outlined cells and monospace lettering.',
+    tags: ['Bold', 'Playful'],
+  },
+  ledger: {
+    description: 'An accounting ledger: tight grid, monospace figures, pale tinted cells.',
+    tags: ['Data-dense', 'Editorial'],
+  },
+  contour: {
+    description: 'Line art: cells are drawn, not filled, with matching coloured labels.',
+    tags: ['Minimal', 'Technical'],
+  },
+  signal: {
+    description: 'Product dashboard: plain cells carrying a status pill, as a SaaS table would.',
+    tags: ['Minimal', 'Data-dense'],
+  },
+  beacon: {
+    description: 'Accessibility first: a colour-blind-safe ramp with AAA contrast throughout.',
+    tags: ['Accessible', 'Bold'],
+  },
+  noir: {
+    description: 'Black tie: a black card ruled in gold with serif capitals.',
+    tags: ['Editorial', 'Bold'],
+  },
+  swiss: {
+    description: 'International typographic style: a flush grid, red band and leading figures.',
+    tags: ['Editorial', 'Data-dense'],
+  },
 };

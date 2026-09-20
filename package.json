@@ -54,7 +54,7 @@
     "test": "vitest run",
     "test:e2e": "E2E_FIXTURES=1 npm run build:site && playwright test",
     "test:e2e:docker": "sh scripts/e2e-docker.sh",
-    "check:package": "node scripts/check-package.mjs && publint --strict && attw --pack --profile esm-only",
+    "check:package": "node scripts/check-package.mjs && node scripts/check-treeshake.mjs && publint --strict && attw --pack --profile esm-only",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "mock:publish": "npm pack --dry-run"
