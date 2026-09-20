@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
 
-const GALLERY = './?beta=gallery';
+const GALLERY = './';
 
 const shownCount = async (page: Page) => {
   const text = (await page.getByRole('status').textContent()) ?? '';
@@ -33,7 +33,6 @@ test('filter chips narrow the designs and are kept in the URL', async ({ page })
   await page.goto(GALLERY);
 
   await page.getByRole('radio', { name: 'Dark' }).check();
-  await expect(page).toHaveURL(/[?&]beta=gallery/);
   await expect(page).toHaveURL(/[?&]scheme=dark/);
   const dark = await shownCount(page);
   await expect(cards(page)).toHaveCount(dark.shown);

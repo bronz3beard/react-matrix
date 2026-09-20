@@ -13,8 +13,8 @@ const summarise = (violations: Violation[]) =>
   violations.map((v) => `${v.id}: ${v.nodes.map((node) => node.target.join(' ')).join(' | ')}`);
 
 const PAGES = [
-  ['demo page', './'],
-  ['preset gallery', './?beta=gallery'],
+  ['demo page', './?demo=classic'],
+  ['preset gallery', './'],
 ] as const;
 
 const openPage = async (page: Page, path: string) => {

@@ -4,12 +4,12 @@ import App from './App';
 import { data } from './data/risk5x5';
 import Gallery from './gallery/Gallery';
 
-// Dark release: the new preset gallery ships behind `?beta=gallery` until it is
-// complete; everyone else still sees the current demo page.
-const showGallery = new URLSearchParams(location.search).get('beta') === 'gallery';
+// The gallery is the demo site: it shows every design live. The single-matrix
+// page (which demonstrates cell selection) stays at ?demo=classic.
+const classic = new URLSearchParams(location.search).get('demo') === 'classic';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    {showGallery ? <Gallery data={data} /> : <App data={data} />}
+    {classic ? <App data={data} /> : <Gallery data={data} />}
   </React.StrictMode>
 );

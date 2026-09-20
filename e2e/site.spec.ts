@@ -1,5 +1,8 @@
 import { expect, test } from '@playwright/test';
 
+// The gallery is the site's landing page; the single-matrix demo lives here.
+const CLASSIC_DEMO = './?demo=classic';
+
 test.beforeEach(async ({ page }) => {
   // Keep runs offline and deterministic: the footer's web font is decorative.
   await page.route(/fonts\.(googleapis|gstatic)\.com/, (route) =>
@@ -14,7 +17,7 @@ test('the demo site renders the risk matrix with all 25 ratings', async ({ page 
     if (message.type() === 'error') errors.push(message.text());
   });
 
-  await page.goto('./');
+  await page.goto(CLASSIC_DEMO);
 
   const table = page.getByRole('table', { name: /React Matrix/ });
   await expect(table).toBeVisible();
@@ -24,7 +27,7 @@ test('the demo site renders the risk matrix with all 25 ratings', async ({ page 
 });
 
 test('axis titles are upper-cased by the Original theme, not in the text', async ({ page }) => {
-  await page.goto('./');
+  await page.goto(CLASSIC_DEMO);
 
   for (const axis of [
     page.getByRole('columnheader', { name: 'Consequence', exact: true }),
@@ -35,7 +38,7 @@ test('axis titles are upper-cased by the Original theme, not in the text', async
 });
 
 test('the page never scrolls sideways; a wide matrix scrolls inside itself', async ({ page }) => {
-  await page.goto('./');
+  await page.goto(CLASSIC_DEMO);
 
   const overflow = await page.evaluate(
     () => document.documentElement.scrollWidth - window.innerWidth
@@ -44,7 +47,7 @@ test('the page never scrolls sideways; a wide matrix scrolls inside itself', asy
 });
 
 test('a cell can be chosen by pointer, Enter or Space', async ({ page }) => {
-  await page.goto('./');
+  await page.goto(CLASSIC_DEMO);
   const status = page.getByRole('status');
 
   await page
@@ -70,7 +73,7 @@ test('a cell can be chosen by pointer, Enter or Space', async ({ page }) => {
 });
 
 test('a matrix that scrolls sideways can be scrolled from the keyboard', async ({ page }) => {
-  await page.goto('./');
+  await page.goto(CLASSIC_DEMO);
   const matrix = page.locator('.rdm-root');
   const scrolls = await matrix.evaluate((element) => element.scrollWidth > element.clientWidth);
 
@@ -97,7 +100,7 @@ test('baseline: original look of the matrix on desktop', async ({ page }, testIn
     'the baseline is captured once, on desktop Chromium'
   );
 
-  await page.goto('./');
+  await page.goto(CLASSIC_DEMO);
 
   const title = await page.locator('caption').boundingBox();
   const table = await page.getByRole('table').boundingBox();

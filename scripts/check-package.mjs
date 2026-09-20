@@ -9,7 +9,9 @@ import { gzipSync } from 'node:zlib';
 
 // Budgets may only be raised with explicit Tech Lead approval.
 const BUDGET_GZIP_BYTES = 10 * 1024;
-const BUDGET_UNPACKED_BYTES = 60 * 1024;
+// Raised from 60 kB with Tech Lead approval (2026-09-20) for the full README;
+// this is install footprint, not what reaches a consumer's bundle.
+const BUDGET_UNPACKED_BYTES = 80 * 1024;
 
 const ALLOWED_IMPORTS = new Set(['react', 'react/jsx-runtime']);
 // If this import is missing, React's JSX runtime was bundled instead of externalised.

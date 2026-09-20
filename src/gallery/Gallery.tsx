@@ -30,6 +30,12 @@ const Gallery = ({ data }: { data: MatrixData }) => {
       <header>
         <h1>React Data Matrix designs</h1>
         <p>Every built-in design, rendered live with the same risk data.</p>
+        <nav className="gallery-links" aria-label="Project">
+          <a href="https://github.com/bronz3beard/react-matrix#readme">Docs</a>
+          <a href="https://www.npmjs.com/package/react-data-matrix">npm</a>
+          <a href="https://github.com/bronz3beard/react-matrix">GitHub</a>
+          <a href="?demo=classic">Cell selection demo</a>
+        </nav>
       </header>
       <FilterChips filters={filters} onChange={setFilters} />
       <p role="status" className="gallery-count">
