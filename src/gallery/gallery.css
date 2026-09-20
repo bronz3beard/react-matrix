@@ -111,6 +111,14 @@
   }
 }
 
+/* Previews render in their compact form (the component hides sub-titles below
+   36rem), so every design is shown the same way at any window size and the
+   widest one (Brutal, 545px) still fits. */
+.preset-card .rdm-root {
+  max-inline-size: 35rem;
+  margin-inline: auto;
+}
+
 .preset-tags {
   display: flex;
   flex-wrap: wrap;
