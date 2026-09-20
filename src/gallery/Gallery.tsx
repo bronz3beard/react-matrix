@@ -3,6 +3,7 @@ import { presets, type MatrixData, type PresetName } from '../../lib';
 import { catalog } from './catalog';
 import FilterChips from './FilterChips';
 import { matchesFilters, readFilters, writeFilters, type GalleryFilters } from './filters';
+import InspectDialog from './InspectDialog';
 import PresetCard from './PresetCard';
 import './gallery.css';
 
@@ -12,6 +13,7 @@ const NAMES = Object.keys(presets) as PresetName[];
 // grid instead of hiding designs behind a dropdown.
 const Gallery = ({ data }: { data: MatrixData }) => {
   const [filters, setFilters] = useState<GalleryFilters>(() => readFilters(location.search));
+  const [inspected, setInspected] = useState<PresetName | null>(null);
 
   useEffect(() => {
     history.replaceState(
@@ -47,10 +49,26 @@ const Gallery = ({ data }: { data: MatrixData }) => {
         <ul className="gallery-grid" aria-label="Designs">
           {visible.map((name) => (
             <li key={name}>
-              <PresetCard theme={presets[name]} info={catalog[name]} data={data} />
+              <PresetCard
+                theme={presets[name]}
+                info={catalog[name]}
+                data={data}
+                onInspect={() => setInspected(name)}
+              />
             </li>
           ))}
         </ul>
+      )}
+      {inspected && (
+        // Remounted per design, so tweaks and the event log start clean.
+        <InspectDialog
+          key={inspected}
+          preset={inspected}
+          theme={presets[inspected]}
+          info={catalog[inspected]}
+          data={data}
+          onClose={() => setInspected(null)}
+        />
       )}
     </main>
   );

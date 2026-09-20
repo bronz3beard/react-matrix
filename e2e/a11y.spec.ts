@@ -38,6 +38,26 @@ const openPage = async (page: Page, path: string) => {
     .toBe(true);
 };
 
+// The inspect dialog is the only interactive matrix on the gallery, and the only
+// place tweak controls exist, so it is scanned as its own state of the page.
+// (Scheduled for S10c, pulled forward to the batch that introduced it.)
+test('the open inspect dialog has no WCAG 2.2 A/AA violations', async ({ page }) => {
+  await openPage(page, './');
+  await page.getByRole('button', { name: 'Inspect Noir' }).click();
+  await expect(page.getByRole('dialog', { name: 'Noir design' })).toBeVisible();
+
+  const allButContrast = await new AxeBuilder({ page })
+    .withTags(WCAG_TAGS)
+    .disableRules(['color-contrast'])
+    .analyze();
+  const contrast = await new AxeBuilder({ page })
+    .withRules(['color-contrast'])
+    .exclude(DATA_COLOURED_CELLS)
+    .analyze();
+
+  expect(summarise([...allButContrast.violations, ...contrast.violations])).toEqual([]);
+});
+
 for (const [label, path] of PAGES) {
   test(`the ${label} has no WCAG 2.2 A/AA violations`, async ({ page }) => {
     await openPage(page, path);

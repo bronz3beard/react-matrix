@@ -149,3 +149,193 @@
     font-size: 0.75rem;
   }
 }
+
+/* Visible to assistive technology only: the card buttons all read "Inspect",
+   so each one carries its design's name without repeating it on screen. */
+.sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.preset-inspect {
+  min-block-size: 44px;
+  margin-block-start: 0.75rem;
+  padding-inline: 1.25rem;
+  border: 1px solid #1a1a1a;
+  border-radius: 999px;
+  background-color: #ffffff;
+  color: #1a1a1a;
+  font: inherit;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #1a1a1a;
+    color: #ffffff;
+  }
+}
+
+.inspect {
+  inline-size: min(100%, 76rem);
+  max-block-size: 100dvh;
+  overflow: auto;
+  padding: 1.25rem;
+  border: 0;
+  border-radius: 12px;
+  background-color: #ffffff;
+  color: #1a1a1a;
+  font-family: system-ui, sans-serif;
+
+  &::backdrop {
+    background-color: rgb(0 0 0 / 55%);
+  }
+
+  h3 {
+    margin: 1.25rem 0 0.5rem;
+    font-size: 1rem;
+  }
+}
+
+.inspect-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: start;
+  justify-content: space-between;
+
+  h2 {
+    margin: 0;
+  }
+
+  p {
+    margin: 0.25rem 0 0;
+    color: #4a4a4a;
+  }
+
+  button {
+    min-block-size: 44px;
+    padding-inline: 1.25rem;
+    border: 1px solid #1a1a1a;
+    border-radius: 999px;
+    background-color: #ffffff;
+    font: inherit;
+    cursor: pointer;
+  }
+}
+
+/* One column until there is room for the controls *beside* a full-size matrix.
+   The widest 5×5 matrix measures ~840px, so the second column is a fixed 20rem
+   and the split waits for 85rem: proportional columns at 64rem clipped it. */
+.inspect-body {
+  display: grid;
+  gap: 1.5rem;
+  margin-block-start: 1rem;
+
+  @media (min-width: 85rem) {
+    grid-template-columns: minmax(0, 1fr) 20rem;
+  }
+}
+
+.inspect-preview .rdm-root {
+  max-inline-size: 100%;
+}
+
+.inspect-hint {
+  margin: 0 0 0.5rem;
+  color: #4a4a4a;
+}
+
+.inspect-log {
+  p {
+    margin: 0;
+    color: #4a4a4a;
+  }
+
+  ol {
+    margin: 0;
+    padding-inline-start: 1.25rem;
+  }
+}
+
+.tweak-panel {
+  fieldset {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    border: 0;
+    margin: 0 0 0.75rem;
+    padding: 0;
+  }
+
+  legend {
+    inline-size: 100%;
+    margin-block-end: 0.25rem;
+    font-weight: 600;
+  }
+}
+
+.tweak-snippet {
+  margin: 0 0 0.75rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  background-color: #f3f5f7;
+  color: #1a1a1a;
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.tweak-copy {
+  min-block-size: 44px;
+  padding-inline: 1.25rem;
+  border: 1px solid #1a1a1a;
+  border-radius: 999px;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  font: inherit;
+  cursor: pointer;
+}
+
+.inspect-tokens {
+  inline-size: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+
+  caption {
+    margin-block-end: 0.5rem;
+    color: #4a4a4a;
+    text-align: start;
+  }
+
+  th,
+  td {
+    border-block-end: 1px solid #e3e6ea;
+    padding: 0.3rem 0.5rem;
+    text-align: start;
+    vertical-align: top;
+    overflow-wrap: anywhere;
+  }
+
+  th {
+    inline-size: 9rem;
+    font-weight: 600;
+  }
+}
+
+.inspect-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+    border-radius: 4px;
+  }
+}

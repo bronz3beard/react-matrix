@@ -26,7 +26,11 @@ test('shows every design as a live preview card', async ({ page }) => {
 test('previews are not interactive, so the grid adds no cell tab stops', async ({ page }) => {
   await page.goto(GALLERY);
 
-  await expect(page.getByRole('list', { name: 'Designs' }).getByRole('button')).toHaveCount(0);
+  // Each card has one Inspect button; the 26 × 25 preview cells add none.
+  const { total } = await shownCount(page);
+  const grid = page.getByRole('list', { name: 'Designs' });
+  await expect(grid.locator('.rdm-root button')).toHaveCount(0);
+  await expect(grid.getByRole('button')).toHaveCount(total);
 });
 
 test('filter chips narrow the designs and are kept in the URL', async ({ page }) => {
