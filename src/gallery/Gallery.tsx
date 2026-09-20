@@ -8,6 +8,7 @@ import FilterChips from './FilterChips';
 import { matchesFilters, readFilters, writeFilters, type GalleryFilters } from './filters';
 import InspectDialog from './InspectDialog';
 import PresetCard from './PresetCard';
+import { useDialogHistory } from './useDialogHistory';
 import './gallery.css';
 
 const NAMES = Object.keys(presets) as PresetName[];
@@ -20,11 +21,15 @@ const Gallery = ({ data }: { data: MatrixData }) => {
   const [compare, setCompare] = useState<CompareState>(() => readCompare(location.search));
   const [comparing, setComparing] = useState(false);
 
+  useDialogHistory({ open: inspected !== null, onClose: () => setInspected(null) });
+  useDialogHistory({ open: comparing, onClose: () => setComparing(false) });
+
   // Filters and the compare selection share the query string, so both are
-  // written from one place and neither can drop the other's parameters.
+  // written from one place and neither can drop the other's parameters. The
+  // existing state is carried over: it may be the marker for an open dialog.
   useEffect(() => {
     const search = writeCompare(writeFilters(location.search, filters), compare);
-    history.replaceState(null, '', `${location.pathname}${search}${location.hash}`);
+    history.replaceState(history.state, '', `${location.pathname}${search}${location.hash}`);
   }, [filters, compare]);
 
   const visible = NAMES.filter((name) =>

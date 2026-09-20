@@ -25,10 +25,14 @@
   gap: 1rem;
   margin-block-start: 0.5rem;
 
+  /* A short word like "npm" made a 44px-tall link only 30px wide, so the tap
+     target failed in one dimension; a minimum inline size fixes both. */
   a {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     min-block-size: 44px;
+    min-inline-size: 44px;
     color: #1a4fd6;
   }
 }

@@ -24,7 +24,10 @@ export const BASE_CSS = [
   '[data-variant=outline] .rdm-cell{background-color:transparent;color:var(--rdm-text);border-color:var(--rdm-cell-bg);border-width:2px}',
   ':is([data-variant=chip],[data-variant=dot]) .rdm-cell{background-color:transparent;color:var(--rdm-text)}',
   '[data-variant=chip] .rdm-cell-label{display:inline-block;padding:.15em .6em;border-radius:999px;background-color:var(--rdm-cell-bg);color:var(--rdm-cell-fg)}',
-  '[data-variant=dot] .rdm-cell-label::before{content:"";display:inline-block;inline-size:.75em;block-size:.75em;margin-inline-end:.4em;border-radius:50%;background-color:var(--rdm-cell-bg)}',
+  // inline-flex keeps the dot beside its label in a narrow cell; as plain inline
+  // content the label wrapped and left the dot alone on the line above.
+  '[data-variant=dot] .rdm-cell-label{display:inline-flex;align-items:baseline}',
+  '[data-variant=dot] .rdm-cell-label::before{content:"";flex:none;display:inline-block;inline-size:.75em;block-size:.75em;margin-inline-end:.4em;border-radius:50%;background-color:var(--rdm-cell-bg)}',
   '[data-emphasis=score] .rdm-cell-score{font-size:1.4em;font-weight:700}',
   '.rdm-cell-button{all:unset;box-sizing:border-box;display:block;inline-size:100%;cursor:pointer;text-align:inherit}',
   '.rdm-cell-button:focus-visible{outline:3px solid var(--rdm-focus);outline-offset:2px}',
