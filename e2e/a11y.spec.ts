@@ -58,6 +58,28 @@ test('the open inspect dialog has no WCAG 2.2 A/AA violations', async ({ page })
   expect(summarise([...allButContrast.violations, ...contrast.violations])).toEqual([]);
 });
 
+// Same reasoning as the inspect dialog: new surface, scanned in the batch that
+// introduced it rather than left until S10c.
+test('the open compare view has no WCAG 2.2 A/AA violations', async ({ page }) => {
+  await openPage(page, './');
+  for (const name of ['Noir', 'Aurora', 'Thermal']) {
+    await page.getByRole('button', { name: `Compare ${name}` }).click();
+  }
+  await page.getByRole('button', { name: 'Compare (3)' }).click();
+  await expect(page.getByRole('dialog')).toBeVisible();
+
+  const allButContrast = await new AxeBuilder({ page })
+    .withTags(WCAG_TAGS)
+    .disableRules(['color-contrast'])
+    .analyze();
+  const contrast = await new AxeBuilder({ page })
+    .withRules(['color-contrast'])
+    .exclude(DATA_COLOURED_CELLS)
+    .analyze();
+
+  expect(summarise([...allButContrast.violations, ...contrast.violations])).toEqual([]);
+});
+
 for (const [label, path] of PAGES) {
   test(`the ${label} has no WCAG 2.2 A/AA violations`, async ({ page }) => {
     await openPage(page, path);

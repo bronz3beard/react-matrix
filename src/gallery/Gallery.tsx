@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { presets, type MatrixData, type PresetName } from '../../lib';
 import { catalog } from './catalog';
+import { readCompare, toggleCompared, writeCompare, type CompareState } from './compare';
+import CompareDialog from './CompareDialog';
+import CompareTray from './CompareTray';
 import FilterChips from './FilterChips';
 import { matchesFilters, readFilters, writeFilters, type GalleryFilters } from './filters';
 import InspectDialog from './InspectDialog';
@@ -14,14 +17,15 @@ const NAMES = Object.keys(presets) as PresetName[];
 const Gallery = ({ data }: { data: MatrixData }) => {
   const [filters, setFilters] = useState<GalleryFilters>(() => readFilters(location.search));
   const [inspected, setInspected] = useState<PresetName | null>(null);
+  const [compare, setCompare] = useState<CompareState>(() => readCompare(location.search));
+  const [comparing, setComparing] = useState(false);
 
+  // Filters and the compare selection share the query string, so both are
+  // written from one place and neither can drop the other's parameters.
   useEffect(() => {
-    history.replaceState(
-      null,
-      '',
-      `${location.pathname}${writeFilters(location.search, filters)}${location.hash}`
-    );
-  }, [filters]);
+    const search = writeCompare(writeFilters(location.search, filters), compare);
+    history.replaceState(null, '', `${location.pathname}${search}${location.hash}`);
+  }, [filters, compare]);
 
   const visible = NAMES.filter((name) =>
     matchesFilters({ theme: presets[name], info: catalog[name], filters })
@@ -54,10 +58,36 @@ const Gallery = ({ data }: { data: MatrixData }) => {
                 info={catalog[name]}
                 data={data}
                 onInspect={() => setInspected(name)}
+                compared={compare.names.includes(name)}
+                onCompare={() =>
+                  setCompare((state) => ({
+                    ...state,
+                    names: toggleCompared({ names: state.names, name }),
+                  }))
+                }
               />
             </li>
           ))}
         </ul>
+      )}
+      <CompareTray
+        names={compare.names}
+        onRemove={(name) =>
+          setCompare((state) => ({
+            ...state,
+            names: toggleCompared({ names: state.names, name }),
+          }))
+        }
+        onClear={() => setCompare((state) => ({ ...state, names: [] }))}
+        onOpen={() => setComparing(true)}
+      />
+      {comparing && (
+        <CompareDialog
+          names={compare.names}
+          size={compare.size}
+          onSize={(size) => setCompare((state) => ({ ...state, size }))}
+          onClose={() => setComparing(false)}
+        />
       )}
       {inspected && (
         // Remounted per design, so tweaks and the event log start clean.

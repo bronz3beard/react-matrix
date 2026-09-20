@@ -7,11 +7,13 @@ interface PresetCardProps {
   info: PresetInfo;
   data: MatrixData;
   onInspect: () => void;
+  compared: boolean;
+  onCompare: () => void;
 }
 
 // A live, non-interactive preview: no `onCellClick`, so the gallery grid adds no
 // cell tab stops however many designs it shows.
-const PresetCard = ({ theme, info, data, onInspect }: PresetCardProps) => {
+const PresetCard = ({ theme, info, data, onInspect, compared, onCompare }: PresetCardProps) => {
   const headingId = useId();
 
   return (
@@ -24,9 +26,14 @@ const PresetCard = ({ theme, info, data, onInspect }: PresetCardProps) => {
         ))}
       </ul>
       <ReactMatrix data={data} theme={theme} style={{ '--rdm-font-size': '0.75rem' }} />
-      <button type="button" className="preset-inspect" onClick={onInspect}>
-        Inspect <span className="sr-only">{theme.name}</span>
-      </button>
+      <div className="preset-actions">
+        <button type="button" onClick={onInspect}>
+          Inspect <span className="sr-only">{theme.name}</span>
+        </button>
+        <button type="button" aria-pressed={compared} onClick={onCompare}>
+          Compare <span className="sr-only">{theme.name}</span>
+        </button>
+      </div>
     </article>
   );
 };

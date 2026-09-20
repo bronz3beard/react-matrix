@@ -291,21 +291,113 @@ export const data: MatrixData = {
 
 ## Recipes
 
-### Next.js (App Router)
+### Next.js
 
-The matrix uses state and effects, so it belongs in a client component:
+Supported on **Next.js 16 and 15**, App Router and Pages Router. The examples below
+were built and run against Next 16.3.5 and 15.5.25 on React 19.
+
+The matrix uses state and effects, so it is a **client component**. That is not the
+same as being client-rendered: it still renders on the server, and the prerendered
+HTML contains the whole table and the design's stylesheet, so there is no blank
+frame before hydration.
+
+#### Fetch on the server, render as a client component (App Router)
+
+The data is a plain object, so it crosses the server/client boundary as a prop. The
+click handler is a function, so it cannot — it belongs in the client component.
 
 ```tsx
+// app/matrix.tsx
 'use client';
 
-import ReactMatrix, { boardroom } from 'react-data-matrix';
+import { useState } from 'react';
+import ReactMatrix, { boardroom, type MatrixData } from 'react-data-matrix';
 
-export function Matrix({ data }) {
-  return <ReactMatrix data={data} theme={boardroom} />;
+export default function Matrix({ data }: { data: MatrixData }) {
+  const [chosen, setChosen] = useState('Choose a cell.');
+
+  return (
+    <>
+      <ReactMatrix
+        data={data}
+        theme={boardroom}
+        onCellClick={(cell, { row, column }) =>
+          setChosen(`${row.row_header_title} × ${column.header_title}: ${cell.description}`)
+        }
+      />
+      <p role="status">{chosen}</p>
+    </>
+  );
 }
 ```
 
-### Server rendering with a strict CSP
+```tsx
+// app/page.tsx — a Server Component: nothing here reaches the browser
+import Matrix from './matrix';
+
+export default async function Page() {
+  const data = await getRiskMatrix();
+  return <Matrix data={data} />;
+}
+```
+
+#### Static sites
+
+Nothing about the matrix forces a server. With `output: 'export'` the page is
+prerendered at build time and the exported HTML contains the full matrix.
+
+#### Pages Router
+
+The same component, with the router's own data fetching. No extra configuration.
+
+```tsx
+// pages/index.tsx
+import type { GetServerSideProps } from 'next';
+import ReactMatrix, { boardroom, type MatrixData } from 'react-data-matrix';
+
+export const getServerSideProps: GetServerSideProps<{ matrix: MatrixData }> = async () => ({
+  props: { matrix: await getRiskMatrix() },
+});
+
+export default function Home({ matrix }: { matrix: MatrixData }) {
+  return <ReactMatrix data={matrix} theme={boardroom} />;
+}
+```
+
+#### A strict Content Security Policy
+
+Generate a nonce per request and pass it to the matrix. **Next 16** uses `proxy.ts`;
+**Next 15** uses `middleware.ts` with a named `middleware` export — that difference is
+Next's own, not this package's.
+
+```ts
+// proxy.ts (Next 16) — middleware.ts on Next 15
+import { NextResponse, type NextRequest } from 'next/server';
+
+export default function proxy(request: NextRequest) {
+  const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
+  const headers = new Headers(request.headers);
+  headers.set('x-nonce', nonce);
+
+  const response = NextResponse.next({ request: { headers } });
+  response.headers.set('Content-Security-Policy', `style-src 'nonce-${nonce}'`);
+  return response;
+}
+```
+
+```tsx
+// app/page.tsx
+import { headers } from 'next/headers';
+
+export default async function Page() {
+  const nonce = (await headers()).get('x-nonce') ?? undefined;
+  return <Matrix data={await getRiskMatrix()} nonce={nonce} />;
+}
+```
+
+The page then opts out of static rendering, because it reads a per-request header.
+
+### Server rendering with a strict CSP (other frameworks)
 
 Pass the page's nonce so the matrix's stylesheet is allowed:
 
