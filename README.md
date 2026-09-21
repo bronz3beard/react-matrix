@@ -11,8 +11,6 @@ A React component for risk matrices and other grids where a value sits at the cr
 - **Works under a strict Content Security Policy**, verified in Chromium, WebKit and Firefox.
 - **React 18.3 and React 19**, including server rendering.
 
-> **Version note.** This README documents the 1.0 API. The published npm version is still 0.4.x; see [Migrating from 0.4.x](#migrating-from-04x).
-
 ---
 
 ## Install

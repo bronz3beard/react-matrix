@@ -2,6 +2,18 @@
 
 This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.0.1 — 2026-09-21
+
+### Fixed
+
+- The README carried a note saying the published npm version was still 0.4.x.
+  That was true while 1.0 was being prepared and stopped being true the moment
+  1.0.0 was published, leaving the note contradicting the page it appeared on.
+
+No code changed: `dist/index.js` is byte-for-byte identical to 1.0.0. A README
+correction needs its own version because npm renders the README from the
+published tarball, so it cannot be changed in place.
+
 ## 1.0.0 — 2026-09-20
 
 The first stable release. 1.0 is a rewrite of the component's styling, packaging
