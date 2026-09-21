@@ -1,7 +1,11 @@
 name: CI
 
 on:
+  # Branches only: a tag push runs release.yml, which checks that CI already
+  # passed for that commit. If CI also ran on the tag, that check would be
+  # waiting on a run that cannot finish until it finishes.
   push:
+    branches: ['**']
   pull_request:
   workflow_dispatch:
 
