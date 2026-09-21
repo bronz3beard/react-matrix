@@ -91,11 +91,20 @@ check(
   `dist/index.js is ${gzipBytes} B gzip, over the ${BUDGET_GZIP_BYTES} B budget`
 );
 
-const [packed] = JSON.parse(
+// `npm pack --json` changed shape: npm 10 returns an array of packed packages,
+// npm 12 returns an object keyed by package name. The entries themselves are
+// identical, so accept either rather than pinning an npm version here.
+const packOutput = JSON.parse(
   execFileSync('npm', ['pack', '--dry-run', '--json', '--ignore-scripts'], {
     encoding: 'utf8',
   })
 );
+const [packed] = Array.isArray(packOutput) ? packOutput : Object.values(packOutput);
+if (!packed?.files) {
+  throw new Error(
+    `could not read "npm pack --json" output (npm ${execFileSync('npm', ['--version'], { encoding: 'utf8' }).trim()})`
+  );
+}
 for (const { path } of packed.files) {
   check(
     ALLOWED_FILES.some((pattern) => pattern.test(path)),
