@@ -1,101 +1,82 @@
 name: Release
 
-# Publishing is deliberately two-handed. This workflow only *stages* a version:
-# it authenticates to npm with a short-lived OIDC token (no npm token exists in
-# this repository) and hands the tarball to npm's staging area. Nothing reaches
-# the public registry until a human with publish access approves it with 2FA.
-#
-# npmjs.com must have a trusted publisher for react-data-matrix pointing at this
-# repository and at this filename, "release.yml". Renaming this file breaks
-# publishing until the configuration is updated to match.
-
+# Publishing a GitHub Release stages the package on npm through trusted publishing (OIDC, no npm token), with
+# provenance. Nothing is installable until a maintainer approves the staged version with 2FA (`npm stage approve` or
+# npmjs.com). A release marked "pre-release" goes to the `next` dist-tag; a full release goes to `latest`.
+# One-time setup on npmjs.com: package settings → Trusted Publisher → GitHub Actions, user `bronz3beard`,
+# repository `react-matrix`, workflow `release.yml`, "Allow npm publish" unticked (staged publishing only).
+# Without it, the stage step fails and nothing is staged.
 on:
-  push:
-    tags: ['v[0-9]+.[0-9]+.[0-9]+']
-  workflow_dispatch:
-    inputs:
-      dry_run:
-        description: 'Rehearse without staging anything'
-        type: boolean
-        default: true
+  release:
+    types: [published]
 
 permissions:
   contents: read
 
 jobs:
-  release:
-    name: release
+  # The same checks a push runs, against the commit being released: lint, types,
+  # unit tests, both React majors, the e2e suite and the package gates.
+  verify:
+    uses: ./.github/workflows/ci.yml
+
+  publish:
+    needs: verify
     runs-on: ubuntu-latest
     permissions:
       contents: read
       # Lets the runner mint the OIDC token npm exchanges for publish rights.
       id-token: write
-      # Read-only, to confirm CI passed for this exact commit.
-      checks: read
+    env:
+      TAG: ${{ github.event.release.tag_name }}
+      PRERELEASE: ${{ github.event.release.prerelease }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
+      # `registry-url` is not decoration: it writes the .npmrc that npm's OIDC
+      # exchange reads. Without it npm never tries trusted publishing and fails
+      # with ENEEDAUTH. Node 26 is pinned because staged publishing needs
+      # `npm stage`, which npm 11.11 (bundled with Node 24) does not have.
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version-file: .nvmrc
+          node-version: 26
+          registry-url: https://registry.npmjs.org
           cache: npm
 
-      # Trusted publishing needs npm 11.5.1+, and `npm stage` needs 11.15.0+.
-      # The npm bundled with Node 22 is 10.x, so it is upgraded explicitly.
-      # The major is pinned: `npm@latest` once moved from npm 10 to npm 12 and
-      # changed the shape of `npm pack --json`, which broke this job while CI
-      # (running the bundled npm) stayed green.
-      - name: Use an npm that can stage a trusted publish
-        run: npm install -g npm@^12.0.2
-
-      - name: The tag must name the version being published
-        if: startsWith(github.ref, 'refs/tags/')
+      - name: Check the release matches package.json
         run: |
-          tag="${GITHUB_REF_NAME#v}"
           version="$(node -p "require('./package.json').version")"
-          if [ "$tag" != "$version" ]; then
-            echo "::error::tag $GITHUB_REF_NAME does not match package.json version $version"
+          if [ "$TAG" != "v$version" ]; then
+            echo "::error::Release tag $TAG doesn't match package.json version $version (expected v$version)."
+            exit 1
+          fi
+          case "$version" in
+            *-*)
+              if [ "$PRERELEASE" != "true" ]; then
+                echo "::error::$version is a prerelease version: mark the GitHub Release as a pre-release so it goes to the next tag."
+                exit 1
+              fi
+              ;;
+          esac
+
+      - name: Check npm supports staged publishing
+        run: |
+          if ! npm stage --help > /dev/null 2>&1; then
+            echo "::error::npm $(npm --version) has no 'npm stage' command, which staged publishing needs."
             exit 1
           fi
 
-      # The tarball is built from a commit, so the commit is what has to be
-      # green. Named jobs are required by name: counting successes would pass
-      # for a commit that has no checks at all.
-      - name: CI must have passed for this commit
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          passed="$(gh api "repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/check-runs" \
-            --paginate --jq '.check_runs[] | select(.conclusion == "success") | .name')"
-          missing=0
-          for job in "verify (React 19)" "verify (React 18)" "e2e (Playwright)"; do
-            if ! printf '%s\n' "$passed" | grep -Fxq "$job"; then
-              echo "::error::\"$job\" has not passed for $GITHUB_SHA"
-              missing=1
-            fi
-          done
-          test "$missing" -eq 0
-
       - run: npm ci
-      - run: npm run lint
-      - run: npm run typecheck
-      - run: npm test
-      - run: npm run build
-      - name: Package purity, publint and attw
-        run: npm run check:package
 
-      # --provenance is passed explicitly rather than relied on: it is the
-      # attestation that ties this tarball to this commit and workflow.
-      - name: Stage the release for approval
-        run: npm stage publish --provenance ${{ inputs.dry_run && '--dry-run' || '' }}
+      # `npm stage publish` runs prepublishOnly (the build) like `npm publish`, then uploads the package for approval
+      # instead of publishing it. Provenance is automatic for a public package staged from a public repository.
+      - run: npm stage publish --tag ${{ github.event.release.prerelease && 'next' || 'latest' }}
 
       - name: What happens next
-        if: ${{ !inputs.dry_run }}
         run: |
           echo "### Staged for approval" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
-          echo "Nothing is public yet. Approve or reject it at" >> "$GITHUB_STEP_SUMMARY"
+          echo "Nothing is installable yet. Approve or reject it at" >> "$GITHUB_STEP_SUMMARY"
           echo "<https://www.npmjs.com/package/react-data-matrix/access>," >> "$GITHUB_STEP_SUMMARY"
           echo 'or with `npm stage list react-data-matrix` then `npm stage approve <stage-id>`.' >> "$GITHUB_STEP_SUMMARY"

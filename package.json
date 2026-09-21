@@ -57,7 +57,8 @@
     "check:package": "node scripts/check-package.mjs && node scripts/check-treeshake.mjs && publint --strict && attw --pack --profile esm-only",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "mock:publish": "npm pack --dry-run"
+    "mock:publish": "npm pack --dry-run",
+    "prepublishOnly": "npm run build"
   },
   "browserslist": {
     "production": [
